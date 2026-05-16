@@ -1,7 +1,58 @@
-[gd_scene format=3 uid="uid://bs8vxmpyaa4u6"]
+[gd_scene format=3 uid="uid://c5h6trusypsh7"]
+
+[ext_resource type="Script" uid="uid://colmiaohdff4p" path="res://ship_node.gd" id="1_3a2p5"]
+[ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://ART ASSETS/duck ship_0001.png" id="2_yhbkl"]
+[ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://ART ASSETS/duck ship_0002.png" id="3_ly44p"]
+[ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://ART ASSETS/shield ship_0001.png" id="4_cpmmr"]
+[ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://ART ASSETS/shield ship_0002.png" id="5_qpxp6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yhbkl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ly44p")
+}],
+"loop": true,
+"name": &"gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_cpmmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qpxp6")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m1ihe"]
+radius = 13.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vysyx"]
+radius = 32.01562
 
 [node name="ShipNode" type="Area2D" unique_id=1841324561]
+script = ExtResource("1_3a2p5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=753737017]
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
+sprite_frames = SubResource("SpriteFrames_65l50")
+animation = &"shield"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1209264211]
+[node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
+visible = false
+position = Vector2(-3, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_m1ihe")
+
+[node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_vysyx")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
