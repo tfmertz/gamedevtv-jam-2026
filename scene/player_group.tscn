@@ -2,5 +2,44 @@
 
 [ext_resource type="Script" uid="uid://2mmrii0a2uoa" path="res://src/player_group.gd" id="1_o01m7"]
 
+[sub_resource type="Curve2D" id="Curve2D_o01m7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -168, -158, 0, 0, 0, 0, 149, 0, 0, 0, 0, 0, -168, 116)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_hcy0v"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1, -254, 0, 0, 0, 0, 89, -222, 0, 0, 0, 0, 143, -171, 0, 0, 0, 0, 175, -122, 0, 0, 0, 0, 188, -33, 0, 0, 0, 0, 164, 65, 0, 0, 0, 0, 71, 146, 0, 0, 0, 0, 19, 161, 0, 0, 0, 0, -89, 169, 0, 0, 0, 0, -183, 149, 0, 0, 0, 0, -246, 80, 0, 0, 0, 0, -247, -10, 0, 0, 0, 0, -204, -114, 0, 0, 0, 0, -176, -188, 0, 0, 0, 0, -127, -223, 0, 0, 0, 0, 1, -254)
+}
+point_count = 16
+
+[sub_resource type="Curve2D" id="Curve2D_x5c8g"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2, -169, 0, 0, 0, 0, 268, 2, 0, 0, 0, 0, -2, 183, 0, 0, 0, 0, -259, 2, 0, 0, 0, 0, -2, -169)
+}
+point_count = 5
+
 [node name="PlayerGroup" type="Node2D" unique_id=160869662]
 script = ExtResource("1_o01m7")
+
+[node name="VPath" type="Path2D" parent="." unique_id=513453015]
+curve = SubResource("Curve2D_o01m7")
+
+[node name="VPathFollow2D" type="PathFollow2D" parent="VPath" unique_id=2118523019]
+position = Vector2(-168, -158)
+rotation = 0.46238497
+
+[node name="CirclePath" type="Path2D" parent="." unique_id=1823495095]
+curve = SubResource("Curve2D_hcy0v")
+
+[node name="CirclePathFollow2D" type="PathFollow2D" parent="CirclePath" unique_id=333889390]
+position = Vector2(1, -254)
+rotation = 0.348771
+
+[node name="DiamondPath" type="Path2D" parent="." unique_id=106955588]
+curve = SubResource("Curve2D_x5c8g")
+
+[node name="DiamondPathFollow2D" type="PathFollow2D" parent="DiamondPath" unique_id=468773119]
+position = Vector2(-2, -169)
+rotation = 0.56456935

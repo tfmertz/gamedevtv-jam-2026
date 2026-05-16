@@ -9,23 +9,28 @@ var mothership
 var ships = []
 
 enum FormationType {V, CIRCLE, DIAMOND}
+var formation = FormationType.V
+var spacing = 1.0
+
+var screen_size = get_viewport_rect()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	screen_size = get_viewport_rect()
 
 
 func spawn_mothership() -> void:
 	mothership = ship_scene.instantiate()
 	mothership.set_ship_type(ShipNode.ShipType.MOTHER)
-	mothership.start(Vector2(0,0))
+	mothership.start(Vector2(screen_size.size.x / 2,screen_size.size.x / 2))
 	add_child(mothership)
 
 
 func add_gunship() -> void:
 	var ship = ship_scene.instantiate()
 	ship.set_ship_type(ShipNode.ShipType.GUN)
-	ship.start(Vector2(0,74)) #TODO VERY TEMPORARY
+	ship.set_on_path()
+	ship.start(Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) #TODO VERY TEMPORARY
 	ships.append(ship)
 	add_child(ship)
 
@@ -33,7 +38,8 @@ func add_gunship() -> void:
 func add_shieldship() -> void:
 	var ship = ship_scene.instantiate()
 	ship.set_ship_type(ShipNode.ShipType.SHIELD)
-	ship.start(Vector2(0,-74)) #TODO VERY TEMPORARY
+	ship.set_on_path()
+	ship.start(Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) #TODO VERY TEMPORARY
 	ships.append(ship)
 	add_child(ship)
 
@@ -64,11 +70,22 @@ func _process(delta: float) -> void:
 		velocity_dir.x = 0
 		velocity_dir.y = 0
 	
-	if Input.is_action_pressed("cycle_formation"):
-		pass
-	elif Input.is_action_pressed("cycle_spacing"):
-		pass
+	if Input.is_action_just_pressed("cycle_formation"):
+		formation = (formation + 1) % len(FormationType)
+	elif Input.is_action_just_pressed("cycle_spacing"):
+		spacing = (spacing + .5)
+		if spacing > 1:
+			spacing -= 1
 		
 	mothership.set_velocity_dir(velocity_dir)
-	for ship in ships:
-		ship.set_velocity_dir(velocity_dir)
+	var new_path
+	if formation == FormationType.V:
+		new_path = $VPath/VPathFollow2D
+	elif formation == FormationType.CIRCLE:
+		new_path = $CirclePath/CirclePathFollow2D
+	elif formation == FormationType.DIAMOND:
+		new_path = $DiamondPath/DiamondPathFollow2D
+	for i in range(ships.size()):
+		var ship = ships[i]
+		new_path.progress_ratio = (float(i) / float(ships.size())) * spacing
+		ship.set_position_target(new_path.position + mothership.position)
