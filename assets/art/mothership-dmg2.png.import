@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jaha1e8rks3f"
-path="res://.godot/imported/duck ship_0002.png-2e71e2117c6e2fd2068e6d2dddb69c85.ctex"
+uid="uid://beywnpmfjiolf"
+path="res://.godot/imported/mothership-dmg2.png-8cc32ac392db8596d55972a2559311c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART ASSETS/duck ship_0002.png"
-dest_files=["res://.godot/imported/duck ship_0002.png-2e71e2117c6e2fd2068e6d2dddb69c85.ctex"]
+source_file="res://assets/art/mothership-dmg2.png"
+dest_files=["res://.godot/imported/mothership-dmg2.png-8cc32ac392db8596d55972a2559311c4.ctex"]
 
 [params]
 
