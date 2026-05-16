@@ -1,12 +1,13 @@
 class_name ShipNode extends Area2D
 
 enum ShipType {GUN, SHIELD, MOTHER}
+var speed = 100
+var ship_type
 var velocity = Vector2.ZERO
 var velocity_dir = Vector2.ZERO
-var ship_type
+var on_path = false
+var position_target = Vector2.ZERO
 var hp
-
-var speed = 400
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,6 +16,14 @@ func _ready() -> void:
 
 func set_velocity_dir(new_vel_dir) -> void:
 	velocity_dir = new_vel_dir
+
+
+func set_on_path() -> void:
+	on_path = true
+
+
+func set_position_target(new_target) -> void:
+	position_target = new_target
 
 
 func set_ship_type(new_type) -> void:
@@ -47,6 +56,8 @@ func start(pos):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if on_path:
+		velocity_dir = (position_target - position).normalized()
 	if velocity_dir.length() > 0:
 		velocity = velocity_dir * speed
 	else:

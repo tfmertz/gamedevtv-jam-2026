@@ -16,10 +16,16 @@ func init_level() -> void:
 		self.remove_child(node)
 		node.queue_free()
 	player_fleet = group_scene.instantiate()
+	add_child(player_fleet)
 	player_fleet.spawn_mothership()
 	player_fleet.add_gunship()
 	player_fleet.add_shieldship()
-	add_child(player_fleet)
+	
+	#TODO temporary while testing formation code
+	player_fleet.add_gunship()
+	player_fleet.add_shieldship()
+	player_fleet.add_gunship()
+	player_fleet.add_shieldship()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

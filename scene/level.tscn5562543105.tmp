@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cmls3wnxui0ji"]
+
+[ext_resource type="Script" uid="uid://7y88cwr0eudt" path="res://src/level.gd" id="1_u52ul"]
+
+[node name="Level" type="Node2D" unique_id=1430583570]
+script = ExtResource("1_u52ul")
+
+[node name="MainBackground" type="Parallax2D" parent="." unique_id=109343717]
+
+[node name="Sprite2D" type="Sprite2D" parent="MainBackground" unique_id=2074523114]
