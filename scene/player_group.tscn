@@ -9,10 +9,6 @@ _data = {
 point_count = 3
 
 [sub_resource type="Curve2D" id="Curve2D_hcy0v"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1, -254, 0, 0, 0, 0, 89, -222, 0, 0, 0, 0, 143, -171, 0, 0, 0, 0, 175, -122, 0, 0, 0, 0, 188, -33, 0, 0, 0, 0, 164, 65, 0, 0, 0, 0, 71, 146, 0, 0, 0, 0, 19, 161, 0, 0, 0, 0, -89, 169, 0, 0, 0, 0, -183, 149, 0, 0, 0, 0, -246, 80, 0, 0, 0, 0, -247, -10, 0, 0, 0, 0, -204, -114, 0, 0, 0, 0, -176, -188, 0, 0, 0, 0, -127, -223, 0, 0, 0, 0, 1, -254)
-}
-point_count = 16
 
 [sub_resource type="Curve2D" id="Curve2D_x5c8g"]
 _data = {
@@ -34,8 +30,8 @@ rotation = 0.46238497
 curve = SubResource("Curve2D_hcy0v")
 
 [node name="CirclePathFollow2D" type="PathFollow2D" parent="CirclePath" unique_id=333889390]
-position = Vector2(1, -254)
-rotation = 0.348771
+position = Vector2(-105, -176)
+rotation = -0.20749624
 
 [node name="DiamondPath" type="Path2D" parent="." unique_id=106955588]
 curve = SubResource("Curve2D_x5c8g")
