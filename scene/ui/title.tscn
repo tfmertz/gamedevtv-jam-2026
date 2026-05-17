@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bug7dnn3w6yks"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ka843"]
+font_size = 32
+
+[node name="Title" type="Node2D" unique_id=1822057023]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=653565697]
+
+[node name="Control" type="CenterContainer" parent="CanvasLayer" unique_id=786101586]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=342005093]
+layout_mode = 2
+text = "StarOx Adventures"
+label_settings = SubResource("LabelSettings_ka843")
