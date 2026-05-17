@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var bullet_scene: PackedScene =preload("res://bullet.tscn")
+#@export var bullet_scene: PackedScene =preload("res://scene/bullet.tscn")
 signal die
 signal fire
 var health: int
@@ -27,6 +27,7 @@ func _ready() -> void:
 	$hitbox_enemy_sm.hide()
 	$hitbox_enemy_bg.hide()
 	target_location=position
+	
 	
 	
 func _process(delta: float) -> void:
@@ -86,6 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning shi
 	if event is InputEventKey:#placeholder for spawning ships, to be removed/disabled
 		if event.pressed and event.keycode == KEY_2:#placeholder for spawning ships, to be removed/disabled
 			spawn_shield()#placeholder for spawning ships, to be removed/disabled
+			print("key hit")
 			#position=Vector2(100,100)#placeholder for spawning ships, to be removed/disabled
 		elif event.pressed and event.keycode == KEY_1:#placeholder for spawning ships, to be removed/disabled
 			spawn_gun()#placeholder for spawning ships, to be removed/disabled

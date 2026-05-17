@@ -90,21 +90,18 @@ radius = 23.0
 
 [node name="ShipNode" type="Area2D" unique_id=1841324561]
 script = ExtResource("1_ewtr1")
-bullet_scene = null
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
 animation = &"mothership-3hp"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
-visible = false
 position = Vector2(-3, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_m1ihe")
 disabled = true
 
 [node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
-visible = false
 position = Vector2(-16, 0)
 shape = SubResource("CircleShape2D_vysyx")
 disabled = true
@@ -118,7 +115,6 @@ disabled = true
 wait_time = 0.5
 
 [node name="hitbox_enemy_sm" type="CollisionShape2D" parent="." unique_id=890536836]
-visible = false
 position = Vector2(6, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cpmmr")
