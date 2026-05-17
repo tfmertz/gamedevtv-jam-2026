@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://bn0m0hhmvfil"]
+
+[ext_resource type="Script" uid="uid://colmiaohdff4p" path="res://src/enemy_ship_node.gd" id="1_fco4n"]
+[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_8v3k6"]
+[ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="3_eb2y3"]
+[ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://assets/art/duck ship_0001.png" id="4_kpk0n"]
+[ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://assets/art/duck ship_0002.png" id="5_dyypv"]
+[ext_resource type="Texture2D" uid="uid://beywnpmfjiolf" path="res://assets/art/mothership-dmg2.png" id="6_6me4b"]
+[ext_resource type="Texture2D" uid="uid://bcpbj0yatob4j" path="res://assets/art/mothership-dmg1.png" id="7_1qk7v"]
+[ext_resource type="Texture2D" uid="uid://bn2s3ftvcnr" path="res://assets/art/mothership.png" id="8_cgpww"]
+[ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://assets/art/shield ship_0001.png" id="9_avsw7"]
+[ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://assets/art/shield ship_0002.png" id="10_g8e3g"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8v3k6")
+}],
+"loop": true,
+"name": &"enemy_big",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_eb2y3")
+}],
+"loop": true,
+"name": &"enemy_small",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kpk0n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dyypv")
+}],
+"loop": true,
+"name": &"gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6me4b")
+}],
+"loop": true,
+"name": &"mothership-1hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1qk7v")
+}],
+"loop": true,
+"name": &"mothership-2hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_cgpww")
+}],
+"loop": true,
+"name": &"mothership-3hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_avsw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g8e3g")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m1ihe"]
+radius = 13.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vysyx"]
+radius = 32.01562
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cpmmr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qpxp6"]
+radius = 23.0
+
+[node name="EnemyShipNode" type="Area2D" unique_id=1841324561]
+script = ExtResource("1_fco4n")
+
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
+sprite_frames = SubResource("SpriteFrames_65l50")
+animation = &"mothership-3hp"
+
+[node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
+position = Vector2(-3, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_m1ihe")
+disabled = true
+
+[node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_vysyx")
+disabled = true
+
+[node name="hitbox_mother" type="CollisionShape2D" parent="." unique_id=1121524872]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_vysyx")
+disabled = true
+
+[node name="bullet_timer" type="Timer" parent="." unique_id=1733135617]
+wait_time = 0.5
+
+[node name="hitbox_enemy_sm" type="CollisionShape2D" parent="." unique_id=890536836]
+position = Vector2(6, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_cpmmr")
+
+[node name="hitbox_enemy_bg" type="CollisionShape2D" parent="." unique_id=1167065100]
+position = Vector2(11, 2)
+shape = SubResource("CircleShape2D_qpxp6")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="bullet_timer" to="." method="_on_timer_timeout"]

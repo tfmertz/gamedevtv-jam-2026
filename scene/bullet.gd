@@ -11,9 +11,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if bullet_type==type.PLAYER:
-		position += Vector2(sin(rotation),-cos(rotation)).normalized()*speed
-	
+	#if bullet_type==type.PLAYER:
+	position += Vector2(sin(rotation),-cos(rotation)).normalized()*speed
+	pass
 
 func _on_despawn_timer_timeout() -> void:
 	queue_free()
