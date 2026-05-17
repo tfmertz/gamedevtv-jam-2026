@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+#pixelorama project files
+*.pxo
