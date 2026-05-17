@@ -1,6 +1,20 @@
 [gd_scene format=3 uid="uid://y4y53cu6oaux"]
 
 [ext_resource type="Script" uid="uid://dd7f5wloc6soi" path="res://src/main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bug7dnn3w6yks" path="res://scene/ui/title.tscn" id="2_v0l8b"]
 
 [node name="main" type="Node2D" unique_id=1530410285]
 script = ExtResource("1_ig7tw")
+default_scene = ExtResource("2_v0l8b")
+
+[node name="SceneRoot" type="Node2D" parent="." unique_id=2123903607]
+
+[node name="Transitions" type="CanvasLayer" parent="." unique_id=1973636594]
+
+[node name="ColorRect" type="ColorRect" parent="Transitions" unique_id=37857874]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
