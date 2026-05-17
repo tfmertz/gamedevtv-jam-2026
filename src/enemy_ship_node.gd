@@ -1,6 +1,6 @@
 extends Area2D
 
-#@export var bullet_scene: PackedScene =preload("res://scene/bullet.tscn")
+@export var bullet_scene: PackedScene =preload("res://scene/bullet.tscn")
 signal die
 signal fire
 var health: int
@@ -28,11 +28,13 @@ func _ready() -> void:
 	$hitbox_enemy_bg.hide()
 	target_location=position
 	
-	
-	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	flyto(target_location)
+	
+
+func _process(delta: float) -> void:
+	pass
 
 
 func spawn_shield() -> void: #spawns ship as shield ship, sets animation, health, hitbox
@@ -112,7 +114,8 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_timer_timeout() -> void:
 	if ship_type!=type.SHIELD:
-		fire.emit(position, ship_type) #bullets are handled by the level
-	#var bullet = bullet_scene.instantiate()
-	#bullet.position = $sprite.position
-	#add_child(bullet)
+		var bullet = bullet_scene.instantiate()
+		bullet.position = position 
+		get_tree().get_root().add_child(bullet)
+		
+	
