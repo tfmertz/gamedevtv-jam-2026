@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b81jlh5w56xmf"
-path="res://.godot/imported/big_enemy.png-54cf632bb06392afb597206a0aed5ca0.ctex"
+uid="uid://br4p7qif0k3fd"
+path="res://.godot/imported/shield ship_0001.png-099930476eb22c8dded4cdedaf5e611a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART ASSETS/big_enemy.png"
-dest_files=["res://.godot/imported/big_enemy.png-54cf632bb06392afb597206a0aed5ca0.ctex"]
+source_file="res://assets/art/shield ship_0001.png"
+dest_files=["res://.godot/imported/shield ship_0001.png-099930476eb22c8dded4cdedaf5e611a.ctex"]
 
 [params]
 

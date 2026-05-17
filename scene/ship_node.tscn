@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://c5h6trusypsh7"]
 
-[ext_resource type="Script" uid="uid://colmiaohdff4p" path="res://ship_node.gd" id="1_3a2p5"]
-[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://ART ASSETS/big_enemy.png" id="2_cpmmr"]
-[ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://ART ASSETS/small_enemy.png" id="2_ly44p"]
-[ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://ART ASSETS/duck ship_0001.png" id="2_yhbkl"]
-[ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://ART ASSETS/duck ship_0002.png" id="3_ly44p"]
-[ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://ART ASSETS/shield ship_0001.png" id="4_cpmmr"]
-[ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://ART ASSETS/shield ship_0002.png" id="5_qpxp6"]
+[ext_resource type="Script" uid="uid://colmiaohdff4p" path="res://scene/ship_node.gd" id="1_3a2p5"]
+[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_cpmmr"]
+[ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="2_ly44p"]
+[ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://assets/art/duck ship_0001.png" id="2_yhbkl"]
+[ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://assets/art/duck ship_0002.png" id="3_ly44p"]
+[ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://assets/art/shield ship_0001.png" id="4_cpmmr"]
+[ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://assets/art/shield ship_0002.png" id="5_qpxp6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
@@ -63,6 +63,7 @@ radius = 23.0
 
 [node name="ShipNode" type="Area2D" unique_id=1841324561]
 script = ExtResource("1_3a2p5")
+bullet_scene = null
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")

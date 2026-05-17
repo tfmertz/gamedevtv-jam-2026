@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br4p7qif0k3fd"
-path="res://.godot/imported/shield ship_0001.png-a628ac774a8541d919368a9c79e2c57e.ctex"
+uid="uid://bkikffj6wah11"
+path="res://.godot/imported/duck ship_0001.png-197e3b8f0e0eac64bd8b1f016a26903a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART ASSETS/shield ship_0001.png"
-dest_files=["res://.godot/imported/shield ship_0001.png-a628ac774a8541d919368a9c79e2c57e.ctex"]
+source_file="res://assets/art/duck ship_0001.png"
+dest_files=["res://.godot/imported/duck ship_0001.png-197e3b8f0e0eac64bd8b1f016a26903a.ctex"]
 
 [params]
 
