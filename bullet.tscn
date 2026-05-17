@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://v6bv60s1f1d6"]
+
+[ext_resource type="Texture2D" uid="uid://b6p6ed4so0wnk" path="res://ART ASSETS/bullet_round.png" id="1_v7oki"]
+[ext_resource type="Script" uid="uid://f0fdv65plue8" path="res://bullet.gd" id="1_v8qja"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v8qja"]
+radius = 4.0
+
+[node name="bullet" type="Area2D" unique_id=957631881]
+script = ExtResource("1_v8qja")
+
+[node name="bullet_player_sprite" type="Sprite2D" parent="." unique_id=262877844]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_v7oki")
+
+[node name="bullet_player_hitbox" type="CollisionShape2D" parent="." unique_id=154617037]
+shape = SubResource("CircleShape2D_v8qja")
+
+[node name="despawn_timer" type="Timer" parent="." unique_id=2000550316]
+
+[connection signal="timeout" from="despawn_timer" to="." method="_on_despawn_timer_timeout"]

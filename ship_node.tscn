@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c5h6trusypsh7"]
 
 [ext_resource type="Script" uid="uid://colmiaohdff4p" path="res://ship_node.gd" id="1_3a2p5"]
+[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://ART ASSETS/big_enemy.png" id="2_cpmmr"]
+[ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://ART ASSETS/small_enemy.png" id="2_ly44p"]
 [ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://ART ASSETS/duck ship_0001.png" id="2_yhbkl"]
 [ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://ART ASSETS/duck ship_0002.png" id="3_ly44p"]
 [ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://ART ASSETS/shield ship_0001.png" id="4_cpmmr"]
@@ -8,6 +10,22 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cpmmr")
+}],
+"loop": true,
+"name": &"enemy_big",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly44p")
+}],
+"loop": true,
+"name": &"enemy_small",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_yhbkl")
@@ -38,12 +56,17 @@ height = 56.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_vysyx"]
 radius = 32.01562
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cpmmr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qpxp6"]
+radius = 23.0
+
 [node name="ShipNode" type="Area2D" unique_id=1841324561]
 script = ExtResource("1_3a2p5")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"shield"
+animation = &"enemy_big"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 visible = false
@@ -52,7 +75,22 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_m1ihe")
 
 [node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
+visible = false
 position = Vector2(-16, 0)
 shape = SubResource("CircleShape2D_vysyx")
 
+[node name="bullet_timer" type="Timer" parent="." unique_id=1733135617]
+wait_time = 0.5
+
+[node name="hitbox_enemy_sm" type="CollisionShape2D" parent="." unique_id=890536836]
+visible = false
+position = Vector2(6, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_cpmmr")
+
+[node name="hitbox_enemy_bg" type="CollisionShape2D" parent="." unique_id=1167065100]
+position = Vector2(11, 2)
+shape = SubResource("CircleShape2D_qpxp6")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="bullet_timer" to="." method="_on_timer_timeout"]
