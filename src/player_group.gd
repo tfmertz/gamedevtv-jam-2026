@@ -1,12 +1,17 @@
 extends Node2D
 
+# Cache references so we don't have to search node tree each frame
+@onready var v_path_follow_2d: PathFollow2D = $VPath/VPathFollow2D
+@onready var circle_path_follow_2d: PathFollow2D = $CirclePath/CirclePathFollow2D
+@onready var diamond_path_follow_2d: PathFollow2D = $DiamondPath/DiamondPathFollow2D
+
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 
 var velocity_dir = Vector2.ZERO
 var velocity = Vector2.ZERO
 
 var mothership
-var ships = []
+var ships: Array[ShipNode] = []
 
 enum FormationType {V, CIRCLE, DIAMOND}
 var formation = FormationType.V
@@ -54,21 +59,8 @@ func cycle_spacing() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("move_right"):
-		velocity_dir.x = 1
-		velocity_dir.y = 0
-	elif Input.is_action_pressed("move_left"):
-		velocity_dir.x = -1
-		velocity_dir.y = 0
-	elif Input.is_action_pressed("move_down"):
-		velocity_dir.x = 0
-		velocity_dir.y = 1
-	elif Input.is_action_pressed("move_up"):
-		velocity_dir.x = 0
-		velocity_dir.y = -1
-	else:
-		velocity_dir.x = 0
-		velocity_dir.y = 0
+	
+	velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if Input.is_action_just_pressed("cycle_formation"):
 		formation = (formation + 1) % len(FormationType)
@@ -78,14 +70,18 @@ func _process(delta: float) -> void:
 			spacing -= 1
 		
 	mothership.set_velocity_dir(velocity_dir)
-	var new_path
+
+	var new_path: PathFollow2D
 	if formation == FormationType.V:
-		new_path = $VPath/VPathFollow2D
+		new_path = v_path_follow_2d
 	elif formation == FormationType.CIRCLE:
-		new_path = $CirclePath/CirclePathFollow2D
+		new_path = circle_path_follow_2d
 	elif formation == FormationType.DIAMOND:
-		new_path = $DiamondPath/DiamondPathFollow2D
+		new_path = diamond_path_follow_2d
 	for i in range(ships.size()):
-		var ship = ships[i]
+		var ship := ships[i]
+		ship.set_on_path()
 		new_path.progress_ratio = (float(i) / float(ships.size())) * spacing
 		ship.set_position_target(new_path.position + mothership.position)
+		# set velo dir to mothership, we'll change if on_path = true in shipnode's physics process
+		ship.set_velocity_dir(velocity_dir)
