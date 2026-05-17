@@ -10,7 +10,7 @@ var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var velocity_dir = Vector2.ZERO
 var velocity = Vector2.ZERO
 
-var mothership
+var mothership: ShipNode
 var ships: Array[ShipNode] = []
 
 enum FormationType {V, CIRCLE, DIAMOND}
@@ -21,6 +21,15 @@ var screen_size = get_viewport_rect()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var NUM_CIRCLE_POINTS = 20
+	var RADIUS = 250
+	var path_curve = Curve2D.new()
+	for i in range(NUM_CIRCLE_POINTS):
+		var angle = ((float(i) / NUM_CIRCLE_POINTS) * TAU) - (TAU/4)
+		var pos = Vector2(cos(angle), sin(angle)) * RADIUS
+		path_curve.add_point(pos)
+		
+	$CirclePath.set_curve(path_curve)
 	screen_size = get_viewport_rect()
 
 
