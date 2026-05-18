@@ -62,7 +62,7 @@ func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health
 	$sprite.play("enemy_big")
 	$sprite.show()
 	hitbox_enemy_bg.disabled = false
-	#$bullet_timer.start()
+	$bullet_timer.start()
 	z_index=enemy_z
 	speed = speed_enemy
 	health = health_enemy_big
