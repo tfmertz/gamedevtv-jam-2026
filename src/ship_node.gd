@@ -10,7 +10,7 @@ var velocity := Vector2.ZERO
 var velocity_dir := Vector2.ZERO
 var on_path := false
 var position_target := Vector2.ZERO
-var hp: int
+var health: int
 var initial_speed := 0
 var screen_size: Rect2
 var enemy_z =12
@@ -38,15 +38,15 @@ func set_ship_type(new_type) -> void:
 	ship_type = new_type
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
-		hp = 1
+		health = 1
 		z_index=player_z
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
-		hp = 1
+		health = 1
 		z_index=player_z
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
-		hp = 3
+		health = 3
 		z_index=player_z
 	else:
 		assert(false, "invalid ship type")
@@ -94,10 +94,14 @@ func _physics_process(delta: float) -> void:
 	position.x = clamp(position.x, 0, screen_size.size.x)
 	position.y = clamp(position.y, 0, screen_size.size.y)
 
+func take_damage(damage: int) -> void:
+	health -= damage
+	if health <= 0:
+		queue_free()
 
 func _on_bullet_timer_timeout() -> void:
 	if ship_type != ShipType.SHIELD:
 		var bullet = bullet_scene.instantiate()
 		bullet.position = position
-		bullet.set_bullet_type("player")
 		get_tree().get_root().add_child(bullet)
+		bullet.set_bullet_type(Bullet.BulletType.PLAYER)

@@ -17,7 +17,7 @@ enum FormationType {V, CIRCLE, DIAMOND}
 var formation = FormationType.V
 var spacing = 1.0
 
-var screen_size = get_viewport_rect()
+var screen_size: Rect2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -77,8 +77,13 @@ func _process(delta: float) -> void:
 		spacing = (spacing + .5)
 		if spacing > 1:
 			spacing -= 1
-		
-	mothership.set_velocity_dir(velocity_dir)
+	
+	if mothership:
+		mothership.set_velocity_dir(velocity_dir)
+	else:
+		# handle game over
+		GameManager.load_scene("res://scene/ui/game_over.tscn")
+		return
 
 	var new_path: PathFollow2D
 	var path_offset = 0
@@ -90,10 +95,24 @@ func _process(delta: float) -> void:
 		new_path = circle_path_follow_2d
 	elif formation == FormationType.DIAMOND:
 		new_path = diamond_path_follow_2d
+		
+	var deleted_ship_idx: Array[int] = []
 	for i in range(ships.size()):
 		var ship := ships[i]
+		
+		# If ship was destroyed, remove it
+		# TODO(tom) we could use signals for this, but this handles
+		# a hard check if ship is ever null
+		if not ship:
+			deleted_ship_idx.push_back(i)
+			continue
+		
 		ship.set_on_path()
 		new_path.progress_ratio = ((float(i) / float(ships.size())) * spacing) + path_offset
 		ship.set_position_target(new_path.position + mothership.position)
 		# set velo dir to mothership, we'll change if on_path = true in shipnode's physics process
 		ship.set_velocity_dir(velocity_dir)
+	
+	# remove deleted ships from array
+	for i in deleted_ship_idx:
+		ships.remove_at(i)

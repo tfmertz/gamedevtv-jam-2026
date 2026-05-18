@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://di2cj6ac8g8m5"]
+
+[ext_resource type="Script" uid="uid://co4dtuoeqqn0c" path="res://scene/test/tom_test_level.gd" id="1_4y81e"]
+
+[node name="TomTestLevel" type="Node2D" unique_id=1564966178]
+script = ExtResource("1_4y81e")
+
+[node name="Timer" type="Timer" parent="." unique_id=1492819669]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
