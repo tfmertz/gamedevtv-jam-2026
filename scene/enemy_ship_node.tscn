@@ -26,14 +26,14 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cpmmr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qpxp6"]
-radius = 52.0
+radius = 24.0
 
 [node name="EnemyShipNode" type="Area2D" unique_id=1841324561]
 script = ExtResource("1_fco4n")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"enemy_big"
+animation = &"enemy_small"
 
 [node name="bullet_timer" type="Timer" parent="." unique_id=1733135617]
 wait_time = 0.5

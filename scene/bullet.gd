@@ -57,6 +57,10 @@ func set_bullet_type(new_type: BulletType) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	# Don't do anything for matching areas
+	# Bullet will kill itself of any area that doesn't match its z_index
+	if z_index == area.z_index:
+		return
 	# only hit things that can be damaged
 	# TODO(tom) we might want to scope bullet layers so enemy and player bullets don't
 	# collider with eachother, or we might want that, IDK, leaving for now to ignore
