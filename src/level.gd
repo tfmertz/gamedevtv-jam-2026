@@ -9,8 +9,8 @@ var screen_size : Vector2i
 @onready var enemy_vert_spawn_follow_2d: PathFollow2D = $EnemyVertSpawnPath/VertSpawnFollow2D
 
 var player_fleet
-var enemy_spawn_min := 3
-var enemy_spawn_max := 5
+var enemy_spawn_min := 1
+var enemy_spawn_max := 3
 var enemy_spawn_timer: Timer
 var difficulty_timer: Timer
 
@@ -64,10 +64,11 @@ func _on_enemy_spawn_timer_timeout() -> void:
 		var new_enemy = enemy_scene.instantiate()
 		spawn_path.progress_ratio = ((float(i) / float(enemies_to_spawn)))
 		new_enemy.position = spawn_path.position + Vector2(int(screen_size.x) + 10, int(screen_size.y/2))#Vector2((randi() % int(screen_size.x/2) + int(screen_size.x/2)),randi() % int(screen_size.y)) #Vector2(500, 500) #
+		
 		add_child(new_enemy)
-		new_enemy.spawn_enemy_small()
-		new_enemy.flyto(Vector2(0, new_enemy.position.y))
-
+		new_enemy.spawn_enemy_big()
+		#new_enemy.flyto(Vector2(0, new_enemy.position.y))
+		new_enemy.set_rand_mode(true) #sets them to random mode
 
 func _on_difficulty_timer_timeout() -> void:
 	pass # Replace with function body.

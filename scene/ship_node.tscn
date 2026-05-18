@@ -93,7 +93,7 @@ script = ExtResource("1_ewtr1")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"mothership-3hp"
+animation = &"gun"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 position = Vector2(-3, -2)
@@ -118,10 +118,12 @@ wait_time = 0.5
 position = Vector2(6, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cpmmr")
+disabled = true
 
 [node name="hitbox_enemy_bg" type="CollisionShape2D" parent="." unique_id=1167065100]
 position = Vector2(11, 2)
 shape = SubResource("CircleShape2D_qpxp6")
+disabled = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="timeout" from="bullet_timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
