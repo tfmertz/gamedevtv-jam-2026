@@ -81,8 +81,11 @@ func _process(delta: float) -> void:
 	mothership.set_velocity_dir(velocity_dir)
 
 	var new_path: PathFollow2D
+	var path_offset = 0
 	if formation == FormationType.V:
 		new_path = v_path_follow_2d
+		if spacing < 1:
+			path_offset = 0.25
 	elif formation == FormationType.CIRCLE:
 		new_path = circle_path_follow_2d
 	elif formation == FormationType.DIAMOND:
@@ -90,7 +93,7 @@ func _process(delta: float) -> void:
 	for i in range(ships.size()):
 		var ship := ships[i]
 		ship.set_on_path()
-		new_path.progress_ratio = (float(i) / float(ships.size())) * spacing
+		new_path.progress_ratio = ((float(i) / float(ships.size())) * spacing) + path_offset
 		ship.set_position_target(new_path.position + mothership.position)
 		# set velo dir to mothership, we'll change if on_path = true in shipnode's physics process
 		ship.set_velocity_dir(velocity_dir)
