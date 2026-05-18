@@ -1,5 +1,7 @@
 class_name ShipNode extends Area2D
 
+@onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
+
 enum ShipType {GUN, SHIELD, MOTHER}
 
 var speed := 250
@@ -11,10 +13,13 @@ var position_target := Vector2.ZERO
 var hp: int
 var initial_speed := 0
 var screen_size: Rect2
+var enemy_z =12
+var player_z =11
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initial_speed = speed
 	screen_size = get_viewport_rect()
+	$bullet_timer.start()
 
 
 func set_velocity_dir(new_vel_dir) -> void:
@@ -34,12 +39,15 @@ func set_ship_type(new_type) -> void:
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
 		hp = 1
+		z_index=player_z
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
 		hp = 1
+		z_index=player_z
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
 		hp = 3
+		z_index=player_z
 	else:
 		assert(false, "invalid ship type")
 
@@ -47,10 +55,13 @@ func set_ship_type(new_type) -> void:
 func start(pos):
 	position = pos
 	show()
+	
 	if ship_type == ShipType.GUN:
 		$hitbox_gun.disabled = false
+		
 	elif ship_type == ShipType.SHIELD:
 		$hitbox_shield.disabled = false
+	
 	elif ship_type == ShipType.MOTHER:
 		$hitbox_mother.disabled = false
 	else:
@@ -82,3 +93,11 @@ func _physics_process(delta: float) -> void:
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.size.x)
 	position.y = clamp(position.y, 0, screen_size.size.y)
+
+
+func _on_bullet_timer_timeout() -> void:
+	if ship_type != ShipType.SHIELD:
+		var bullet = bullet_scene.instantiate()
+		bullet.position = position
+		bullet.set_bullet_type("player")
+		get_tree().get_root().add_child(bullet)
