@@ -17,7 +17,7 @@ enum FormationType {V, CIRCLE, DIAMOND}
 var formation = FormationType.V
 var spacing = 1.0
 
-var screen_size = get_viewport_rect()
+var screen_size: Rect2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

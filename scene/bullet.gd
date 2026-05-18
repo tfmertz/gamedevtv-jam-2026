@@ -1,17 +1,23 @@
-extends Area2D
+class_name Bullet extends Area2D
 
-var speed = 10
-enum type {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
-var bullet_type = type 
+
+# Cache node refs
+@onready var bullet_small_hitbox: CollisionShape2D = $bullet_small_hitbox
+@onready var bullet_large_hitbox: CollisionShape2D = $bullet_large_hitbox
+
+
+var speed = 2
+enum BulletType {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
+var bullet_type: BulletType 
 var bullet_direction = 1
-var enemy_z =12
-var player_z =11
+var enemy_z = 12
+var player_z = 11
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$despawn_timer.start()
-	$bullet_large_hitbox.disabled=true
-	$bullet_small_hitbox.disabled=true
+	bullet_large_hitbox.disabled=true
+	bullet_small_hitbox.disabled=true
 	#$bullet_sprite.hide()
 	rotation = PI/2
 
@@ -24,26 +30,26 @@ func _process(delta: float) -> void:
 func _on_despawn_timer_timeout() -> void:
 	queue_free()
 
-func set_bullet_type(new_type) -> void:
-	if new_type == "ENEMY_1":
-		bullet_type = type.ENEMY_1
-		$bullet_small_hitbox.disabled=false
+func set_bullet_type(new_type: BulletType) -> void:
+	if new_type == BulletType.ENEMY_1:
+		bullet_type = BulletType.ENEMY_1
+		bullet_small_hitbox.disabled=false
 		$bullet_sprite.play("enemy_1")
 		$bullet_sprite.show()
 		bullet_direction = -1
 		z_index=enemy_z
 		
-	elif new_type == "ENEMY_2":
-		bullet_type = type.ENEMY_2
-		$bullet_large_hitbox.disabled=false
+	elif new_type == BulletType.ENEMY_2:
+		bullet_type = BulletType.ENEMY_2
+		bullet_large_hitbox.disabled=false
 		$bullet_sprite.play("enemy_2")
 		$bullet_sprite.show()
 		bullet_direction = -1
 		z_index=enemy_z
 		
 	else:
-		bullet_type = type.PLAYER
-		$bullet_small_hitbox.disabled=false
+		bullet_type = BulletType.PLAYER
+		bullet_small_hitbox.disabled=false
 		$bullet_sprite.play("player")
 		$bullet_sprite.show()
 		bullet_direction = 1
