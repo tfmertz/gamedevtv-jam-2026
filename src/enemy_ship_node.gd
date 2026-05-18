@@ -14,10 +14,10 @@ var speed_enemy = 10
 var speed =1 #placeholder speed
 var target_direction: Vector2
 var target_location: Vector2
-enum EnemyType  {ENEMY_SMALL, ENEMY_BIG}
+enum EnemyType {ENEMY_SMALL, ENEMY_BIG}
 var ship_type = EnemyType
-var enemy_z =12
-var player_z =11
+var enemy_z = 12
+var player_z = 11
 var wind_x: int
 var wind_y: int
 var rand_coutner = 3
@@ -42,7 +42,11 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	pass
 
-
+func take_damage(damage: int) -> void:
+	health -= damage
+	if health <= 0:
+		die.emit(position, ship_type)
+		queue_free()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
 	$sprite.play("enemy_small")
@@ -58,7 +62,7 @@ func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health
 	$sprite.play("enemy_big")
 	$sprite.show()
 	hitbox_enemy_bg.disabled = false
-	$bullet_timer.start()
+	#$bullet_timer.start()
 	z_index=enemy_z
 	speed = speed_enemy
 	health = health_enemy_big
@@ -85,14 +89,6 @@ func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning shi
 		elif event.pressed and event.keycode == KEY_6:#placeholder for spawning ships, to be removed/disabled
 			set_rand_mode(true)#placeholder for spawning ships, to be removed/disabled"""
 	pass
-
-func _on_area_entered(area: Area2D) -> void:
-	if area.z_index==player_z: #detecting if the body that entered is an player
-		health -= 1
-		if health <= 0:
-			die.emit(position, ship_type)
-			queue_free()
-
 
 func _on_timer_timeout() -> void:
 	var bullet = bullet_scene.instantiate()

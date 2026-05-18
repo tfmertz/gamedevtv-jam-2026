@@ -6,7 +6,7 @@ class_name Bullet extends Area2D
 @onready var bullet_large_hitbox: CollisionShape2D = $bullet_large_hitbox
 
 
-var speed = 2
+var speed = 8
 enum BulletType {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
 var bullet_type: BulletType 
 var bullet_direction = 1
@@ -54,3 +54,22 @@ func set_bullet_type(new_type: BulletType) -> void:
 		$bullet_sprite.show()
 		bullet_direction = 1
 		z_index=player_z
+
+
+func _on_area_entered(area: Area2D) -> void:
+	# only hit things that can be damaged
+	# TODO(tom) we might want to scope bullet layers so enemy and player bullets don't
+	# collider with eachother, or we might want that, IDK, leaving for now to ignore
+	if area.has_method("take_damage"):
+		# If I'm an enemy bullet and hitting player ship
+		if z_index == enemy_z and area.z_index == player_z:
+			area.take_damage(1)
+		# otherwise if I"m a player bullet and hit an enemy ship
+		elif z_index == player_z and area.z_index == enemy_z:
+			area.take_damage(1)
+	
+	# kill the bullet
+	#TODO(tom) spawn VFX
+	AudioManager.report_bullet_hit()
+	queue_free()
+		
