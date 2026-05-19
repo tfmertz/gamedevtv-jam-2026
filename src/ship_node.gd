@@ -15,6 +15,8 @@ var initial_speed := 0
 var screen_size: Rect2
 var enemy_z =12
 var player_z =11
+var invuln_duration = 1
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initial_speed = speed
@@ -36,6 +38,7 @@ func set_position_target(new_target) -> void:
 
 func set_ship_type(new_type) -> void:
 	ship_type = new_type
+	$InvulnerabilityTimer.wait_time = invuln_duration
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
 		health = 1
@@ -95,9 +98,15 @@ func _physics_process(delta: float) -> void:
 	position.y = clamp(position.y, 0, screen_size.size.y)
 
 func take_damage(damage: int) -> void:
-	health -= damage
-	if health <= 0:
-		queue_free()
+	if $InvulnerabilityTimer.is_stopped():
+		health -= damage
+		if health <= 0:
+			queue_free()
+		else:
+			$InvulnerabilityTimer.start()
+		if ship_type == ShipType.MOTHER:
+			$sprite.animation = "mothership-" + str(health) + "hp"
+			$FlashingTimer.start()
 
 func _on_bullet_timer_timeout() -> void:
 	if ship_type != ShipType.SHIELD:
@@ -105,3 +114,12 @@ func _on_bullet_timer_timeout() -> void:
 		bullet.position = position
 		get_tree().get_root().add_child(bullet)
 		bullet.set_bullet_type(Bullet.BulletType.PLAYER)
+
+
+func _on_flashing_timer_timeout() -> void:
+	self.visible = not self.visible
+
+
+func _on_invulnerability_timer_timeout() -> void:
+	$FlashingTimer.stop()
+	self.visible = true

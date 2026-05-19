@@ -125,4 +125,12 @@ position = Vector2(11, 2)
 shape = SubResource("CircleShape2D_qpxp6")
 disabled = true
 
+[node name="InvulnerabilityTimer" type="Timer" parent="." unique_id=1694510080]
+one_shot = true
+
+[node name="FlashingTimer" type="Timer" parent="." unique_id=1538594990]
+wait_time = 0.1
+
 [connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
+[connection signal="timeout" from="FlashingTimer" to="." method="_on_flashing_timer_timeout"]
