@@ -6,6 +6,7 @@ extends Node2D
 @onready var diamond_path_follow_2d: PathFollow2D = $DiamondPath/DiamondPathFollow2D
 
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
+var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 
 var velocity_dir = Vector2.ZERO
 var velocity = Vector2.ZERO
@@ -35,27 +36,37 @@ func _ready() -> void:
 
 func spawn_mothership() -> void:
 	mothership = ship_scene.instantiate()
+	mothership.register_parent(self)
 	mothership.set_ship_type(ShipNode.ShipType.MOTHER)
 	mothership.start(Vector2(screen_size.size.x / 2,screen_size.size.x / 2))
 	add_child(mothership)
 
-
-func add_gunship() -> void:
+#TODO ew
+func add_gunship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) -> void:
 	var ship = ship_scene.instantiate()
+	ship.register_parent(self)
 	ship.set_ship_type(ShipNode.ShipType.GUN)
 	ship.set_on_path()
-	ship.start(Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) #TODO VERY TEMPORARY
+	ship.start(spawn)
 	ships.append(ship)
 	add_child(ship)
 
-
-func add_shieldship() -> void:
+#TODO also ew
+func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) -> void:
 	var ship = ship_scene.instantiate()
+	ship.register_parent(self)
 	ship.set_ship_type(ShipNode.ShipType.SHIELD)
 	ship.set_on_path()
-	ship.start(Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) #TODO VERY TEMPORARY
+	ship.start(spawn)
 	ships.append(ship)
 	add_child(ship)
+
+
+func add_scrap(scrap: Scrap):
+	if scrap.scrap_type == scrap.ScrapType.SHIELD:
+		add_shieldship(scrap.position)
+	if scrap.scrap_type == scrap.ScrapType.GUN:
+		add_gunship(scrap.position)
 
 
 func cycle_formation() -> void:

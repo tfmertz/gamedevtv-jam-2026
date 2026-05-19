@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
+@onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var hitbox_enemy_bg: CollisionShape2D = $hitbox_enemy_bg
 @onready var hitbox_enemy_sm: CollisionShape2D = $hitbox_enemy_sm
 
@@ -24,6 +25,7 @@ var rand_coutner = 3
 var sector_counter = 2
 var rand_mode = false
 var sprite_half = 32
+var SCRAP_CHANCE = 0.5 #TODO Isaac: difficulty setting?
 
 
 func _ready() -> void:
@@ -46,6 +48,11 @@ func take_damage(damage: int) -> void:
 	health -= damage
 	if health <= 0:
 		die.emit(position, ship_type)
+		if randf_range(0, 1) < SCRAP_CHANCE:
+			var scrap = scrap_scene.instantiate()
+			scrap.position = position
+			get_tree().get_root().add_child(scrap)
+			scrap.set_movement()
 		queue_free()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
