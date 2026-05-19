@@ -1,6 +1,7 @@
 class_name ShipNode extends Area2D
 
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
+@onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 
 enum ShipType {GUN, SHIELD, MOTHER}
 
@@ -16,12 +17,17 @@ var screen_size: Rect2
 var enemy_z =12
 var player_z =11
 var invuln_duration = 1
+var parent
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initial_speed = speed
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
+
+
+func register_parent(new_parent) -> void:
+	parent = new_parent
 
 
 func set_velocity_dir(new_vel_dir) -> void:
@@ -103,10 +109,15 @@ func take_damage(damage: int) -> void:
 		if health <= 0:
 			queue_free()
 		else:
-			$InvulnerabilityTimer.start()
-		if ship_type == ShipType.MOTHER:
-			$sprite.animation = "mothership-" + str(health) + "hp"
-			$FlashingTimer.start()
+			if ship_type == ShipType.MOTHER:
+				$InvulnerabilityTimer.start()
+				$sprite.animation = "mothership-" + str(health) + "hp"
+				$FlashingTimer.start()
+
+
+func hit_scrap(scrap: Scrap):
+	parent.add_scrap(scrap)
+
 
 func _on_bullet_timer_timeout() -> void:
 	if ship_type != ShipType.SHIELD:
