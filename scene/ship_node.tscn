@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://assets/art/shield ship_0002.png" id="5_qpxp6"]
 [ext_resource type="Texture2D" uid="uid://cvb7682s2nuus" path="res://assets/art/cow_0003.png" id="6_qshjt"]
 [ext_resource type="Texture2D" uid="uid://0pg0f3h6pl24" path="res://assets/art/cow_0002.png" id="7_8rak0"]
+[ext_resource type="Texture2D" uid="uid://beywnpmfjiolf" path="res://assets/art/mothership-dmg2.png" id="5_muy1h"]
+[ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://assets/art/shield ship_0002.png" id="5_qpxp6"]
 [ext_resource type="Texture2D" uid="uid://b1cexk1o4eydm" path="res://assets/art/cow.png" id="8_qshjt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
@@ -94,6 +96,7 @@ script = ExtResource("1_ewtr1")
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
 animation = &"mothership-1hp"
+animation = &"mothership-3hp"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 position = Vector2(-3, -2)
