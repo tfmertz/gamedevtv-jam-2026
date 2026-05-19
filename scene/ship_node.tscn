@@ -7,9 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://assets/art/duck ship_0002.png" id="3_ly44p"]
 [ext_resource type="Texture2D" uid="uid://bcpbj0yatob4j" path="res://assets/art/mothership-dmg1.png" id="4_73jyy"]
 [ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://assets/art/shield ship_0001.png" id="4_cpmmr"]
-[ext_resource type="Texture2D" uid="uid://bn2s3ftvcnr" path="res://assets/art/mothership.png" id="4_yaupb"]
 [ext_resource type="Texture2D" uid="uid://beywnpmfjiolf" path="res://assets/art/mothership-dmg2.png" id="5_muy1h"]
 [ext_resource type="Texture2D" uid="uid://6pekkv2o8ymh" path="res://assets/art/shield ship_0002.png" id="5_qpxp6"]
+[ext_resource type="Texture2D" uid="uid://b1cexk1o4eydm" path="res://assets/art/cow.png" id="8_qshjt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
@@ -58,7 +58,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_yaupb")
+"texture": ExtResource("8_qshjt")
 }],
 "loop": true,
 "name": &"mothership-3hp",
@@ -93,7 +93,7 @@ script = ExtResource("1_ewtr1")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"shield"
+animation = &"mothership-3hp"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 position = Vector2(-3, -2)
