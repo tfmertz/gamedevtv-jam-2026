@@ -46,7 +46,6 @@ func set_movement() -> void:
 func _physics_process(delta: float) -> void:
 	$MovementPath2D/MovementPathFollow2D.progress += delta * speed
 	self.position = $MovementPath2D/MovementPathFollow2D.position# + spawn_position
-	print(position)
 
 
 func _on_area_entered(area: Area2D) -> void:
