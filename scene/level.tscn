@@ -5,6 +5,12 @@
 [ext_resource type="Texture2D" path="res://assets/art/planet_a.png" id="3_planet_a"]
 [ext_resource type="Texture2D" path="res://assets/art/planet_b.png" id="4_planet_b"]
 
+[sub_resource type="Curve2D" id="Curve2D_s4405"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -200, 0, 0, 0, 0, 0, 200)
+}
+point_count = 2
+
 [node name="Level" type="Node2D" unique_id=1430583570]
 script = ExtResource("1_u52ul")
 
@@ -46,3 +52,20 @@ texture = ExtResource("3_planet_a")
 position = Vector2(4032, 324)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("4_planet_b")
+
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=688992479]
+wait_time = 2.0
+autostart = true
+
+[node name="DifficultyTimer" type="Timer" parent="." unique_id=642594811]
+autostart = true
+
+[node name="EnemyVertSpawnPath" type="Path2D" parent="." unique_id=804415949]
+curve = SubResource("Curve2D_s4405")
+
+[node name="VertSpawnFollow2D" type="PathFollow2D" parent="EnemyVertSpawnPath" unique_id=1186230592]
+position = Vector2(0, -200)
+rotation = 1.5707964
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]

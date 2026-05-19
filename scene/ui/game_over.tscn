@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dij5iil8mdolm"]
+
+[ext_resource type="Script" uid="uid://btjhyl76d37gl" path="res://src/title.gd" id="1_oef1b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ka843"]
+font_size = 32
+
+[node name="Title" type="Node2D" unique_id=1822057023]
+script = ExtResource("1_oef1b")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=653565697]
+
+[node name="Control" type="CenterContainer" parent="CanvasLayer" unique_id=786101586]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=222502212]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=342005093]
+layout_mode = 2
+text = "Game Over!"
+label_settings = SubResource("LabelSettings_ka843")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=2062605715]
+layout_mode = 2
+text = "Retry"
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button" to="." method="_on_button_press"]

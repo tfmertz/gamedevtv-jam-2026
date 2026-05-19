@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cmmk8vljkgmy6"]
+
+[ext_resource type="Script" uid="uid://b3qhpxtefocj4" path="res://scene/scrap.gd" id="1_qfbu2"]
+[ext_resource type="Texture2D" uid="uid://d1oeu84awhtdq" path="res://assets/art/scrap_duck.png" id="2_mpowy"]
+[ext_resource type="Texture2D" uid="uid://b2at5vytakdui" path="res://assets/art/scrap_shield.png" id="3_u46ec"]
+
+[sub_resource type="Curve2D" id="Curve2D_qkpxk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ggp53"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mpowy")
+}],
+"loop": true,
+"name": &"gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_u46ec")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpowy"]
+size = Vector2(62, 60)
+
+[node name="Scrap" type="Area2D" unique_id=498599342]
+z_index = -1
+collision_layer = 4
+script = ExtResource("1_qfbu2")
+
+[node name="MovementPath2D" type="Path2D" parent="." unique_id=1468683549]
+curve = SubResource("Curve2D_qkpxk")
+
+[node name="MovementPathFollow2D" type="PathFollow2D" parent="MovementPath2D" unique_id=849698991]
+
+[node name="scrap_sprite" type="AnimatedSprite2D" parent="." unique_id=1457025635]
+sprite_frames = SubResource("SpriteFrames_ggp53")
+animation = &"gun"
+
+[node name="scrap_hitbox" type="CollisionShape2D" parent="." unique_id=1354835184]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_mpowy")
+
+[node name="despawn_timer" type="Timer" parent="." unique_id=1486609555]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
