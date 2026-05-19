@@ -2,6 +2,7 @@ class_name ShipNode extends Area2D
 
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
+@onready var hitbox_shield: CollisionShape2D = $hitbox_shield
 
 enum ShipType {GUN, SHIELD, MOTHER}
 
@@ -14,9 +15,10 @@ var position_target := Vector2.ZERO
 var health: int
 var initial_speed := 0
 var screen_size: Rect2
-var enemy_z =12
-var player_z =11
-var invuln_duration = 1
+var enemy_z := 12
+var player_z := 11
+var invuln_duration := 1
+var shield_radius := 50
 var parent
 
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +27,12 @@ func _ready() -> void:
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
 
+func _draw() -> void:
+	if ship_type != ShipType.SHIELD:
+		return
+	
+	if health > 1:
+		draw_circle(hitbox_shield.position, shield_radius, Color.from_rgba8(0, 150, 178, 125))
 
 func register_parent(new_parent) -> void:
 	parent = new_parent
@@ -51,7 +59,7 @@ func set_ship_type(new_type) -> void:
 		z_index=player_z
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
-		health = 1
+		health = 4
 		z_index=player_z
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
@@ -60,6 +68,8 @@ func set_ship_type(new_type) -> void:
 	else:
 		assert(false, "invalid ship type")
 
+func set_shield() -> void:
+	queue_redraw()
 
 func start(pos):
 	position = pos
@@ -108,16 +118,15 @@ func take_damage(damage: int) -> void:
 		health -= damage
 		if health <= 0:
 			queue_free()
-		else:
-			if ship_type == ShipType.MOTHER:
-				$InvulnerabilityTimer.start()
-				$sprite.animation = "mothership-" + str(health) + "hp"
-				$FlashingTimer.start()
-
+		elif ship_type == ShipType.MOTHER:
+			$InvulnerabilityTimer.start()
+			$sprite.animation = "mothership-" + str(health) + "hp"
+			$FlashingTimer.start()
+		elif ship_type == ShipType.SHIELD and health == 1:
+			set_shield()
 
 func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)
-
 
 func _on_bullet_timer_timeout() -> void:
 	if ship_type != ShipType.SHIELD:

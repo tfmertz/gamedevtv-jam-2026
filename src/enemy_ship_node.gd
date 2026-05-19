@@ -51,8 +51,8 @@ func take_damage(damage: int) -> void:
 		if randf_range(0, 1) < SCRAP_CHANCE:
 			var scrap = scrap_scene.instantiate()
 			scrap.position = position
-			get_tree().get_root().add_child(scrap)
-			scrap.set_movement()
+			get_tree().get_root().call_deferred("add_child", scrap)
+			scrap.call_deferred("set_movement")
 		queue_free()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox

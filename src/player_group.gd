@@ -49,7 +49,7 @@ func add_gunship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi
 	ship.set_on_path()
 	ship.start(spawn)
 	ships.append(ship)
-	add_child(ship)
+	call_deferred("add_child", ship)
 
 #TODO also ew
 func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) -> void:
@@ -59,7 +59,7 @@ func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),ra
 	ship.set_on_path()
 	ship.start(spawn)
 	ships.append(ship)
-	add_child(ship)
+	call_deferred("add_child", ship)
 
 
 func add_scrap(scrap: Scrap):

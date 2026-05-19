@@ -81,7 +81,7 @@ radius = 13.0
 height = 56.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vysyx"]
-radius = 32.01562
+radius = 55.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cpmmr"]
 
@@ -93,7 +93,7 @@ script = ExtResource("1_ewtr1")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"gun"
+animation = &"shield"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 position = Vector2(-3, -2)
@@ -102,7 +102,7 @@ shape = SubResource("CapsuleShape2D_m1ihe")
 disabled = true
 
 [node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
-position = Vector2(-16, 0)
+position = Vector2(-7, 0)
 shape = SubResource("CircleShape2D_vysyx")
 disabled = true
 
