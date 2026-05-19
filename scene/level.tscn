@@ -1,10 +1,48 @@
-[gd_scene format=3 uid="uid://cmls3wnxui0ji"]
+[gd_scene load_steps=5 format=3 uid="uid://cmls3wnxui0ji"]
 
 [ext_resource type="Script" uid="uid://7y88cwr0eudt" path="res://src/level.gd" id="1_u52ul"]
+[ext_resource type="Texture2D" uid="uid://b78v62tuvike" path="res://assets/art/space1.png" id="2_space1"]
+[ext_resource type="Texture2D" path="res://assets/art/planet_a.png" id="3_planet_a"]
+[ext_resource type="Texture2D" path="res://assets/art/planet_b.png" id="4_planet_b"]
 
 [node name="Level" type="Node2D" unique_id=1430583570]
 script = ExtResource("1_u52ul")
 
-[node name="MainBackground" type="Parallax2D" parent="." unique_id=109343717]
+[node name="SpaceLayer" type="Parallax2D" parent="."]
+z_index = -100
+scale = Vector2(5, 5)
+scroll_scale = Vector2(0, 0)
+autoscroll = Vector2(20, 0)
+repeat_size = Vector2(256, 128)
+repeat_times = 8
 
-[node name="Sprite2D" type="Sprite2D" parent="MainBackground" unique_id=2074523114]
+[node name="Sprite2D" type="Sprite2D" parent="SpaceLayer"]
+texture = ExtResource("2_space1")
+centered = false
+
+[node name="PlanetLayer" type="Parallax2D" parent="."]
+z_index = -50
+scroll_scale = Vector2(0, 0)
+autoscroll = Vector2(60, 0)
+repeat_size = Vector2(4608, 1500)
+repeat_times = 4
+
+[node name="PlanetA" type="Sprite2D" parent="PlanetLayer"]
+position = Vector2(576, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_planet_a")
+
+[node name="PlanetB" type="Sprite2D" parent="PlanetLayer"]
+position = Vector2(1728, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_planet_b")
+
+[node name="PlanetA2" type="Sprite2D" parent="PlanetLayer"]
+position = Vector2(2880, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_planet_a")
+
+[node name="PlanetB2" type="Sprite2D" parent="PlanetLayer"]
+position = Vector2(4032, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_planet_b")

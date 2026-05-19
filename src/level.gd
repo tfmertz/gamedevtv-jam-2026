@@ -12,9 +12,8 @@ func _ready() -> void:
 
 
 func init_level() -> void:
-	for node in self.get_children():
-		self.remove_child(node)
-		node.queue_free()
+	if player_fleet:
+		player_fleet.queue_free()
 	player_fleet = group_scene.instantiate()
 	add_child(player_fleet)
 	player_fleet.spawn_mothership()
