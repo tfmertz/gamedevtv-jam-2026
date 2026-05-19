@@ -29,6 +29,8 @@ func _ready() -> void:
 		var angle = ((float(i) / NUM_CIRCLE_POINTS) * TAU) - (TAU/4)
 		var pos = Vector2(cos(angle), sin(angle)) * RADIUS
 		path_curve.add_point(pos)
+	var last_angle = -TAU/4
+	path_curve.add_point(Vector2(cos(last_angle), sin(last_angle)) * RADIUS)
 		
 	$CirclePath.set_curve(path_curve)
 	screen_size = get_viewport_rect()
