@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://di2cj6ac8g8m5"]
 
 [ext_resource type="Script" uid="uid://co4dtuoeqqn0c" path="res://scene/test/tom_test_level.gd" id="1_4y81e"]
+[ext_resource type="PackedScene" uid="uid://b0orh6apr1yau" path="res://scene/bomber.tscn" id="2_ysgiw"]
 
 [node name="TomTestLevel" type="Node2D" unique_id=1564966178]
 script = ExtResource("1_4y81e")
@@ -8,5 +9,17 @@ script = ExtResource("1_4y81e")
 [node name="Timer" type="Timer" parent="." unique_id=1492819669]
 wait_time = 2.0
 autostart = true
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("2_ysgiw")]
+position = Vector2(1200, 336)
+
+[node name="Bomber4" parent="." unique_id=962848810 instance=ExtResource("2_ysgiw")]
+position = Vector2(1200, 451)
+
+[node name="Bomber2" parent="." unique_id=657605256 instance=ExtResource("2_ysgiw")]
+position = Vector2(1196, 129)
+
+[node name="Bomber3" parent="." unique_id=1973112670 instance=ExtResource("2_ysgiw")]
+position = Vector2(1198, 232)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
