@@ -10,8 +10,9 @@ var speed = 8
 enum BulletType {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
 var bullet_type: BulletType 
 var bullet_direction = 1
-var enemy_z = 12
-var player_z = 11
+
+@export var ENEMY_Z  := 12
+@export var PLAYER_Z := 11
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -37,7 +38,7 @@ func set_bullet_type(new_type: BulletType) -> void:
 		$bullet_sprite.play("enemy_1")
 		$bullet_sprite.show()
 		bullet_direction = -1
-		z_index=enemy_z
+		z_index=ENEMY_Z
 		
 	elif new_type == BulletType.ENEMY_2:
 		bullet_type = BulletType.ENEMY_2
@@ -45,7 +46,7 @@ func set_bullet_type(new_type: BulletType) -> void:
 		$bullet_sprite.play("enemy_2")
 		$bullet_sprite.show()
 		bullet_direction = -1
-		z_index=enemy_z
+		z_index=ENEMY_Z
 		
 	else:
 		bullet_type = BulletType.PLAYER
@@ -53,7 +54,7 @@ func set_bullet_type(new_type: BulletType) -> void:
 		$bullet_sprite.play("player")
 		$bullet_sprite.show()
 		bullet_direction = 1
-		z_index=player_z
+		z_index=PLAYER_Z
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -66,10 +67,10 @@ func _on_area_entered(area: Area2D) -> void:
 	# collider with eachother, or we might want that, IDK, leaving for now to ignore
 	if area.has_method("take_damage"):
 		# If I'm an enemy bullet and hitting player ship
-		if z_index == enemy_z and area.z_index == player_z:
+		if z_index == ENEMY_Z and area.z_index == PLAYER_Z:
 			area.take_damage(1)
 		# otherwise if I"m a player bullet and hit an enemy ship
-		elif z_index == player_z and area.z_index == enemy_z:
+		elif z_index == PLAYER_Z and area.z_index == ENEMY_Z:
 			area.take_damage(1)
 	
 	# kill the bullet
