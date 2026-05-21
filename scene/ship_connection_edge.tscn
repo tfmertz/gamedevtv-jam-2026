@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://ehr58r86mctx"]
+
+[ext_resource type="Script" uid="uid://dksci00r88frq" path="res://src/ship_connection_edge.gd" id="1_0ptn0"]
+[ext_resource type="Texture2D" uid="uid://h3fmwk2rrr0q" path="res://assets/art/connections/ship_connection1.png" id="1_gc81o"]
+[ext_resource type="Texture2D" uid="uid://bhlwpgxgjy01" path="res://assets/art/connections/ship_connection2.png" id="2_0ptn0"]
+[ext_resource type="Texture2D" uid="uid://b4j6fosmq5bnh" path="res://assets/art/connections/ship_connection3.png" id="3_wur42"]
+[ext_resource type="Texture2D" uid="uid://bfwic332rotx8" path="res://assets/art/connections/ship_connection4.png" id="4_86hob"]
+[ext_resource type="Texture2D" uid="uid://blnyuccfsp2qb" path="res://assets/art/connections/ship_connection5.png" id="5_pen1x"]
+[ext_resource type="Texture2D" uid="uid://cntkxucdxi85u" path="res://assets/art/connections/ship_connection6.png" id="6_4pb2v"]
+[ext_resource type="Texture2D" uid="uid://8su1j7vfbvpm" path="res://assets/art/connections/ship_connection7.png" id="7_jxa00"]
+[ext_resource type="Texture2D" uid="uid://cpun0xkmc4pjm" path="res://assets/art/connections/ship_connection8.png" id="8_yar70"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gc81o"]
+size = Vector2(6, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_duunn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gc81o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0ptn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wur42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_86hob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_pen1x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4pb2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jxa00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_yar70")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="ShipConnectionEdge" type="Area2D" unique_id=1667807780]
+script = ExtResource("1_0ptn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1360403804]
+position = Vector2(32, -3.8146973e-06)
+rotation = 1.5721029
+shape = SubResource("RectangleShape2D_gc81o")
+debug_color = Color(0.93384314, 2.2140146e-05, 0.64506185, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=211407766]
+position = Vector2(-0.009437561, -0.004217148)
+rotation = 0.0013725162
+sprite_frames = SubResource("SpriteFrames_duunn")
+offset = Vector2(31.99578, 0.01533189)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

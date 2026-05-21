@@ -7,12 +7,14 @@ extends Node2D
 
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
+var ship_conn_scene : PackedScene = preload("res://scene/ship_connection_edge.tscn")
 
 var velocity_dir = Vector2.ZERO
 var velocity = Vector2.ZERO
 
 var mothership: ShipNode
 var ships: Array[ShipNode] = []
+var connections = [] #: Array[ShipConnectionEdge] = []
 
 enum FormationType {V, CIRCLE, DIAMOND}
 var formation = FormationType.V
@@ -52,6 +54,13 @@ func add_gunship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi
 	ship.start(spawn)
 	ships.append(ship)
 	call_deferred("add_child", ship)
+	if ships.size() > 1:
+		var connection = ship_conn_scene.instantiate()
+		connection.set_source_ship(ships[-2])
+		connection.set_dest_ship(ship)
+		connection.play_animation()
+		connections.append(connection)
+		call_deferred("add_child", connection)
 
 #TODO also ew
 func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) -> void:
@@ -62,12 +71,19 @@ func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),ra
 	ship.start(spawn)
 	ships.append(ship)
 	call_deferred("add_child", ship)
+	if ships.size() > 1:
+		var connection = ship_conn_scene.instantiate()
+		connection.set_source_ship(ships[-2])
+		connection.set_dest_ship(ship)
+		connection.play_animation()
+		connections.append(connection)
+		call_deferred("add_child", connection)
 
 
 func add_scrap(scrap: Scrap):
 	if scrap.scrap_type == scrap.ScrapType.SHIELD:
 		add_shieldship(scrap.position)
-	if scrap.scrap_type == scrap.ScrapType.GUN:
+	elif scrap.scrap_type == scrap.ScrapType.GUN:
 		add_gunship(scrap.position)
 
 
@@ -81,11 +97,14 @@ func cycle_spacing() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var check_last_connection = false
+	var close_loop            = false
 	
 	velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if Input.is_action_just_pressed("cycle_formation"):
 		formation = (formation + 1) % len(FormationType)
+		check_last_connection = true
 	elif Input.is_action_just_pressed("cycle_spacing"):
 		spacing = (spacing + .5)
 		if spacing > 1:
@@ -106,8 +125,10 @@ func _process(delta: float) -> void:
 			path_offset = 0.25
 	elif formation == FormationType.CIRCLE:
 		new_path = circle_path_follow_2d
+		close_loop = true
 	elif formation == FormationType.DIAMOND:
 		new_path = diamond_path_follow_2d
+		close_loop = true
 		
 	var deleted_ship_idx: Array[int] = []
 	for i in range(ships.size()):
@@ -126,6 +147,37 @@ func _process(delta: float) -> void:
 		# set velo dir to mothership, we'll change if on_path = true in shipnode's physics process
 		ship.set_velocity_dir(velocity_dir)
 	
+	
+	if deleted_ship_idx.size() > 0:
+		for connection in connections:
+			connection.queue_free()
+		connections.clear()
+	
 	# remove deleted ships from array
 	for i in deleted_ship_idx:
 		ships.remove_at(i)
+	
+	if deleted_ship_idx.size() > 0:
+		var prev_ship = null
+		for ship in ships:
+			if prev_ship != null:
+				var connection = ship_conn_scene.instantiate()
+				connection.set_source_ship(prev_ship)
+				connection.set_dest_ship(ship)
+				connection.play_animation()
+				connections.append(connection)
+				call_deferred("add_child", connection)
+				
+			prev_ship = ship
+	#TODO(isaac) getting the connections to close the loop will be mildly
+	#annoying to handle, punting for now
+	"""
+	elif check_last_connection:
+		if close_loop and ships.size() > 2:
+			var connection = ship_conn_scene.instantiate()
+			connection.set_source_ship(ships[-1])
+			connection.set_dest_ship(ships[0])
+			connection.play_animation()
+			connections.append(connection)
+			call_deferred("add_child", connection)
+	"""

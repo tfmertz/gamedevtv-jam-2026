@@ -52,3 +52,5 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("hit_scrap"):
 		area.hit_scrap(self)
 		queue_free()
+
+#TODO add timeout
