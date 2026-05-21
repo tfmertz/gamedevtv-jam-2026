@@ -17,7 +17,9 @@ var ships: Array[ShipNode] = []
 var connections = [] #: Array[ShipConnectionEdge] = []
 
 enum FormationType {V, CIRCLE, DIAMOND}
+enum ShipOrderType {INTERLACE, SHIELD_FIRST, GUN_FIRST}
 var formation = FormationType.V
+var ship_order = -1
 var spacing = 1.0
 
 var screen_size: Rect2
@@ -54,13 +56,7 @@ func add_gunship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi
 	ship.start(spawn)
 	ships.append(ship)
 	call_deferred("add_child", ship)
-	if ships.size() > 1:
-		var connection = ship_conn_scene.instantiate()
-		connection.set_source_ship(ships[-2])
-		connection.set_dest_ship(ship)
-		connection.play_animation()
-		connections.append(connection)
-		call_deferred("add_child", connection)
+	add_single_connection(ship)
 
 #TODO also ew
 func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),randi() % int(screen_size.size.y))) -> void:
@@ -71,15 +67,21 @@ func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),ra
 	ship.start(spawn)
 	ships.append(ship)
 	call_deferred("add_child", ship)
+	add_single_connection(ship)
+
+
+func add_single_connection(new_ship: ShipNode) -> void:
 	if ships.size() > 1:
 		var connection = ship_conn_scene.instantiate()
 		connection.set_source_ship(ships[-2])
-		connection.set_dest_ship(ship)
+		connection.set_dest_ship(new_ship)
 		connection.play_animation()
 		connections.append(connection)
 		call_deferred("add_child", connection)
 
 
+#TODO(isaac) if multiple ships hit the same piece of scrap, we trigger spawns for all of them
+#so this should be a queue (like audio handling)
 func add_scrap(scrap: Scrap):
 	if scrap.scrap_type == scrap.ScrapType.SHIELD:
 		add_shieldship(scrap.position)
@@ -99,6 +101,7 @@ func cycle_spacing() -> void:
 func _process(delta: float) -> void:
 	var check_last_connection = false
 	var close_loop            = false
+	var toggle_ship_grouping  = false
 	
 	velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
@@ -109,6 +112,9 @@ func _process(delta: float) -> void:
 		spacing = (spacing + .5)
 		if spacing > 1:
 			spacing -= 1
+	elif Input.is_action_just_pressed("sort_ships"):
+		ship_order = (ship_order + 1) % len(ShipOrderType)
+		toggle_ship_grouping = true
 	
 	if mothership:
 		mothership.set_velocity_dir(velocity_dir)
@@ -148,7 +154,7 @@ func _process(delta: float) -> void:
 		ship.set_velocity_dir(velocity_dir)
 	
 	
-	if deleted_ship_idx.size() > 0:
+	if deleted_ship_idx.size() > 0 or toggle_ship_grouping:
 		for connection in connections:
 			connection.queue_free()
 		connections.clear()
@@ -157,17 +163,30 @@ func _process(delta: float) -> void:
 	for i in deleted_ship_idx:
 		ships.remove_at(i)
 	
-	if deleted_ship_idx.size() > 0:
-		var prev_ship = null
-		for ship in ships:
-			if prev_ship != null:
-				var connection = ship_conn_scene.instantiate()
-				connection.set_source_ship(prev_ship)
-				connection.set_dest_ship(ship)
-				connection.play_animation()
-				connections.append(connection)
-				call_deferred("add_child", connection)
-				
+	if toggle_ship_grouping:
+		if ship_order == ShipOrderType.INTERLACE:
+			interlace_ships()
+		elif ship_order == ShipOrderType.SHIELD_FIRST:
+			ships.sort_custom(func(a,b): return a.ship_type < b.ship_type)
+		elif ship_order == ShipOrderType.GUN_FIRST:
+			ships.sort_custom(func(a,b): return a.ship_type > b.ship_type)
+	
+	if deleted_ship_idx.size() > 0 or toggle_ship_grouping:
+		recalculate_connections()
+	
+func recalculate_connections() -> void:
+	assert(connections.size() == 0)
+	var prev_ship = null
+	for ship in ships:
+		if prev_ship != null and ship != null:
+			var connection = ship_conn_scene.instantiate()
+			connection.set_source_ship(prev_ship)
+			connection.set_dest_ship(ship)
+			connection.play_animation()
+			connections.append(connection)
+			call_deferred("add_child", connection)
+			
+		if ship != null:
 			prev_ship = ship
 	#TODO(isaac) getting the connections to close the loop will be mildly
 	#annoying to handle, punting for now
@@ -181,3 +200,15 @@ func _process(delta: float) -> void:
 			connections.append(connection)
 			call_deferred("add_child", connection)
 	"""
+
+func interlace_ships() -> void:
+	var gun_ships    = ships.filter(func(item): return item.ship_type == ShipNode.ShipType.GUN)
+	var shield_ships = ships.filter(func(item): return item.ship_type == ShipNode.ShipType.SHIELD)
+	var new_ships: Array[ShipNode] = []
+	while(gun_ships.size() > 0 or shield_ships.size() > 0):
+		if gun_ships.size() > 0:
+			new_ships.append(gun_ships.pop_back())
+		if shield_ships.size() > 0:
+			new_ships.append(shield_ships.pop_back())
+	ships = new_ships
+	
