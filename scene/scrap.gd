@@ -14,7 +14,7 @@ var scrap_type: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	scrap_type = randi_range(0, ScrapType.size())
+	scrap_type = randi_range(0, ScrapType.size()-1)
 	if scrap_type == ScrapType.SHIELD:
 		$scrap_sprite.animation = "shield"
 	else:
