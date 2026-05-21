@@ -81,7 +81,6 @@ func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),ra
 
 
 func add_scrap(scrap: Scrap):
-	print("yummy scrap")
 	if scrap.scrap_type == scrap.ScrapType.SHIELD:
 		add_shieldship(scrap.position)
 	elif scrap.scrap_type == scrap.ScrapType.GUN:
