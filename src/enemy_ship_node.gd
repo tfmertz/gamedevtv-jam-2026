@@ -9,17 +9,16 @@ extends Area2D
 signal die
 signal fire
 
+@export var ship_type: EnemyType = EnemyType.NONE
+
 var health: int
 var health_enemy_small = 1
 var health_enemy_big = 2
-var speed_enemy = 10
-var speed =1 #placeholder speed
+var speed_enemy = 5
+var speed = 1 #placeholder speed
 var target_direction: Vector2
 var target_location: Vector2
-enum EnemyType {ENEMY_SMALL, ENEMY_BIG}
-var ship_type = EnemyType
-var enemy_z = 12
-var player_z = 11
+enum EnemyType {NONE, ENEMY_SMALL, ENEMY_BIG}
 var wind_x: int
 var wind_y: int
 var rand_coutner = 3
@@ -33,14 +32,18 @@ var EXPLOSION_DAMAGE = 1
 func _ready() -> void:
 	wind_x = get_window().size.x
 	wind_y = get_window().size.y
-	
-	$sprite.hide()
+
+	#$sprite.hide()
 	hitbox_enemy_sm.disabled = true
 	hitbox_enemy_bg.disabled = true
 	$rand_timer.stop()
-	target_location=position
+	target_location = Vector2(-50, position.y)
 	#$ExplosionArea/hitbox_collision_explosion.disabled = true
-	
+	if ship_type == EnemyType.ENEMY_SMALL:
+		spawn_enemy_small()
+	elif ship_type == EnemyType.ENEMY_BIG:
+		spawn_enemy_big()
+		#set_rand_mode(true)
 
 func _physics_process(delta: float) -> void:
 	flyto(target_location)
@@ -65,7 +68,7 @@ func take_damage(damage: int) -> void:
 			var scrap = scrap_scene.instantiate()
 			scrap.position = position
 			get_tree().get_root().call_deferred("add_child", scrap)
-			scrap.call_deferred("set_movement")
+			#scrap.call_deferred("set_movement")
 		queue_free()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
@@ -73,7 +76,6 @@ func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, heal
 	$sprite.show()
 	hitbox_enemy_sm.disabled = false
 	$bullet_timer.start()
-	z_index=enemy_z
 	speed = speed_enemy
 	health = health_enemy_small
 	ship_type = EnemyType.ENEMY_SMALL
@@ -81,9 +83,9 @@ func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, heal
 func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health, hitbox
 	$sprite.play("enemy_big")
 	$sprite.show()
+
 	hitbox_enemy_bg.disabled = false
 	$bullet_timer.start()
-	z_index=enemy_z
 	speed = speed_enemy
 	health = health_enemy_big
 	ship_type = EnemyType.ENEMY_BIG
@@ -123,7 +125,7 @@ func _on_timer_timeout() -> void:
 		
 	
 
-func set_rand_mode (mode: bool) -> void:
+func set_rand_mode(mode: bool) -> void:
 	if mode:
 		rand_mode = true
 		$rand_timer.start()
