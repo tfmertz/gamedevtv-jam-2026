@@ -4,6 +4,7 @@ extends Area2D
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var hitbox_enemy_bg: CollisionShape2D = $hitbox_enemy_bg
 @onready var hitbox_enemy_sm: CollisionShape2D = $hitbox_enemy_sm
+@onready var explosion_area: Area2D = $ExplosionArea
 
 signal die
 signal fire
@@ -26,6 +27,7 @@ var sector_counter = 2
 var rand_mode = false
 var sprite_half = 32
 var SCRAP_CHANCE = 0.5 #TODO Isaac: difficulty setting?
+var EXPLOSION_DAMAGE = 1
 
 
 func _ready() -> void:
@@ -37,12 +39,23 @@ func _ready() -> void:
 	hitbox_enemy_bg.disabled = true
 	$rand_timer.stop()
 	target_location=position
+	#$ExplosionArea/hitbox_collision_explosion.disabled = true
+	
 
 func _physics_process(delta: float) -> void:
 	flyto(target_location)
 
 func _process(delta: float) -> void:
 	pass
+
+#shamelessly ripped from bomber class
+func _die() -> void:
+	# check out AOE and deal damage
+	var areas = explosion_area.get_overlapping_areas()
+	for area in areas:
+		if area.has_method("take_damage"):
+			area.take_damage(EXPLOSION_DAMAGE)
+	queue_free()
 
 func take_damage(damage: int) -> void:
 	health -= damage
@@ -134,6 +147,6 @@ func _on_rand_timer_timeout() -> void:
 		flyto(Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x*(sector_counter+1)/3-sprite_half), randi_range(sprite_half,wind_y-sprite_half)))
 		
 		
-		
-		
-		
+func _on_area_entered(area: Area2D) -> void:
+	if area.has_method("take_damage"):
+		call_deferred("_die")

@@ -49,8 +49,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	area_entered.disconnect(_on_area_entered)
 	if area.has_method("hit_scrap"):
 		area.hit_scrap(self)
 		queue_free()
 
-#TODO add timeout
+func _on_despawn_timer_timeout() -> void:
+		queue_free()

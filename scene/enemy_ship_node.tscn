@@ -28,6 +28,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_qpxp6"]
 radius = 24.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_r2h1d"]
+radius = 48.010414
+
 [node name="EnemyShipNode" type="Area2D" unique_id=1841324561]
 collision_layer = 2
 script = ExtResource("1_fco4n")
@@ -51,5 +54,13 @@ shape = SubResource("CircleShape2D_qpxp6")
 [node name="rand_timer" type="Timer" parent="." unique_id=1714477443]
 wait_time = 3.0
 
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=1499407559]
+collision_layer = 32
+
+[node name="hitbox_collision_explosion" type="CollisionShape2D" parent="ExplosionArea" unique_id=817199595]
+position = Vector2(10, 1)
+shape = SubResource("CircleShape2D_r2h1d")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="bullet_timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="rand_timer" to="." method="_on_rand_timer_timeout"]

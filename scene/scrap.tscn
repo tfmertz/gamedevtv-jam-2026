@@ -30,7 +30,7 @@ size = Vector2(62, 60)
 
 [node name="Scrap" type="Area2D" unique_id=498599342]
 z_index = -1
-collision_layer = 4
+collision_layer = 8
 script = ExtResource("1_qfbu2")
 
 [node name="MovementPath2D" type="Path2D" parent="." unique_id=1468683549]
@@ -47,5 +47,9 @@ position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_mpowy")
 
 [node name="despawn_timer" type="Timer" parent="." unique_id=1486609555]
+wait_time = 5.0
+one_shot = true
+autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="despawn_timer" to="." method="_on_despawn_timer_timeout"]

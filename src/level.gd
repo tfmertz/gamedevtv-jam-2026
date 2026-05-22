@@ -10,7 +10,7 @@ var screen_size : Vector2i
 
 var player_fleet
 var enemy_spawn_min := 1
-var enemy_spawn_max := 3
+var enemy_spawn_max := 1
 var enemy_spawn_timer: Timer
 var difficulty_timer: Timer
 

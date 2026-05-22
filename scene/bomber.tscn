@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b0orh6apr1yau"]
+[gd_scene format=3 uid="uid://i2bhoea50ibg"]
 
 [ext_resource type="Script" uid="uid://dighhxhhpe0ei" path="res://src/bomber.gd" id="1_u514y"]
 [ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="2_8c32t"]
