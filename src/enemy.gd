@@ -53,4 +53,4 @@ func random_direction_around(base: Vector2, spread_degrees: float = 45.0) -> Vec
 	return base.normalized().rotated(angle_offset)
 
 func _die() -> void:
-	pass
+	queue_free()

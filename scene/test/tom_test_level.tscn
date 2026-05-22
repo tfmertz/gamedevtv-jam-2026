@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://di2cj6ac8g8m5"]
 
 [ext_resource type="Script" uid="uid://co4dtuoeqqn0c" path="res://scene/test/tom_test_level.gd" id="1_4y81e"]
-[ext_resource type="PackedScene" uid="uid://b0orh6apr1yau" path="res://scene/bomber.tscn" id="2_ysgiw"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="2_ysgiw"]
 [ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="3_wpmb4"]
 
 [node name="TomTestLevel" type="Node2D" unique_id=1564966178]
