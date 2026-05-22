@@ -1,23 +1,34 @@
 extends Node
 
+@export_dir var waves_folder: String = "res://scene/waves"
+@export var spawn_interval: float = 10.0
+## Where waves spawn relative to. Usually just off the right edge of the screen.
+@export var spawn_anchor: Node2D
+## Where instantiated waves get parented. Usually your enemies container or the world root.
+@export var enemy_container: Node
+
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var group_scene : PackedScene = preload("res://scene/player_group.tscn")
 var enemy_scene : PackedScene = preload("res://scene/enemy_ship_node.tscn")
 var screen_size : Vector2i
 
-
 @onready var enemy_vert_spawn_follow_2d: PathFollow2D = $EnemyVertSpawnPath/VertSpawnFollow2D
+@onready var wave_timer: Timer = $WaveTimer
 
 var player_fleet
 var enemy_spawn_min := 1
 var enemy_spawn_max := 1
 var enemy_spawn_timer: Timer
 var difficulty_timer: Timer
+var _wave_scenes: Array[PackedScene] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_load_waves()
 	init_level()
-
+	
+	wave_timer.wait_time = spawn_interval
+	
 
 func init_level() -> void:
 	if player_fleet != null:
@@ -36,19 +47,32 @@ func init_level() -> void:
 	player_fleet.add_shieldship()
 
 	screen_size =  get_window().size
-	
 
-func game_over() -> void:
-	pass
+func _load_waves() -> void:
+	var file_paths := ResourceLoader.list_directory(waves_folder)
+	if file_paths == null:
+		push_error("WaveSpawner: cannot open %s" % waves_folder)
+		return
+	for file_name in file_paths:
+		# Editor saves .tscn; exports remap to .remap/.scn. Check the imported path.
+		if file_name.ends_with(".tscn") or file_name.ends_with(".scn"):
+			var path := "%s/%s" % [waves_folder, file_name]
+			var scene := load(path) as PackedScene
+			if scene != null:
+				_wave_scenes.append(scene)
+	if _wave_scenes.is_empty():
+		push_warning("WaveSpawner: no waves found in %s" % waves_folder)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func shoot() -> void:
-	pass
+func _on_wave_timer_timeout() -> void:
+	if _wave_scenes.is_empty():
+		return
+	var scene := _wave_scenes.pick_random() as PackedScene
+	var wave := scene.instantiate() as Node2D
+	if spawn_anchor != null:
+		wave.global_position = spawn_anchor.global_position
+	var parent: Node = enemy_container if enemy_container != null else get_tree().current_scene
+	parent.add_child(wave)
 
 
 func _on_enemy_spawn_timer_timeout() -> void:
@@ -71,4 +95,8 @@ func _on_enemy_spawn_timer_timeout() -> void:
 		new_enemy.set_rand_mode(true) #sets them to random mode
 
 func _on_difficulty_timer_timeout() -> void:
+	pass # Replace with function body.
+
+
+func _on_timer_timeout() -> void:
 	pass # Replace with function body.

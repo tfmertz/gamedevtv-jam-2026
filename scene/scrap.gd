@@ -19,6 +19,8 @@ func _ready() -> void:
 		$scrap_sprite.animation = "shield"
 	else:
 		$scrap_sprite.animation = "gun"
+		
+	set_movement()
 	
 
 func set_movement() -> void:

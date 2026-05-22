@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b8qr3hqvdmvjl"]
+
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="1_xbp3s"]
+
+[node name="Wave1" type="Node2D" unique_id=1161713471]
+
+[node name="EnemyShipNode2" parent="." unique_id=1878084434 instance=ExtResource("1_xbp3s")]
+position = Vector2(2327, 307)
+ship_type = 2
+
+[node name="EnemyShipNode3" parent="." unique_id=17835875 instance=ExtResource("1_xbp3s")]
+position = Vector2(2037, 500)
+ship_type = 2
+
+[node name="EnemyShipNode4" parent="." unique_id=1841324561 instance=ExtResource("1_xbp3s")]
+position = Vector2(2326, 500)
+ship_type = 2
+
+[node name="EnemyShipNode5" parent="." unique_id=398741377 instance=ExtResource("1_xbp3s")]
+position = Vector2(2328, 711)
+ship_type = 2
