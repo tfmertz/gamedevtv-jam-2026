@@ -49,13 +49,12 @@ func _attack() -> void:
 	# clean enemy if they didn't collide
 	get_tree().create_timer(5).timeout.connect(queue_free)
 
-func _die() -> void:
+func _explode() -> void:
 	# check out AOE and deal damage
 	var areas = explosion_area.get_overlapping_areas()
 	for area in areas:
 		if area.has_method("take_damage"):
 			area.take_damage(attack)
-	queue_free()
 
 func _on_attack_timer_timeout() -> void:
 	_attack()
@@ -65,4 +64,5 @@ func _on_area_entered(area: Area2D) -> void:
 	# if we hit something that can take damage
 	if area is ShipNode:
 		# explode
+		_explode()
 		_die()

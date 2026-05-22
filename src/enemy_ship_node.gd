@@ -1,5 +1,6 @@
 extends Area2D
 
+var ship_explosion_vfx : PackedScene = preload("res://scene/ship_explosion.tscn")
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var hitbox_enemy_bg: CollisionShape2D = $hitbox_enemy_bg
@@ -58,6 +59,11 @@ func _die() -> void:
 	for area in areas:
 		if area.has_method("take_damage"):
 			area.take_damage(EXPLOSION_DAMAGE)
+	
+	#TODO(tom) DRY this up later
+	var explosion_vfx := ship_explosion_vfx.instantiate()
+	explosion_vfx.position = position
+	get_parent().add_child(explosion_vfx)
 	queue_free()
 
 func take_damage(damage: int) -> void:
@@ -69,7 +75,7 @@ func take_damage(damage: int) -> void:
 			scrap.position = position
 			get_tree().get_root().call_deferred("add_child", scrap)
 			#scrap.call_deferred("set_movement")
-		queue_free()
+		_die()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
 	$sprite.play("enemy_small")
