@@ -4,6 +4,8 @@ class_name Bullet extends Area2D
 @onready var bullet_small_hitbox: CollisionShape2D = $bullet_small_hitbox
 @onready var bullet_large_hitbox: CollisionShape2D = $bullet_large_hitbox
 
+var bullet_explosion_vfx : PackedScene = preload("res://scene/bullet_explosion.tscn")
+
 var speed = 500
 enum BulletType {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
 var bullet_type: BulletType 
@@ -59,10 +61,14 @@ func _on_area_entered(area: Area2D) -> void:
 		area.take_damage(1)
 	
 	# kill the bullet, on mask area hit
-	#TODO(tom) spawn VFX
+	var new_vfx = bullet_explosion_vfx.instantiate()
+	new_vfx.position = position
+	# TODO(tom) implement pooling
+	get_parent().add_child(new_vfx)
 	AudioManager.report_bullet_hit()
 	queue_free()
 
 # When bullets go out of view, delete them
 func _on_screen_exited() -> void:
+
 	queue_free()

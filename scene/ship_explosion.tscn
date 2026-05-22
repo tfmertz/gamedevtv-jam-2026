@@ -6,8 +6,14 @@
 _data = [Vector2(0, 0.22471917), 0.0, 0.0, 0, 0, Vector2(0.10548523, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="Gradient" id="Gradient_x3108"]
+offsets = PackedFloat32Array(0, 0.3127962, 0.6066351, 0.8578199, 1)
+colors = PackedColorArray(0.9999997, 0.2830094, 0.09237703, 1, 0.6421697, 0, 0.1061903, 1, 0.5877486, 0, 0.097191125, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
 [node name="ShipExplosion" type="Node2D" unique_id=60562191]
 script = ExtResource("1_x3108")
+color = Color(1, 1, 1, 0.4745098)
+draw_shape = true
 
 [node name="Draw" type="Node2D" parent="." unique_id=1191501806]
 
@@ -27,4 +33,4 @@ initial_velocity_max = 3.0
 scale_amount_min = 20.0
 scale_amount_max = 50.0
 scale_amount_curve = SubResource("Curve_0njxy")
-color = Color(0.66261786, 0.113225974, 0.14748222, 1)
+color_ramp = SubResource("Gradient_x3108")
