@@ -7,6 +7,8 @@ extends Area2D
 @export var attack := 1
 @export var speed := 100
 
+var ship_explosion_vfx : PackedScene = preload("res://scene/ship_explosion.tscn")
+
 var velocity := Vector2.ZERO
 var move_tween : Tween
 
@@ -53,4 +55,7 @@ func random_direction_around(base: Vector2, spread_degrees: float = 45.0) -> Vec
 	return base.normalized().rotated(angle_offset)
 
 func _die() -> void:
-	pass
+	var explosion_vfx := ship_explosion_vfx.instantiate()
+	explosion_vfx.position = position
+	get_parent().add_child(explosion_vfx)
+	queue_free()

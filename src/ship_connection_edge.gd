@@ -4,14 +4,10 @@ class_name ShipConnectionEdge extends Area2D
 
 var source_ship : ShipNode = null
 var dest_ship   : ShipNode = null
-@export var ENEMY_Z  := 12
-@export var PLAYER_Z := 11
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#TODO(isaac) idk why this isn't working so time to be lazy
-	#z_index = Bullet.PLAYER_Z
-	z_index = PLAYER_Z
+	pass
 	
 
 func set_source_ship(ship: ShipNode):
@@ -38,13 +34,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	# Don't do anything for matching areas
-	# Connection only interacts with enemy ships/bullets
-	if z_index == area.z_index:
-		return
-	# only hit things that can be damaged
-	# TODO(isaac) we very likely want to scope bullet layers so enemy and player bullets don't
-	# collider with eachother, or we might want that, IDK, leaving for now to ignore
-	# see: tom's comment in bullet.gd
-	if area.has_method("take_damage") and area.z_index == ENEMY_Z:
-		area.take_damage(1)
+	# If connection hits an area on it's mask, and can deal
+	# damage, then do it
+	if area.has_method("take_damage"):
+		area.take_damage(5)

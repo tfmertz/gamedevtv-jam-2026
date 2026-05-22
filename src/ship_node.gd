@@ -15,8 +15,6 @@ var position_target := Vector2.ZERO
 var health: int
 var initial_speed := 0
 var screen_size: Rect2
-var enemy_z := 12
-var player_z := 11
 var invuln_duration := 1
 var shield_radius := 50
 var parent
@@ -56,15 +54,13 @@ func set_ship_type(new_type) -> void:
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
 		health = 1
-		z_index=player_z
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
 		health = 4
-		z_index=player_z
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
 		health = 3
-		z_index=player_z
+		add_to_group("player")
 	else:
 		assert(false, "invalid ship type")
 

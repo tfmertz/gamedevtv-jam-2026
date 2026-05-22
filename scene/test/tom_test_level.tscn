@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://di2cj6ac8g8m5"]
 
 [ext_resource type="Script" uid="uid://co4dtuoeqqn0c" path="res://scene/test/tom_test_level.gd" id="1_4y81e"]
-[ext_resource type="PackedScene" uid="uid://b0orh6apr1yau" path="res://scene/bomber.tscn" id="2_ysgiw"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="2_ysgiw"]
 [ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="3_wpmb4"]
+[ext_resource type="PackedScene" uid="uid://7jwgo73kwtp0" path="res://scene/ship_explosion.tscn" id="4_eumky"]
 
 [node name="TomTestLevel" type="Node2D" unique_id=1564966178]
 script = ExtResource("1_4y81e")
@@ -15,5 +16,11 @@ position = Vector2(1015, 379)
 
 [node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("2_ysgiw")]
 position = Vector2(1316, 444)
+
+[node name="ShipExplosion" parent="." unique_id=60562191 instance=ExtResource("4_eumky")]
+position = Vector2(507, 399)
+
+[node name="ShipExplosion2" parent="." unique_id=1904973732 instance=ExtResource("4_eumky")]
+position = Vector2(793, 265)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -3,12 +3,14 @@ extends Node2D
 var bullet_scene: PackedScene = preload("res://scene/bullet.tscn")
 var enemy_scene: PackedScene = preload("res://scene/enemy_ship_node.tscn")
 var ship_scene: PackedScene = preload("res://scene/ship_node.tscn")
+var group_scene : PackedScene = preload("res://scene/player_group.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# set up the ship and bullet
 	_spawn_bullet()
 	_spawn_enemy()
+	_spawn_mothership(Vector2(500, 500))
 	
 	for i in range(5):
 		var pos = Vector2(400, 450 + i * 20)
@@ -37,6 +39,10 @@ func _spawn_ship(pos: Vector2):
 	new_ship.set_ship_type(ShipNode.ShipType.SHIELD)
 	new_ship.start(pos)
 	
+func _spawn_mothership(pos: Vector2):
+	var player_fleet = group_scene.instantiate()
+	add_child(player_fleet)
+	player_fleet.spawn_mothership()
 
 func _on_timer_timeout() -> void:
 	_spawn_bullet()
