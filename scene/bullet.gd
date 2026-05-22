@@ -6,30 +6,28 @@ class_name Bullet extends Area2D
 @onready var bullet_large_hitbox: CollisionShape2D = $bullet_large_hitbox
 
 
-var speed = 8
+var speed = 500
 enum BulletType {PLAYER, ENEMY_1, ENEMY_2} #to be set on call by level
 var bullet_type: BulletType 
-var bullet_direction = 1
+var direction := Vector2.RIGHT
 
 @export var ENEMY_Z  := 12
 @export var PLAYER_Z := 11
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$despawn_timer.start()
 	bullet_large_hitbox.disabled=true
 	bullet_small_hitbox.disabled=true
 	#$bullet_sprite.hide()
-	rotation = PI/2
+	# safety normalize
+	direction = direction.normalized()
+	# Assume sprites will point Vector2.RIGHT, right now
+	# we have circles, so doesn't really matter
+	rotation = direction.angle()
 
 func _physics_process(delta: float) -> void:
-	position += Vector2(sin(rotation),-cos(rotation)).normalized()*speed*bullet_direction
-	
-func _process(delta: float) -> void:
-	pass
-
-func _on_despawn_timer_timeout() -> void:
-	queue_free()
+	# Add delta to tie to physics frame
+	position += speed * direction * delta
 
 func set_bullet_type(new_type: BulletType) -> void:
 	if new_type == BulletType.ENEMY_1:
@@ -37,7 +35,7 @@ func set_bullet_type(new_type: BulletType) -> void:
 		bullet_small_hitbox.disabled=false
 		$bullet_sprite.play("enemy_1")
 		$bullet_sprite.show()
-		bullet_direction = -1
+		direction = Vector2.LEFT
 		z_index=ENEMY_Z
 		
 	elif new_type == BulletType.ENEMY_2:
@@ -45,7 +43,7 @@ func set_bullet_type(new_type: BulletType) -> void:
 		bullet_large_hitbox.disabled=false
 		$bullet_sprite.play("enemy_2")
 		$bullet_sprite.show()
-		bullet_direction = -1
+		direction = Vector2.LEFT
 		z_index=ENEMY_Z
 		
 	else:
@@ -53,14 +51,14 @@ func set_bullet_type(new_type: BulletType) -> void:
 		bullet_small_hitbox.disabled=false
 		$bullet_sprite.play("player")
 		$bullet_sprite.show()
-		bullet_direction = 1
+		direction = Vector2.RIGHT
 		z_index=PLAYER_Z
 
 
 func _on_area_entered(area: Area2D) -> void:
 	# Don't do anything for matching areas
 	# Bullet will kill itself of any area that doesn't match its z_index
-	if z_index == area.z_index:
+	if z_index == area.z_index or (area is Enemy and z_index == ENEMY_Z):
 		return
 	# only hit things that can be damaged
 	# TODO(tom) we might want to scope bullet layers so enemy and player bullets don't
@@ -77,4 +75,7 @@ func _on_area_entered(area: Area2D) -> void:
 	#TODO(tom) spawn VFX
 	AudioManager.report_bullet_hit()
 	queue_free()
-		
+
+# When bullets go out of view, delete them
+func _on_screen_exited() -> void:
+	queue_free()

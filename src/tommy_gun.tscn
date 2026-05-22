@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dyfe2xuytxb4s"]
+
+[ext_resource type="Script" uid="uid://b8pblu5cobv4a" path="res://scene/tommy_gun.gd" id="1_iw8w3"]
+[ext_resource type="PackedScene" uid="uid://v6bv60s1f1d6" path="res://scene/bullet.tscn" id="2_mq4bw"]
+[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_srckj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mq4bw"]
+radius = 24.0
+
+[node name="TommyGun" type="Area2D" unique_id=979594765]
+collision_layer = 2
+script = ExtResource("1_iw8w3")
+bullet_scene = ExtResource("2_mq4bw")
+movement_distance = 200
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1167430700]
+position = Vector2(-11, -2)
+texture = ExtResource("2_srckj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1060046115]
+shape = SubResource("CircleShape2D_mq4bw")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=284859033]

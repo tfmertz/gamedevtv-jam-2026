@@ -29,6 +29,7 @@ animations = [{
 radius = 24.0
 
 [node name="EnemyShipNode" type="Area2D" unique_id=1841324561]
+collision_layer = 2
 script = ExtResource("1_fco4n")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
