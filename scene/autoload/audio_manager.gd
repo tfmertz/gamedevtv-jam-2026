@@ -8,6 +8,7 @@ const POOL_SIZE := 16 # max audio players
 @export var enemy_fire_stream: AudioStream
 @export var hit_stream: AudioStream
 @export var title_music_stream: AudioStream
+@export var game_music_stream: AudioStream
 
 var _enemy_fire_count := 0
 var _bullet_hit_count := 0
@@ -51,6 +52,11 @@ func report_enemy_fire() -> void:
 
 func report_bullet_hit() -> void:
 	_bullet_hit_count += 1
+
+# TODO(tom) add music cross fade on scene transition
+func cross_fade_music(new_stream: AudioStream):
+	_music_player.stream = new_stream
+	_music_player.play()
 
 func _play_pooled(stream: AudioStream, volume_db: float = 0.0,
 		pitch: float = 1.0) -> void:
