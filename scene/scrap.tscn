@@ -30,7 +30,7 @@ size = Vector2(62, 60)
 
 [node name="Scrap" type="Area2D" unique_id=498599342]
 z_index = -1
-collision_layer = 4
+collision_layer = 8
 script = ExtResource("1_qfbu2")
 
 [node name="MovementPath2D" type="Path2D" parent="." unique_id=1468683549]

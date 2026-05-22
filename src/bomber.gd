@@ -48,7 +48,6 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	print('hit')
 	# if we hit something that can take damage
 	if area is ShipNode:
 		# explode
