@@ -10,13 +10,13 @@ size = Vector2(62, 18)
 [node name="Bomber" type="Area2D" unique_id=608566180]
 collision_layer = 2
 script = ExtResource("1_u514y")
-speed = 250
+speed = 600
 explosion_damage = 5
-explosion_radius = 80
+explosion_radius = 70
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1463319858]
-position = Vector2(-12, 4)
-scale = Vector2(2, 2)
+position = Vector2(12, 4)
+scale = Vector2(-2, 2)
 texture = ExtResource("2_8c32t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1286505360]

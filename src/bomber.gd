@@ -5,48 +5,43 @@ extends Enemy
 
 ## How long to wait until attacking
 @export var attack_delay := 2
+@export var initial_move_distance := 500
 
 var is_attacking := false
 var direction := Vector2.LEFT
+var max_speed := 2000
 
 func _ready() -> void:
 	# call base class to wire events
 	super()
 
-	attack_timer.wait_time = attack_delay
-	attack_timer.start()
+	# our initial move into position
+	var tween = move_to(position + direction * initial_move_distance, attack_delay)
+	await tween.finished
+	_attack()
+	
 
 func _move(delta: float) -> void:
-	if not is_attacking:
+	rotation = direction.angle()
+	if is_attacking:
 		# speed is really accel here
 		velocity += direction * speed * delta
-	else:
-		# quick drag
-		velocity = velocity.move_toward(Vector2.ZERO, 1000 * delta)
-		#look_at(direction)
+		# limit velocity to max_speed
+		velocity = velocity.limit_length(max_speed)
+		
+		# this should never happen, we only accel in attack
+		if not velocity.is_zero_approx():
+			position += velocity * delta
 	
-	if not velocity.is_zero_approx():
-		position += velocity * delta
 
 func _attack() -> void:
+	await flash()
 	is_attacking = true
 	# get player and set direction
 	var player = get_tree().get_first_node_in_group("player")
 	# set our new direction
 	if player:
 		direction = position.direction_to(player.position)
-		# set sprite to right rotation
-		sprite_2d.rotation = direction.angle()
-		sprite_2d.scale.x *= -1
-		#$RayCast2D.target_position = direction
 	
-	await flash()
-	
-	is_attacking = false
-	# launch attack
-	speed *= 2
-	# clean enemy if they didn't collide
-	get_tree().create_timer(5).timeout.connect(queue_free)
-
-func _on_attack_timer_timeout() -> void:
-	_attack()
+	# set movement, then accel on top in _move
+	velocity = direction * speed
