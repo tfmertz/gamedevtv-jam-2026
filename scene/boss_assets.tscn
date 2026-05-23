@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://e1q14x8d1pxp"]
+
+[ext_resource type="Texture2D" uid="uid://iwjowtsgdn7n" path="res://assets/art/boss topbot.png" id="1_dos4c"]
+[ext_resource type="Texture2D" uid="uid://dj38767uktc53" path="res://assets/art/boss center_0001.png" id="2_7i6ka"]
+[ext_resource type="Texture2D" uid="uid://tjvbv6q5pvhn" path="res://assets/art/boss center_0002.png" id="3_3qcnw"]
+[ext_resource type="Texture2D" uid="uid://dpki3h788brbb" path="res://assets/art/boss center_0003.png" id="4_6dxsr"]
+[ext_resource type="Texture2D" uid="uid://83n2deh5uhi5" path="res://assets/art/boss center_0004.png" id="5_g6epx"]
+[ext_resource type="Texture2D" uid="uid://bfehdn2wjnru1" path="res://assets/art/boss center_0005.png" id="6_c8kt4"]
+[ext_resource type="Texture2D" uid="uid://djd53vwwrcvnc" path="res://assets/art/boss center_0006.png" id="7_ovd18"]
+[ext_resource type="Texture2D" uid="uid://bm0eakyspe72x" path="res://assets/art/boss center tounge_0001.png" id="8_66scr"]
+[ext_resource type="Texture2D" uid="uid://skmha258k7gf" path="res://assets/art/boss center tounge_0002.png" id="9_av72y"]
+[ext_resource type="Texture2D" uid="uid://cfc7v5tqipgbi" path="res://assets/art/boss center tounge_0003.png" id="10_bcsr7"]
+[ext_resource type="Texture2D" uid="uid://vdymnms2dwsd" path="res://assets/art/boss center tounge_0004.png" id="11_18u25"]
+[ext_resource type="Texture2D" uid="uid://brl8ojot5uh7j" path="res://assets/art/boss center tounge_0005.png" id="12_l23xp"]
+[ext_resource type="Texture2D" uid="uid://co6ood2jp2blv" path="res://assets/art/boss center tounge_0006.png" id="13_xnlb2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f327n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dos4c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2swhq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7i6ka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3qcnw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6dxsr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_g6epx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_c8kt4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ovd18")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mmeu6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dos4c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2h1es"]
+size = Vector2(109, 385)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ow25m"]
+size = Vector2(111, 366)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ahva"]
+size = Vector2(109, 385)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sg6jn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_66scr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_av72y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bcsr7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_18u25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_l23xp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_xnlb2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="boss_assets" type="Area2D" unique_id=1304102839]
+
+[node name="bosstop" type="AnimatedSprite2D" parent="." unique_id=609331229]
+position = Vector2(1740, 180)
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_f327n")
+
+[node name="bossmid" type="AnimatedSprite2D" parent="." unique_id=1175751207]
+position = Vector2(1740, 540)
+sprite_frames = SubResource("SpriteFrames_2swhq")
+frame_progress = 0.38713217
+
+[node name="bossbot" type="AnimatedSprite2D" parent="." unique_id=1775664542]
+position = Vector2(1740, 900)
+sprite_frames = SubResource("SpriteFrames_mmeu6")
+
+[node name="bosstophitbox" type="CollisionShape2D" parent="." unique_id=1677238319]
+position = Vector2(1768.717, 186.05449)
+rotation = 0.22689278
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_2h1es")
+
+[node name="bossmidhitbox" type="CollisionShape2D" parent="." unique_id=1616377692]
+position = Vector2(1729.5, 544)
+shape = SubResource("RectangleShape2D_ow25m")
+
+[node name="bossbothitbox" type="CollisionShape2D" parent="." unique_id=1356632840]
+position = Vector2(1770, 903)
+rotation = -0.2268928
+shape = SubResource("RectangleShape2D_0ahva")
+
+[node name="tongue" type="AnimatedSprite2D" parent="." unique_id=2049132617]
+position = Vector2(1740, 540)
+sprite_frames = SubResource("SpriteFrames_sg6jn")
+frame_progress = 0.87248635
