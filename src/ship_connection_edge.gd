@@ -5,7 +5,7 @@ class_name ShipConnectionEdge extends Area2D
 var source_ship : ShipNode = null
 var dest_ship   : ShipNode = null
 
-# Called when the node enters the ascene tree for the first time.
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_index = -1
 	
