@@ -2,18 +2,17 @@
 
 [ext_resource type="Script" uid="uid://dighhxhhpe0ei" path="res://src/bomber.gd" id="1_u514y"]
 [ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="2_8c32t"]
+[ext_resource type="PackedScene" uid="uid://cumlnlxw5s8vl" path="res://scene/auto_kill_off_screen.tscn" id="3_8c32t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j07rk"]
 size = Vector2(62, 18)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_u514y"]
-radius = 90.0
-
 [node name="Bomber" type="Area2D" unique_id=608566180]
 collision_layer = 2
 script = ExtResource("1_u514y")
-attack = 5
 speed = 250
+explosion_damage = 5
+explosion_radius = 80
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1463319858]
 position = Vector2(-12, 4)
@@ -26,12 +25,7 @@ shape = SubResource("RectangleShape2D_j07rk")
 [node name="AttackTimer" type="Timer" parent="." unique_id=29555263]
 one_shot = true
 
-[node name="ExplosionArea" type="Area2D" parent="." unique_id=270104489]
-collision_layer = 0
-monitorable = false
+[node name="AutoKillOffScreen" parent="." unique_id=296764808 instance=ExtResource("3_8c32t")]
+rect = Rect2(-34, -12, 68, 24)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=1134038205]
-shape = SubResource("CircleShape2D_u514y")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

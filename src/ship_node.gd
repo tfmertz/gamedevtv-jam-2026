@@ -54,9 +54,11 @@ func set_ship_type(new_type) -> void:
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
 		health = 1
+		add_to_group("node")
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
 		health = 4
+		add_to_group("node")
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
 		health = 3
