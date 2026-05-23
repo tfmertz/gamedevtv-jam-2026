@@ -5,10 +5,11 @@ enum ScrapType {SHIELD, GUN}
 var screen_size: Rect2
 var PATH_SAMPLES := 200
 var AMPLITUDE_RATIO := 10
+var FREQ_RATIO := 20
 var frequency_ratio: float
 var amplitude: int
 var frequency: float
-var speed = 200
+var speed = 250
 var spawn_position: Vector2
 var scrap_type: int
 
@@ -29,17 +30,19 @@ func set_movement() -> void:
 	spawn_position = position
 	screen_size = get_viewport_rect()
 	amplitude = int(screen_size.size.y / AMPLITUDE_RATIO)
-	frequency_ratio = randf_range(4.0, 64.0)
-	frequency = frequency_ratio / screen_size.size.x
+	frequency = FREQ_RATIO / screen_size.size.x
 	var path_curve = Curve2D.new()
+	var pos: Vector2
 	for i in range(PATH_SAMPLES):
-		var pos: Vector2
 		if i == 0:
 			pos = position
 		else:
 			var x = position.x - (position.x*(float(i)/PATH_SAMPLES))
 			pos = Vector2(x, position.y - (amplitude * sin(frequency * x)))
 		path_curve.add_point(pos)
+		
+	pos.x -= 100
+	path_curve.add_point(pos)
 		
 	$MovementPath2D.set_curve(path_curve)
 
@@ -49,12 +52,7 @@ func _physics_process(delta: float) -> void:
 	$MovementPath2D/MovementPathFollow2D.progress += delta * speed
 	self.position = $MovementPath2D/MovementPathFollow2D.position# + spawn_position
 
-
 func _on_area_entered(area: Area2D) -> void:
-	area_entered.disconnect(_on_area_entered)
 	if area.has_method("hit_scrap"):
 		area.hit_scrap(self)
-		queue_free()
-
-func _on_despawn_timer_timeout() -> void:
 		queue_free()
