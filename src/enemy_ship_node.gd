@@ -61,7 +61,6 @@ func take_damage(damage: int) -> void:
 		#TODO(isaac) i suspect this is bad to do, but it's saturday so whatever
 		var player_fleet_size = get_node("/root/Level").player_fleet.ships.size()
 		var scrap_chance = scrap_chance_calculator(player_fleet_size)
-		print("my chance is %f" % scrap_chance)
 		if randf_range(0, 1) < scrap_chance:
 			var scrap = scrap_scene.instantiate()
 			scrap.position = position

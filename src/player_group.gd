@@ -149,6 +149,11 @@ func _process(delta: float) -> void:
 	var deleted_ship_idx: Array[int] = []
 	for i in range(ships.size()):
 		var ship := ships[i]
+		var gap_size = 0.0
+		var gap_offset = 0.0
+		if ships.size() >= 2:
+			gap_size = 100.0 / ships.size()
+			gap_offset = (gap_size / (ships.size() - 1)) / 100.0
 		
 		# If ship was destroyed, remove it
 		# TODO(tom) we could use signals for this, but this handles
@@ -157,8 +162,10 @@ func _process(delta: float) -> void:
 			deleted_ship_idx.push_front(i)
 			continue
 		
-		ship.set_on_path()
-		new_path.progress_ratio = ((float(i) / float(ships.size())) * spacing) + path_offset
+		if formation == FormationType.V:
+			new_path.progress_ratio = (((float(i) / float(ships.size())) + (float(i) * gap_offset)) * spacing) + path_offset
+		else:
+			new_path.progress_ratio = ((float(i) / float(ships.size())) * spacing) + path_offset
 		ship.set_position_target(new_path.position + mothership.position)
 		# set velo dir to mothership, we'll change if on_path = true in shipnode's physics process
 		ship.set_velocity_dir(velocity_dir)
