@@ -6,17 +6,20 @@ extends Area2D
 @export var health := 1
 @export var attack := 1
 @export var speed := 100
+@export var explosion_damage := 1
+@export var explosion_radius := 50
 
 var ship_explosion_vfx : PackedScene = preload("res://scene/ship_explosion.tscn")
 
 var velocity := Vector2.ZERO
 var move_tween : Tween
+var is_dying := false
 
-func _physics_process(delta: float) -> void:
-	if position.x < -50:
-		# silently die offscreen
-		queue_free()
+func _ready() -> void:
+	# hook up explosion logic
+	area_entered.connect(_on_area_entered)
 	
+func _physics_process(delta: float) -> void:
 	_move(delta)
 
 func _move(delta: float) -> void:
@@ -54,8 +57,30 @@ func random_direction_around(base: Vector2, spread_degrees: float = 45.0) -> Vec
 	var angle_offset = randf_range(-deg_to_rad(spread_degrees), deg_to_rad(spread_degrees))
 	return base.normalized().rotated(angle_offset)
 
-func _die() -> void:
+func is_on_screen(world_pos: Vector2) -> bool:
+	var transform := get_viewport().get_canvas_transform()
+	var screen_pos := transform * world_pos
+	return get_viewport_rect().has_point(screen_pos)
+
+func _die(explode: bool = false) -> void:
+	if is_dying:
+		return
+	is_dying = true
 	var explosion_vfx := ship_explosion_vfx.instantiate()
 	explosion_vfx.position = position
-	get_parent().add_child(explosion_vfx)
+	# set the explosion to do damage, this will automatically
+	# show a damage visual and handle dealing the damage
+	if explosion_damage > 0 and explode:
+		explosion_vfx.damage = explosion_damage
+		explosion_vfx.radius = explosion_radius
+	get_parent().call_deferred("add_child", explosion_vfx)
 	queue_free()
+
+# handles exploding from player ship/nodes. Not for regular damage detectiion
+# see take_damage
+func _on_area_entered(area: Area2D) -> void:
+	var is_explosion := false
+	# only explode on collisions with nodes or player
+	if area.is_in_group("node") or area.is_in_group("player"):
+		is_explosion = true
+	_die(is_explosion)

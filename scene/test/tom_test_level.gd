@@ -7,10 +7,11 @@ var group_scene : PackedScene = preload("res://scene/player_group.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	pass
 	# set up the ship and bullet
-	_spawn_bullet()
-	_spawn_enemy()
-	_spawn_mothership(Vector2(500, 500))
+	#_spawn_bullet()
+	#_spawn_enemy()
+	#_spawn_mothership(Vector2(500, 500))
 	
 	for i in range(5):
 		var pos = Vector2(400, 450 + i * 20)
@@ -45,4 +46,5 @@ func _spawn_mothership(pos: Vector2):
 	player_fleet.spawn_mothership()
 
 func _on_timer_timeout() -> void:
-	_spawn_bullet()
+	#_spawn_bullet()
+	pass

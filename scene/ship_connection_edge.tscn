@@ -46,8 +46,7 @@ animations = [{
 }]
 
 [node name="ShipConnectionEdge" type="Area2D" unique_id=1667807780]
-collision_layer = 16
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("1_0ptn0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1360403804]
@@ -61,5 +60,3 @@ position = Vector2(-0.009437561, -0.004217148)
 rotation = 0.0013725162
 sprite_frames = SubResource("SpriteFrames_duunn")
 offset = Vector2(31.99578, 0.01533189)
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

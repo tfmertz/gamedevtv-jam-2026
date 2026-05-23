@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b8pblu5cobv4a" path="res://scene/tommy_gun.gd" id="1_iw8w3"]
 [ext_resource type="PackedScene" uid="uid://v6bv60s1f1d6" path="res://scene/bullet.tscn" id="2_mq4bw"]
 [ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_srckj"]
+[ext_resource type="PackedScene" uid="uid://cumlnlxw5s8vl" path="res://scene/auto_kill_off_screen.tscn" id="4_n7vq6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mq4bw"]
 radius = 24.0
@@ -21,3 +22,6 @@ texture = ExtResource("2_srckj")
 shape = SubResource("CircleShape2D_mq4bw")
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=284859033]
+
+[node name="AutoKillOffScreen" parent="." unique_id=296764808 instance=ExtResource("4_n7vq6")]
+rect = Rect2(-23, -24, 46, 48)

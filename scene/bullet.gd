@@ -13,6 +13,7 @@ var direction := Vector2.RIGHT
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	add_to_group("bullet")
 	bullet_large_hitbox.disabled=true
 	bullet_small_hitbox.disabled=true
 	$bullet_sprite.hide()

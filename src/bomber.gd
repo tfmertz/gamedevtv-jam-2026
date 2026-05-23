@@ -1,19 +1,18 @@
 extends Enemy
 
 @onready var attack_timer: Timer = $AttackTimer
-@onready var collision_shape_2d: CollisionShape2D = $ExplosionArea/CollisionShape2D
-@onready var explosion_area: Area2D = $ExplosionArea
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 ## How long to wait until attacking
 @export var attack_delay := 2
-@export var explosion_radius := 50
 
 var is_attacking := false
 var direction := Vector2.LEFT
 
 func _ready() -> void:
-	collision_shape_2d.shape.radius = explosion_radius
+	# call base class to wire events
+	super()
+
 	attack_timer.wait_time = attack_delay
 	attack_timer.start()
 
@@ -49,20 +48,5 @@ func _attack() -> void:
 	# clean enemy if they didn't collide
 	get_tree().create_timer(5).timeout.connect(queue_free)
 
-func _explode() -> void:
-	# check out AOE and deal damage
-	var areas = explosion_area.get_overlapping_areas()
-	for area in areas:
-		if area.has_method("take_damage"):
-			area.take_damage(attack)
-
 func _on_attack_timer_timeout() -> void:
 	_attack()
-
-
-func _on_area_entered(area: Area2D) -> void:
-	# if we hit something that can take damage
-	if area is ShipNode:
-		# explode
-		_explode()
-		_die()

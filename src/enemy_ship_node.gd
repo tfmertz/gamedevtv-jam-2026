@@ -1,33 +1,26 @@
-extends Area2D
+extends Enemy
 
-var ship_explosion_vfx : PackedScene = preload("res://scene/ship_explosion.tscn")
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var hitbox_enemy_bg: CollisionShape2D = $hitbox_enemy_bg
 @onready var hitbox_enemy_sm: CollisionShape2D = $hitbox_enemy_sm
-@onready var explosion_area: Area2D = $ExplosionArea
 
 signal die
 signal fire
 
 @export var ship_type: EnemyType = EnemyType.NONE
+@export var rand_mode := false
 
-var health: int
 var health_enemy_small = 1
 var health_enemy_big = 2
-var speed_enemy = 5
-var speed = 1 #placeholder speed
-var target_direction: Vector2
 var target_location: Vector2
 enum EnemyType {NONE, ENEMY_SMALL, ENEMY_BIG}
 var wind_x: int
 var wind_y: int
 var rand_coutner = 3
 var sector_counter = 2
-var rand_mode = false
 var sprite_half = 32
 var SCRAP_CHANCE = 0.5 #TODO Isaac: difficulty setting?
-var EXPLOSION_DAMAGE = 1
 
 
 func _ready() -> void:
@@ -43,27 +36,15 @@ func _ready() -> void:
 		spawn_enemy_small()
 	elif ship_type == EnemyType.ENEMY_BIG:
 		spawn_enemy_big()
-		#set_rand_mode(true)
+	
+	if rand_mode:
+		set_rand_mode(true)
 
 func _physics_process(delta: float) -> void:
-	flyto(target_location)
+	flyto(delta)
 
 func _process(delta: float) -> void:
 	pass
-
-#shamelessly ripped from bomber class
-func _die() -> void:
-	# check out AOE and deal damage
-	var areas = explosion_area.get_overlapping_areas()
-	for area in areas:
-		if area.has_method("take_damage"):
-			area.take_damage(EXPLOSION_DAMAGE)
-	
-	#TODO(tom) DRY this up later
-	var explosion_vfx := ship_explosion_vfx.instantiate()
-	explosion_vfx.position = position
-	get_parent().add_child(explosion_vfx)
-	queue_free()
 
 func take_damage(damage: int) -> void:
 	health -= damage
@@ -74,14 +55,15 @@ func take_damage(damage: int) -> void:
 			scrap.position = position
 			get_tree().get_root().call_deferred("add_child", scrap)
 			#scrap.call_deferred("set_movement")
+		# don't explode for damage on bullet kills
 		_die()
 
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
-	$sprite.play("enemy_small")
+	$sprite.play("enemy_alt")
 	$sprite.show()
-	hitbox_enemy_sm.disabled = false
+	#hitbox_enemy_sm.disabled = false
+	hitbox_enemy_bg.disabled = false
 	$bullet_timer.start()
-	speed = speed_enemy
 	health = health_enemy_small
 	ship_type = EnemyType.ENEMY_SMALL
 
@@ -91,17 +73,15 @@ func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health
 
 	hitbox_enemy_bg.disabled = false
 	$bullet_timer.start()
-	speed = speed_enemy
 	health = health_enemy_big
 	ship_type = EnemyType.ENEMY_BIG
 
-func flyto(location: Vector2) -> void: #recieves a target position as vector2
-	target_location = location
-	target_direction = Vector2(target_location.x-position.x, target_location.y-position.y)
-	var temp_speed = target_direction.length()/round(target_direction.length()/speed) #sets a temporary speed equal to arrive at location exactly
-	if position != target_location:
-		position = position+target_direction.normalized()*temp_speed
-	
+func flyto(delta: float) -> void: #recieves a target position as vector2
+	var dir = position.direction_to(target_location)
+	# sets a temporary speed equal to arrive at location exactly
+	if position.distance_to(target_location) > 5:
+		position += dir * speed * delta
+
 
 func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning ships, to be removed/disabled
 	if event is InputEventKey:#placeholder for spawning ships, to be removed/disabled
@@ -123,10 +103,10 @@ func _on_timer_timeout() -> void:
 	
 	get_tree().get_root().add_child(bullet)
 	
-	if ship_type == EnemyType.ENEMY_SMALL:
-		bullet.set_bullet_type(Bullet.BulletType.ENEMY_1)
-	elif ship_type == EnemyType.ENEMY_BIG:
-		bullet.set_bullet_type(Bullet.BulletType.ENEMY_2)
+	#if ship_type == EnemyType.ENEMY_SMALL:
+		#bullet.set_bullet_type(Bullet.BulletType.ENEMY_1)
+	#elif ship_type == EnemyType.ENEMY_BIG:
+	bullet.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		
 	
 
@@ -136,7 +116,7 @@ func set_rand_mode(mode: bool) -> void:
 		$rand_timer.start()
 		#position = Vector2(wind_x+sprite_half,randi_range(sprite_half,wind_y-sprite_half))
 		var randpoint = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x-sprite_half-wind_x/5), randi_range(sprite_half,wind_y-sprite_half))#placeholder for spawning ships, to be removed/disabled
-		flyto(randpoint)#placeholder for spawning ships, to be removed/disabled
+		target_location = randpoint
 	else:
 		rand_mode = false
 		$rand_timer.stop()
@@ -151,9 +131,4 @@ func _on_rand_timer_timeout() -> void:
 			rand_coutner=0
 		if sector_counter == -2:
 			queue_free()
-		flyto(Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x*(sector_counter+1)/3-sprite_half-wind_x/5), randi_range(sprite_half,wind_y-sprite_half)))
-		
-		
-func _on_area_entered(area: Area2D) -> void:
-	if area.has_method("take_damage"):
-		call_deferred("_die")
+		target_location = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x*(sector_counter+1)/3-sprite_half-wind_x/5), randi_range(sprite_half,wind_y-sprite_half))

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dtul8s0joq7cs"]
 
-[ext_resource type="Script" uid="uid://dcy84vejg5o3d" path="res://src/ship_explosion.gd" id="1_f25v3"]
+[ext_resource type="Script" uid="uid://b6cdnwk2l3ykg" path="res://src/bullet_explosion.gd" id="1_f25v3"]
 
 [sub_resource type="Curve" id="Curve_f25v3"]
 _data = [Vector2(0, 1), 0.0, 0.29050097, 0, 0, Vector2(1, 0), -1.6818453, 0.0, 0, 0]

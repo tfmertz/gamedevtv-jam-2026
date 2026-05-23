@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cumlnlxw5s8vl"]
+
+[ext_resource type="Script" uid="uid://bxj0e2kfcfvkw" path="res://src/auto_kill_off_screen.gd" id="1_brxyq"]
+
+[node name="AutoKillOffScreen" type="VisibleOnScreenNotifier2D" unique_id=296764808]
+script = ExtResource("1_brxyq")
+
+[connection signal="screen_exited" from="." to="." method="_on_screen_exited"]
