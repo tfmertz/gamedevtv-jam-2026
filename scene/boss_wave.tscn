@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c4evxf4j44kyi"]
+
+[ext_resource type="Script" uid="uid://c5cxt05584a6s" path="res://src/boss_wave.gd" id="1_4nm24"]
+[ext_resource type="PackedScene" uid="uid://e1q14x8d1pxp" path="res://scene/boss_assets.tscn" id="2_aepen"]
+
+[node name="boss_wave" type="Node2D" unique_id=1501877358]
+script = ExtResource("1_4nm24")
+
+[node name="boss_assets" parent="." unique_id=1304102839 instance=ExtResource("2_aepen")]
+position = Vector2(306, 0)
+
+[node name="tongue_timer" type="Timer" parent="." unique_id=94264862]
+
+[node name="screen_enter_timer" type="Timer" parent="." unique_id=531797416]
+wait_time = 4.0
+
+[node name="ship_spawn_timer" type="Timer" parent="." unique_id=1371163265]
+wait_time = 2.0
+
+[node name="bullet_timer" type="Timer" parent="." unique_id=1216338126]
+wait_time = 1.5
+
+[node name="attack_timer" type="Timer" parent="." unique_id=1561567841]
+
+[node name="wave_timer" type="Timer" parent="." unique_id=1274687876]
+wait_time = 5.0
+
+[connection signal="timeout" from="tongue_timer" to="." method="_on_tongue_timer_timeout"]
+[connection signal="timeout" from="screen_enter_timer" to="." method="_on_screen_enter_timer_timeout"]
+[connection signal="timeout" from="ship_spawn_timer" to="." method="_on_ship_spawn_timer_timeout"]
+[connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
+[connection signal="timeout" from="wave_timer" to="." method="_on_wave_timer_timeout"]

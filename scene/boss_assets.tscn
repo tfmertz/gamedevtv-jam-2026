@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://e1q14x8d1pxp"]
 
 [ext_resource type="Texture2D" uid="uid://iwjowtsgdn7n" path="res://assets/art/boss topbot.png" id="1_dos4c"]
+[ext_resource type="Texture2D" uid="uid://b3mv6b85iwgbl" path="res://assets/art/boss_death.png" id="2_3qcnw"]
 [ext_resource type="Texture2D" uid="uid://dj38767uktc53" path="res://assets/art/boss center_0001.png" id="2_7i6ka"]
 [ext_resource type="Texture2D" uid="uid://tjvbv6q5pvhn" path="res://assets/art/boss center_0002.png" id="3_3qcnw"]
 [ext_resource type="Texture2D" uid="uid://dpki3h788brbb" path="res://assets/art/boss center_0003.png" id="4_6dxsr"]
@@ -27,6 +28,14 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2swhq"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3qcnw")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_7i6ka")
@@ -92,12 +101,13 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_xnlb2")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
 
 [node name="boss_assets" type="Area2D" unique_id=1304102839]
+collision_layer = 2
 
 [node name="bosstop" type="AnimatedSprite2D" parent="." unique_id=609331229]
 position = Vector2(1740, 180)
@@ -107,7 +117,7 @@ sprite_frames = SubResource("SpriteFrames_f327n")
 [node name="bossmid" type="AnimatedSprite2D" parent="." unique_id=1175751207]
 position = Vector2(1740, 540)
 sprite_frames = SubResource("SpriteFrames_2swhq")
-frame_progress = 0.38713217
+animation = &"death"
 
 [node name="bossbot" type="AnimatedSprite2D" parent="." unique_id=1775664542]
 position = Vector2(1740, 900)
@@ -129,6 +139,8 @@ rotation = -0.2268928
 shape = SubResource("RectangleShape2D_0ahva")
 
 [node name="tongue" type="AnimatedSprite2D" parent="." unique_id=2049132617]
+visible = false
 position = Vector2(1740, 540)
 sprite_frames = SubResource("SpriteFrames_sg6jn")
-frame_progress = 0.87248635
+frame = 5
+frame_progress = 1.0
