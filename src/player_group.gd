@@ -144,7 +144,7 @@ func _process(delta: float) -> void:
 		# TODO(tom) we could use signals for this, but this handles
 		# a hard check if ship is ever null
 		if not ship:
-			deleted_ship_idx.push_back(i)
+			deleted_ship_idx.push_front(i)
 			continue
 		
 		ship.set_on_path()
