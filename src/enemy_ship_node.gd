@@ -20,7 +20,6 @@ var wind_y: int
 var rand_coutner = 3
 var sector_counter = 2
 var sprite_half = 32
-var SCRAP_CHANCE = 0.5 #TODO Isaac: difficulty setting?
 
 
 func _ready() -> void:
@@ -46,11 +45,24 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	pass
 
+
+func scrap_chance_calculator(fleet_size: int) -> float:
+	var chance = 0.55
+	if fleet_size < 6:
+		chance = 1
+	else:
+		chance -= fleet_size * 0.01
+	return chance
+
 func take_damage(damage: int) -> void:
 	health -= damage
 	if health <= 0:
 		die.emit(position, ship_type)
-		if randf_range(0, 1) < SCRAP_CHANCE:
+		#TODO(isaac) i suspect this is bad to do, but it's saturday so whatever
+		var player_fleet_size = get_node("/root/Level").player_fleet.ships.size()
+		var scrap_chance = scrap_chance_calculator(player_fleet_size)
+		print("my chance is %f" % scrap_chance)
+		if randf_range(0, 1) < scrap_chance:
 			var scrap = scrap_scene.instantiate()
 			scrap.position = position
 			get_tree().get_root().call_deferred("add_child", scrap)

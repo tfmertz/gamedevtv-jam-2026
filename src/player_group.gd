@@ -81,8 +81,9 @@ func add_single_connection(new_ship: ShipNode) -> void:
 	if ships.size() > 2 and (formation == FormationType.CIRCLE or formation == FormationType.DIAMOND) and spacing >= 1:
 		#remove -2 because we just added a new connection between the second to last ship and this one,
 		#so trim the connection between second to last and first, then add one between newest and first
-		connections[-2].queue_free()
-		connections.remove_at(-2)
+		if ships.size() > 3:
+			connections[-2].queue_free()
+			connections.remove_at(-2)
 		var connection2 = ship_conn_scene.instantiate()
 		connection2.set_source_ship(ships[-1])
 		connection2.set_dest_ship(ships[0])
