@@ -78,10 +78,18 @@ func add_single_connection(new_ship: ShipNode) -> void:
 		connection.play_animation()
 		connections.append(connection)
 		call_deferred("add_child", connection)
+	if ships.size() > 2 and (formation == FormationType.CIRCLE or formation == FormationType.DIAMOND) and spacing >= 1:
+		#remove -2 because we just added a new connection between the second to last ship and this one,
+		#so trim the connection between second to last and first, then add one between newest and first
+		connections[-2].queue_free()
+		connections.remove_at(-2)
+		var connection2 = ship_conn_scene.instantiate()
+		connection2.set_source_ship(ships[-1])
+		connection2.set_dest_ship(ships[0])
+		connection2.play_animation()
+		connections.append(connection2)
+		call_deferred("add_child", connection2)
 
-
-#TODO(isaac) if multiple ships hit the same piece of scrap, we trigger spawns for all of them
-#so this should be a queue (like audio handling)
 func add_scrap(scrap: Scrap):
 	if scrap.scrap_type == scrap.ScrapType.SHIELD:
 		add_shieldship(scrap.position)
@@ -107,11 +115,12 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("cycle_formation"):
 		formation = (formation + 1) % len(FormationType)
-		check_last_connection = true
+		toggle_ship_grouping = true
 	elif Input.is_action_just_pressed("cycle_spacing"):
 		spacing = (spacing + .5)
 		if spacing > 1:
 			spacing -= 1
+		toggle_ship_grouping = true
 	elif Input.is_action_just_pressed("sort_ships"):
 		ship_order = (ship_order + 1) % len(ShipOrderType)
 		toggle_ship_grouping = true
@@ -188,18 +197,13 @@ func recalculate_connections() -> void:
 			
 		if ship != null:
 			prev_ship = ship
-	#TODO(isaac) getting the connections to close the loop will be mildly
-	#annoying to handle, punting for now
-	"""
-	elif check_last_connection:
-		if close_loop and ships.size() > 2:
-			var connection = ship_conn_scene.instantiate()
-			connection.set_source_ship(ships[-1])
-			connection.set_dest_ship(ships[0])
-			connection.play_animation()
-			connections.append(connection)
-			call_deferred("add_child", connection)
-	"""
+	if ships.size() > 2 and (formation == FormationType.CIRCLE or formation == FormationType.DIAMOND) and spacing >= 1:
+		var connection = ship_conn_scene.instantiate()
+		connection.set_source_ship(ships[-1])
+		connection.set_dest_ship(ships[0])
+		connection.play_animation()
+		connections.append(connection)
+		call_deferred("add_child", connection)
 
 func interlace_ships() -> void:
 	var gun_ships    = ships.filter(func(item): return item.ship_type == ShipNode.ShipType.GUN)
