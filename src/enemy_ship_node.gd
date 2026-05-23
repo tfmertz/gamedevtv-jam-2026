@@ -24,9 +24,8 @@ var SCRAP_CHANCE = 0.5 #TODO Isaac: difficulty setting?
 
 
 func _ready() -> void:
-	wind_x = get_window().size.x
-	wind_y = get_window().size.y
-
+	wind_x = get_viewport_rect().size.x
+	wind_y = get_viewport_rect().size.y
 	#$sprite.hide()
 	hitbox_enemy_sm.disabled = true
 	hitbox_enemy_bg.disabled = true
@@ -116,7 +115,7 @@ func set_rand_mode(mode: bool) -> void:
 		rand_mode = true
 		$rand_timer.start()
 		#position = Vector2(wind_x+sprite_half,randi_range(sprite_half,wind_y-sprite_half))
-		var randpoint = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x-sprite_half), randi_range(sprite_half,wind_y-sprite_half))#placeholder for spawning ships, to be removed/disabled
+		var randpoint = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x-sprite_half-wind_x/5), randi_range(sprite_half,wind_y-sprite_half))#placeholder for spawning ships, to be removed/disabled
 		target_location = randpoint
 	else:
 		rand_mode = false
@@ -132,4 +131,4 @@ func _on_rand_timer_timeout() -> void:
 			rand_coutner=0
 		if sector_counter == -2:
 			queue_free()
-		target_location = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x*(sector_counter+1)/3-sprite_half), randi_range(sprite_half,wind_y-sprite_half))
+		target_location = Vector2(randi_range((wind_x*sector_counter/3+sprite_half),wind_x*(sector_counter+1)/3-sprite_half-wind_x/5), randi_range(sprite_half,wind_y-sprite_half))
