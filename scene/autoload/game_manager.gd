@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 # Autoloaded as "GameManager"
 
 signal scene_changing
@@ -7,6 +7,7 @@ signal scene_changed
 ## Optional. Leave empty and set Godot's normal "Main Scene"
 ## in Project Settings instead. If set, this path loads on startup.
 @export var initial_scene_path: String = ""
+@export var scrap_scene: PackedScene = preload("res://scene/scrap.tscn")
 
 var is_transitioning := false
 
@@ -63,3 +64,19 @@ func _change_to(scene_path: String) -> void:
 	# Wait one frame so get_tree().current_scene is the new scene.
 	await get_tree().process_frame
 	await get_tree().process_frame  # second frame: instantiation settled
+
+func spawn_scrap(pos: Vector2) -> void:
+	var player_fleet_size = get_tree().get_nodes_in_group("node").size()
+	var scrap_chance = scrap_chance_calculator(player_fleet_size)
+	if randf_range(0, 1) < scrap_chance:
+		var scrap = scrap_scene.instantiate()
+		scrap.position = pos
+		get_tree().get_root().add_child(scrap)
+
+func scrap_chance_calculator(fleet_size: int) -> float:
+	var chance = 0.55
+	if fleet_size < 6:
+		chance = 1
+	else:
+		chance -= fleet_size * 0.01
+	return chance

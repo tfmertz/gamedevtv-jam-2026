@@ -66,6 +66,9 @@ func _die(explode: bool = false) -> void:
 	if is_dying:
 		return
 	is_dying = true
+	# Request a scrap spawn from GameManager
+	GameManager.spawn_scrap(position)
+
 	var explosion_vfx := ship_explosion_vfx.instantiate()
 	explosion_vfx.position = position
 	# set the explosion to do damage, this will automatically
@@ -81,6 +84,6 @@ func _die(explode: bool = false) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	var is_explosion := false
 	# only explode on collisions with nodes or player
-	if area.is_in_group("node") or area.is_in_group("player"):
+	if area.is_in_group("node"):
 		is_explosion = true
 	_die(is_explosion)

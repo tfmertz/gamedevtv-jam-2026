@@ -42,33 +42,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	flyto(delta)
 
-func _process(delta: float) -> void:
-	pass
-
-
-func scrap_chance_calculator(fleet_size: int) -> float:
-	var chance = 0.55
-	if fleet_size < 6:
-		chance = 1
-	else:
-		chance -= fleet_size * 0.01
-	return chance
-
-func take_damage(damage: int) -> void:
-	health -= damage
-	if health <= 0:
-		die.emit(position, ship_type)
-		#TODO(isaac) i suspect this is bad to do, but it's saturday so whatever
-		var player_fleet_size = get_node("/root/Level").player_fleet.ships.size()
-		var scrap_chance = scrap_chance_calculator(player_fleet_size)
-		if randf_range(0, 1) < scrap_chance:
-			var scrap = scrap_scene.instantiate()
-			scrap.position = position
-			get_tree().get_root().call_deferred("add_child", scrap)
-			#scrap.call_deferred("set_movement")
-		# don't explode for damage on bullet kills
-		_die()
-
 func spawn_enemy_small() -> void: #spawns ship as gun ship, sets animation, health, hitbox
 	$sprite.play("enemy_alt")
 	$sprite.show()
