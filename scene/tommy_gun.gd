@@ -7,13 +7,15 @@ extends Enemy
 @export var attack_spread := 10
 @export var clip_size := 8
 @export var movement_duration := 1.25
-@export var movement_spread := 25
+@export var movement_spread := 35
 @export var movement_distance := 400
 
 var is_attacking := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# call base class ready to wire death collision
+	super()
 	if not bullet_scene:
 		assert(bullet_scene != null, "Bullet scene needs to be defined to shoot!")
 
@@ -41,6 +43,13 @@ func set_new_target() -> void:
 	# random angle LEFT between 
 	var dir = random_direction_around(Vector2.LEFT, movement_spread)
 	var new_target = (dir * movement_distance) + position
+	
+	# check if new_target if off screen, if so, adjust y
+	if not is_on_screen(new_target):
+		if new_target.y < 15:
+			new_target.y += 150
+		else:
+			new_target.y -= 150
 	
 	# move_to is from base Enemy class
 	var tween = move_to(new_target, movement_duration)
