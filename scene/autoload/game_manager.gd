@@ -74,9 +74,9 @@ func spawn_scrap(pos: Vector2) -> void:
 		get_tree().get_root().add_child(scrap)
 
 func scrap_chance_calculator(fleet_size: int) -> float:
-	var chance = 0.55
-	if fleet_size < 6:
+	var chance = 0.56
+	if fleet_size < 7:
 		chance = 1
 	else:
-		chance -= fleet_size * 0.01
+		chance -= fleet_size * 0.02
 	return chance
