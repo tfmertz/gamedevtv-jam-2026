@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dyfe2xuytxb4s"]
 
-[ext_resource type="Script" uid="uid://b8pblu5cobv4a" path="res://scene/tommy_gun.gd" id="1_iw8w3"]
+[ext_resource type="Script" uid="uid://b8pblu5cobv4a" path="res://tommy_gun.gd" id="1_iw8w3"]
 [ext_resource type="PackedScene" uid="uid://v6bv60s1f1d6" path="res://scene/bullet.tscn" id="2_mq4bw"]
 [ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_srckj"]
 [ext_resource type="PackedScene" uid="uid://cumlnlxw5s8vl" path="res://scene/auto_kill_off_screen.tscn" id="4_n7vq6"]

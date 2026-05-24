@@ -40,4 +40,4 @@ func _explode() -> void:
 	var areas = get_overlapping_areas()
 	for area in areas:
 		if area.has_method("take_damage"):
-			area.take_damage(damage)
+			area.take_damage(damage, self)

@@ -59,7 +59,7 @@ func _on_area_entered(area: Area2D) -> void:
 	# If the bullet colliders with anything on it's mask layer
 	# that can take damage, clear damage to it
 	if area.has_method("take_damage"):
-		area.take_damage(1)
+		area.take_damage(1, self)
 	
 	# kill the bullet, on mask area hit
 	var new_vfx = bullet_explosion_vfx.instantiate()

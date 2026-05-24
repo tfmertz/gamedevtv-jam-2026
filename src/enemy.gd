@@ -28,7 +28,7 @@ func _move(delta: float) -> void:
 func _attack() -> void:
 	pass
 	
-func take_damage(damage: int) -> void:
+func take_damage(damage: int, source: Area2D) -> void:
 	health -= damage
 	if health <= 0:
 		_die()
