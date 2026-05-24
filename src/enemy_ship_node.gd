@@ -4,6 +4,7 @@ extends Enemy
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var hitbox_enemy_bg: CollisionShape2D = $hitbox_enemy_bg
 @onready var hitbox_enemy_sm: CollisionShape2D = $hitbox_enemy_sm
+@onready var shield: Area2D = $Shield
 
 signal die
 signal fire
@@ -56,8 +57,9 @@ func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health
 	$sprite.show()
 
 	hitbox_enemy_bg.disabled = false
+	shield.set_active(1)
 	$bullet_timer.start()
-	health = health_enemy_big
+	health = 1
 	ship_type = EnemyType.ENEMY_BIG
 
 func flyto(delta: float) -> void: #recieves a target position as vector2

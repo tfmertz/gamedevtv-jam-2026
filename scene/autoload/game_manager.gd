@@ -4,6 +4,8 @@ extends Node2D
 signal scene_changing
 signal scene_changed
 
+@onready var camera: Camera2D = $Camera2D
+
 ## Optional. Leave empty and set Godot's normal "Main Scene"
 ## in Project Settings instead. If set, this path loads on startup.
 @export var initial_scene_path: String = ""
@@ -12,6 +14,7 @@ signal scene_changed
 var is_transitioning := false
 
 var _color_rect: ColorRect
+var flash_tween: Tween
 
 func _ready() -> void:
 	var canvas := CanvasLayer.new()
@@ -40,6 +43,23 @@ func fade_in(duration := 1.0) -> void:
 	var tween := create_tween()
 	tween.tween_property(_color_rect, "color:a", 0.0, duration)
 	await tween.finished
+
+func flash(duration := 0.1) -> void:
+	if flash_tween and flash_tween.is_running():
+		return
+	var initial_color := _color_rect.color
+	var color = Color(1, 1, 1, 0)
+	_color_rect.color = color
+	flash_tween = create_tween()
+	flash_tween.tween_property(_color_rect, "color:a", 0.5, duration)
+	flash_tween.tween_property(_color_rect, "color:a", 0.0, duration)
+	await flash_tween.finished
+	
+	_color_rect.color = initial_color
+
+func shake_camera(shake_strength: float) -> void:
+	if camera and camera.has_method("shake"):
+		camera.shake(shake_strength)
 
 func load_scene(scene_path: String) -> void:
 	if is_transitioning:
@@ -71,7 +91,7 @@ func spawn_scrap(pos: Vector2) -> void:
 	if randf_range(0, 1) < scrap_chance:
 		var scrap = scrap_scene.instantiate()
 		scrap.position = pos
-		get_tree().get_root().add_child(scrap)
+		get_tree().get_root().call_deferred("add_child", scrap)
 
 func scrap_chance_calculator(fleet_size: int) -> float:
 	var chance = 0.56

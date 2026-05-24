@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://bs8vxmpyaa4u6"]
 
 [ext_resource type="Script" uid="uid://cro2ftqp4emch" path="res://src/ship_node.gd" id="1_ewtr1"]
-[ext_resource type="Texture2D" uid="uid://b81jlh5w56xmf" path="res://assets/art/big_enemy.png" id="2_cpmmr"]
-[ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="2_ly44p"]
 [ext_resource type="Texture2D" uid="uid://bkikffj6wah11" path="res://assets/art/duck ship_0001.png" id="2_yhbkl"]
 [ext_resource type="Texture2D" uid="uid://jaha1e8rks3f" path="res://assets/art/duck ship_0002.png" id="3_ly44p"]
 [ext_resource type="Texture2D" uid="uid://br4p7qif0k3fd" path="res://assets/art/shield ship_0001.png" id="4_cpmmr"]
@@ -10,25 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://cvb7682s2nuus" path="res://assets/art/cow_0003.png" id="6_qshjt"]
 [ext_resource type="Texture2D" uid="uid://0pg0f3h6pl24" path="res://assets/art/cow_0002.png" id="7_8rak0"]
 [ext_resource type="Texture2D" uid="uid://b1cexk1o4eydm" path="res://assets/art/cow.png" id="8_qshjt"]
+[ext_resource type="PackedScene" uid="uid://bnx018jkfsdvj" path="res://scene/shield.tscn" id="11_8rak0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_cpmmr")
-}],
-"loop": true,
-"name": &"enemy_big",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_ly44p")
-}],
-"loop": true,
-"name": &"enemy_small",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_yhbkl")
@@ -81,12 +64,7 @@ radius = 13.0
 height = 56.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vysyx"]
-radius = 55.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cpmmr"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qpxp6"]
-radius = 23.0
+radius = 25.0
 
 [node name="ShipNode" type="Area2D" unique_id=1841324561 groups=["node"]]
 collision_mask = 2
@@ -94,37 +72,27 @@ script = ExtResource("1_ewtr1")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"mothership-3hp"
+animation = &"shield"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
+visible = false
 position = Vector2(-3, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_m1ihe")
 disabled = true
 
 [node name="hitbox_shield" type="CollisionShape2D" parent="." unique_id=1696449843]
-position = Vector2(-7, 0)
+position = Vector2(-9, 0)
 shape = SubResource("CircleShape2D_vysyx")
 disabled = true
 
 [node name="hitbox_mother" type="CollisionShape2D" parent="." unique_id=1121524872]
-position = Vector2(-16, 0)
+visible = false
 shape = SubResource("CircleShape2D_vysyx")
 disabled = true
 
 [node name="bullet_timer" type="Timer" parent="." unique_id=1733135617]
 wait_time = 0.5
-
-[node name="hitbox_enemy_sm" type="CollisionShape2D" parent="." unique_id=890536836]
-position = Vector2(6, -2)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_cpmmr")
-disabled = true
-
-[node name="hitbox_enemy_bg" type="CollisionShape2D" parent="." unique_id=1167065100]
-position = Vector2(11, 2)
-shape = SubResource("CircleShape2D_qpxp6")
-disabled = true
 
 [node name="InvulnerabilityTimer" type="Timer" parent="." unique_id=1694510080]
 one_shot = true
@@ -135,6 +103,10 @@ wait_time = 0.1
 [node name="CrashTimer" type="Timer" parent="." unique_id=1828068009]
 wait_time = 0.7
 one_shot = true
+
+[node name="Shield" parent="." unique_id=779096602 instance=ExtResource("11_8rak0")]
+position = Vector2(-7, 0)
+is_enemy = false
 
 [connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
