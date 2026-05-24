@@ -107,11 +107,11 @@ func spawn_scrap(pos: Vector2) -> void:
 	set_deferred("is_spawning_scrap", false)
 
 func scrap_chance_calculator(fleet_size: int) -> float:
-	var chance = 0.35
+	var chance = 0.4
 	if fleet_size < 2:
 		chance = 1
 	elif fleet_size < 4:
 		chance = 0.5
 	else:
-		chance -= fleet_size * 0.02
+		chance -= fleet_size * 0.01
 	return chance

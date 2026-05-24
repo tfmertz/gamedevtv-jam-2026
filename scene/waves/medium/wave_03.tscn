@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bleknymq4xe1r"]
+
+[ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="1_kxhbr"]
+
+[node name="Wave03" type="Node2D" unique_id=90128409]
+
+[node name="TommyGun" parent="." unique_id=979594765 instance=ExtResource("1_kxhbr")]
+position = Vector2(2015, 90)
+shield_health = 1
+
+[node name="TommyGun2" parent="." unique_id=1893915470 instance=ExtResource("1_kxhbr")]
+position = Vector2(2017, 981)
+shield_health = 1
+
+[node name="TommyGun3" parent="." unique_id=954373863 instance=ExtResource("1_kxhbr")]
+position = Vector2(2006, 711)
+shield_health = 1
+
+[node name="TommyGun4" parent="." unique_id=255899317 instance=ExtResource("1_kxhbr")]
+position = Vector2(2012, 303)
+shield_health = 1

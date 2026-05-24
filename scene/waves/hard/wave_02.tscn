@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dg8h8c7scktwx"]
+
+[ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="1_f5d66"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="2_40k0j"]
+
+[node name="Wave02" type="Node2D" unique_id=31588650]
+
+[node name="TommyGun" parent="." unique_id=979594765 instance=ExtResource("1_f5d66")]
+position = Vector2(1989, 530)
+attack_spread = 25
+clip_size = 20
+shield_health = 1
+
+[node name="TommyGun2" parent="." unique_id=684771124 instance=ExtResource("1_f5d66")]
+position = Vector2(1995, 890)
+attack_spread = 25
+clip_size = 20
+shield_health = 1
+
+[node name="TommyGun3" parent="." unique_id=1705404169 instance=ExtResource("1_f5d66")]
+position = Vector2(1993, 151)
+attack_spread = 25
+clip_size = 20
+shield_health = 1
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("2_40k0j")]
+position = Vector2(1992, 718)
+
+[node name="Bomber2" parent="." unique_id=1154546143 instance=ExtResource("2_40k0j")]
+position = Vector2(1997, 345)
