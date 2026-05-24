@@ -18,11 +18,11 @@ var screen_size : Vector2i
 @onready var enemy_vert_spawn_follow_2d: PathFollow2D = $EnemyVertSpawnPath/VertSpawnFollow2D
 @onready var wave_timer: Timer = $WaveTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
+@onready var difficulty_timer: Timer = $DifficultyTimer
 
 var player_fleet
 var enemy_spawn_min := 1
 var enemy_spawn_max := 1
-var difficulty_timer: Timer
 var _wave_scenes_by_difficulty: Dictionary = {
 	Difficulty.EASY: [] as Array[PackedScene],
 	Difficulty.MEDIUM: [] as Array[PackedScene],
@@ -147,6 +147,7 @@ func _on_difficulty_timer_timeout() -> void:
 	# Turn off other spawners
 	wave_timer.stop()
 	enemy_spawn_timer.stop()
+	difficulty_timer.stop()
 	
 	return
 	if difficulty == Difficulty.HARD:
