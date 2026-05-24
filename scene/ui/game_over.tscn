@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://dij5iil8mdolm"]
 
 [ext_resource type="Script" uid="uid://btjhyl76d37gl" path="res://src/title.gd" id="1_oef1b"]
+[ext_resource type="Texture2D" uid="uid://b78v62tuvike" path="res://assets/art/space1.png" id="2_space1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ka843"]
-font_size = 32
+font_size = 64
+font_color = Color(1, 0.35, 0.35, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_controls_header"]
 font_size = 32
@@ -26,6 +30,22 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Title" type="Node2D" unique_id=1822057023]
 script = ExtResource("1_oef1b")
 
+[node name="SpaceLayer" type="Parallax2D" parent="."]
+z_index = -100
+scale = Vector2(5, 5)
+scroll_scale = Vector2(0, 0)
+repeat_size = Vector2(2048, 1152)
+autoscroll = Vector2(-20, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SpaceLayer"]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("2_space1")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 2048, 1152)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=653565697]
 
 [node name="Control" type="CenterContainer" parent="CanvasLayer" unique_id=786101586]
@@ -43,10 +63,11 @@ theme_override_constants/separation = 12
 layout_mode = 2
 text = "Game Over!"
 label_settings = SubResource("LabelSettings_ka843")
+horizontal_alignment = 1
 
 [node name="ControlsMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = -160
+theme_override_constants/margin_top = 24
 
 [node name="ControlsBox" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin"]
 layout_mode = 2
