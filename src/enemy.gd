@@ -86,7 +86,7 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	var is_explosion := false
 	# only explode on collisions with nodes or player
-	if area.is_in_group("node"):
+	if area.is_in_group("node") or area.is_in_group("connections"):
 		GameManager.shake_camera(20.0)
 		is_explosion = true
 	_die(is_explosion)

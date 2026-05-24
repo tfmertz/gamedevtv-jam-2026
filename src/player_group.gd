@@ -82,6 +82,7 @@ func add_single_connection(new_ship: ShipNode) -> void:
 		#remove -2 because we just added a new connection between the second to last ship and this one,
 		#so trim the connection between second to last and first, then add one between newest and first
 		if ships.size() > 3:
+			connections[-2].remove_from_group("connections")
 			connections[-2].queue_free()
 			connections.remove_at(-2)
 		var connection2 = ship_conn_scene.instantiate()
@@ -173,6 +174,7 @@ func _process(delta: float) -> void:
 	
 	if deleted_ship_idx.size() > 0 or toggle_ship_grouping:
 		for connection in connections:
+			connection.remove_from_group("connections")
 			connection.queue_free()
 		connections.clear()
 	
