@@ -14,7 +14,7 @@ var bullet_spawn_1 = Vector2(1736,26)
 var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
-var health = 50
+var health = 100
 var target_location
 var target_direction
 var speed = 1
@@ -151,12 +151,12 @@ func spawn_ships() -> void:
 		ship2.set_rand_mode(true)
 	else:
 		var ship = bomber_scene.instantiate()
-		get_tree().get_root().add_child(ship)
 		ship.position = ship_spawn_top
+		get_tree().get_root().add_child(ship)
 		
 		var ship2 = bomber_scene.instantiate()
-		get_tree().get_root().add_child(ship2)
 		ship2.position = ship_spawn_bot
+		get_tree().get_root().add_child(ship2)
 
 
 

@@ -4,6 +4,7 @@ class_name Enemy
 extends Area2D
 
 @export var health := 1
+@export var shield_health := 0
 @export var attack := 1
 @export var speed := 100
 @export var explosion_damage := 1
@@ -18,6 +19,8 @@ var is_dying := false
 func _ready() -> void:
 	# hook up explosion logic
 	area_entered.connect(_on_area_entered)
+	if shield_health > 0:
+		$Shield.set_active(shield_health)
 	
 func _physics_process(delta: float) -> void:
 	_move(delta)
@@ -87,6 +90,6 @@ func _on_area_entered(area: Area2D) -> void:
 	var is_explosion := false
 	# only explode on collisions with nodes or player
 	if area.is_in_group("node") or area.is_in_group("connections"):
-		GameManager.shake_camera(20.0)
+		GameManager.shake_camera(30.0)
 		is_explosion = true
 	_die(is_explosion)

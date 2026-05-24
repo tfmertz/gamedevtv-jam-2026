@@ -5,17 +5,13 @@
 [node name="Wave1" type="Node2D" unique_id=1161713471]
 
 [node name="EnemyShipNode2" parent="." unique_id=1878084434 instance=ExtResource("1_xbp3s")]
-position = Vector2(2327, 307)
+position = Vector2(2000, 408)
 ship_type = 2
 
 [node name="EnemyShipNode3" parent="." unique_id=17835875 instance=ExtResource("1_xbp3s")]
-position = Vector2(2037, 500)
-ship_type = 2
-
-[node name="EnemyShipNode4" parent="." unique_id=1841324561 instance=ExtResource("1_xbp3s")]
-position = Vector2(2326, 500)
+position = Vector2(2124, 500)
 ship_type = 2
 
 [node name="EnemyShipNode5" parent="." unique_id=398741377 instance=ExtResource("1_xbp3s")]
-position = Vector2(2328, 711)
+position = Vector2(2000, 582)
 ship_type = 2

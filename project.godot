@@ -78,7 +78,7 @@ sort_ships={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Bullets"
-2d_physics/layer_4="Shielded"
+2d_physics/layer_4="Scrap"
 
 [physics]
 

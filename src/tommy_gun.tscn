@@ -28,5 +28,3 @@ shape = SubResource("CircleShape2D_mq4bw")
 rect = Rect2(-23, -24, 46, 48)
 
 [node name="Shield" parent="." unique_id=779096602 instance=ExtResource("5_g0ey1")]
-health = 1
-auto_init = true

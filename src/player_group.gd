@@ -44,7 +44,7 @@ func spawn_mothership() -> void:
 	mothership = ship_scene.instantiate()
 	mothership.register_parent(self)
 	mothership.set_ship_type(ShipNode.ShipType.MOTHER)
-	mothership.start(Vector2(screen_size.size.x / 2,screen_size.size.x / 2))
+	mothership.start(Vector2(screen_size.size.x / 4,screen_size.size.y / 2))
 	add_child(mothership)
 
 #TODO ew
@@ -113,7 +113,10 @@ func _process(delta: float) -> void:
 	var close_loop            = false
 	var toggle_ship_grouping  = false
 	
-	velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if not GameManager.stop_player_control:
+		velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	else:
+		velocity_dir = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("cycle_formation"):
 		formation = (formation + 1) % len(FormationType)

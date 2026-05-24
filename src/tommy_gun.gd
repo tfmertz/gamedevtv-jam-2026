@@ -14,7 +14,7 @@ var is_attacking := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# call base class ready to wire death collision
+	# call base class's _ready to wire death collision
 	super()
 	if not bullet_scene:
 		assert(bullet_scene != null, "Bullet scene needs to be defined to shoot!")

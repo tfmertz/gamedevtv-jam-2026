@@ -1,21 +1,24 @@
 [gd_scene format=3 uid="uid://cmls3wnxui0ji"]
 
 [ext_resource type="Script" uid="uid://7y88cwr0eudt" path="res://src/level.gd" id="1_u52ul"]
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="2_bddx0"]
 [ext_resource type="Texture2D" uid="uid://b78v62tuvike" path="res://assets/art/space1.png" id="2_space1"]
 [ext_resource type="Texture2D" uid="uid://cll4joqkh7f1i" path="res://assets/art/planet_a.png" id="3_planet_a"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="3_u2b8d"]
+[ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="4_aw33w"]
 [ext_resource type="Texture2D" uid="uid://6usrl22ae0rg" path="res://assets/art/planet_b.png" id="4_planet_b"]
+[ext_resource type="PackedScene" uid="uid://cmmk8vljkgmy6" path="res://scene/scrap.tscn" id="8_u2b8d"]
 
 [sub_resource type="Curve2D" id="Curve2D_s4405"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, -200, 0, 0, 0, 0, 0, 200)
+"points": PackedVector2Array(0, 0, 0, 0, 0, -450, 0, 0, 0, 0, -1, 450)
 }
 point_count = 2
 
-[node name="Level" type="Node2D" unique_id=1430583570 node_paths=PackedStringArray("spawn_anchor", "enemy_container")]
+[node name="Level" type="Node2D" unique_id=1430583570 node_paths=PackedStringArray("enemy_container")]
 script = ExtResource("1_u52ul")
-spawn_interval = 5.0
-spawn_anchor = NodePath("SpawnAnchor")
 enemy_container = NodePath("Enemies")
+enemy_scenes = Array[PackedScene]([ExtResource("2_bddx0"), ExtResource("3_u2b8d"), ExtResource("4_aw33w")])
 
 [node name="SpaceLayer" type="Parallax2D" parent="." unique_id=22750423]
 z_index = -100
@@ -56,26 +59,28 @@ position = Vector2(4032, 324)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("4_planet_b")
 
-[node name="SpawnAnchor" type="Node2D" parent="." unique_id=161952274]
-position = Vector2(0, -1)
-
 [node name="Enemies" type="Node2D" parent="." unique_id=1477185941]
 
 [node name="EnemySpawnTimer" type="Timer" parent="." unique_id=688992479]
 wait_time = 2.0
 
 [node name="DifficultyTimer" type="Timer" parent="." unique_id=642594811]
+wait_time = 120.0
 autostart = true
 
 [node name="EnemyVertSpawnPath" type="Path2D" parent="." unique_id=804415949]
+position = Vector2(1980, 540)
 curve = SubResource("Curve2D_s4405")
 
 [node name="VertSpawnFollow2D" type="PathFollow2D" parent="EnemyVertSpawnPath" unique_id=1186230592]
-position = Vector2(0, -200)
-rotation = 1.5707964
+position = Vector2(0, -450)
+rotation = 1.5719074
 
 [node name="WaveTimer" type="Timer" parent="." unique_id=38180934]
 autostart = true
+
+[node name="Scrap" parent="." unique_id=498599342 instance=ExtResource("8_u2b8d")]
+position = Vector2(1183, 516)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
