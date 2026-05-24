@@ -5,8 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://tyl64vdenayv" path="res://assets/sound/hit.wav" id="3_kteht"]
 [ext_resource type="AudioStream" uid="uid://ce8uu8iu6iqb6" path="res://assets/sound/SpaceAmbient.ogg" id="4_f24qo"]
 [ext_resource type="AudioStream" uid="uid://c6mfrwi7c2uo1" path="res://assets/sound/StarOx.ogg" id="5_kteht"]
-[ext_resource type="AudioStream" uid="uid://ekaoaxd446v1" path="res://assets/sound/moopain1.wav" id="6_ibl2c"]
-[ext_resource type="AudioStream" uid="uid://cmfnlwsqi45pu" path="res://assets/sound/moopain2.wav" id="7_fvf71"]
+[ext_resource type="AudioStream" uid="uid://pw60ibjxcnue" path="res://assets/sound/moopain1.wav" id="6_ibl2c"]
+[ext_resource type="AudioStream" uid="uid://cfurosvinpaoq" path="res://assets/sound/moopain2.wav" id="7_fvf71"]
+[ext_resource type="AudioStream" uid="uid://bqwwipokfsnqm" path="res://assets/sound/bosslaugh1.wav" id="8_fvf71"]
 
 [node name="AudioManager" type="Node2D" unique_id=1142990482]
 script = ExtResource("1_0mued")
@@ -16,3 +17,4 @@ title_music_stream = ExtResource("4_f24qo")
 game_music_stream = ExtResource("5_kteht")
 player_injured_stream = ExtResource("6_ibl2c")
 player_very_injured_stream = ExtResource("7_fvf71")
+boss_laugh_stream = ExtResource("8_fvf71")

@@ -11,11 +11,13 @@ const POOL_SIZE := 16 # max audio players
 @export var game_music_stream: AudioStream
 @export var player_injured_stream: AudioStream
 @export var player_very_injured_stream: AudioStream
+@export var boss_laugh_stream: AudioStream
 
 var _enemy_fire_count          := 0
 var _bullet_hit_count          := 0
 var _player_injured_count      := 0
 var _player_very_injured_count := 0
+var _boss_laughing             := false
 var _aggregate_accum           := 0.0
 var _pool: Array[AudioStreamPlayer] = []
 
@@ -56,6 +58,9 @@ func _process(delta: float) -> void:
 	if _player_very_injured_count > 0:
 		_play_pooled(player_very_injured_stream, 10.0, 1.0)
 		_player_very_injured_count = 0
+	if _boss_laughing:
+		_play_pooled(boss_laugh_stream, 0.0, 1.0)
+		_boss_laughing = false
 
 func report_enemy_fire() -> void:
 	_enemy_fire_count += 1
@@ -68,6 +73,9 @@ func report_player_injured() -> void:
 
 func report_player_very_injured() -> void:
 	_player_very_injured_count += 1
+
+func report_boss_laughter() -> void:
+	_boss_laughing = true
 
 # TODO(tom) add music cross fade on scene transition
 func cross_fade_music(new_stream: AudioStream):
