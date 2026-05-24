@@ -3,6 +3,31 @@
 [ext_resource type="Script" uid="uid://c5cxt05584a6s" path="res://src/boss_wave.gd" id="1_4nm24"]
 [ext_resource type="PackedScene" uid="uid://e1q14x8d1pxp" path="res://scene/boss_assets.tscn" id="2_aepen"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hb_bg"]
+bg_color = Color(0.08, 0.08, 0.08, 0.85)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.9, 0.9, 0.9, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hb_fill"]
+bg_color = Color(0.85, 0.15, 0.15, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb_label"]
+font_size = 22
+font_color = Color(1, 1, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="boss_wave" type="Node2D" unique_id=1501877358]
 script = ExtResource("1_4nm24")
 
@@ -24,6 +49,34 @@ wait_time = 1.5
 
 [node name="wave_timer" type="Timer" parent="." unique_id=1274687876]
 wait_time = 5.0
+
+[node name="HealthBarLayer" type="CanvasLayer" parent="." unique_id=1101010101]
+layer = 10
+visible = false
+
+[node name="HealthBarLabel" type="Label" parent="HealthBarLayer" unique_id=1101010102]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 16.0
+offset_right = 50.0
+offset_bottom = 44.0
+text = "BOSS"
+label_settings = SubResource("LabelSettings_hb_label")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HealthBarLayer" unique_id=1101010103]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 48.0
+offset_right = 400.0
+offset_bottom = 80.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hb_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hb_fill")
+max_value = 100.0
+value = 100.0
+show_percentage = false
 
 [connection signal="timeout" from="tongue_timer" to="." method="_on_tongue_timer_timeout"]
 [connection signal="timeout" from="screen_enter_timer" to="." method="_on_screen_enter_timer_timeout"]
