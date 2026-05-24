@@ -40,6 +40,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = health
 	health_bar_layer.visible = false
+	AudioManager.report_boss_laughter()
 
 func _physics_process(delta: float) -> void:
 	flyto(target_location)
