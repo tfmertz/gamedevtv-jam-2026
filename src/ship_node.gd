@@ -8,6 +8,7 @@ enum ShipType {GUN, SHIELD, MOTHER}
 var speed := 250
 var terminal_speed := 500
 var terminal_rotation := PI*randf_range(3.0,6.0)
+var terminal_size := Vector2.ZERO
 var ship_type: ShipType
 var velocity := Vector2.ZERO
 var velocity_dir := Vector2.ZERO
@@ -26,6 +27,9 @@ func _ready() -> void:
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
 	$CrashTimer.wait_time = randf_range(0.75, 1.5)
+	var last_size = randf_range(0.2, 0.8)
+	terminal_size = Vector2(last_size, last_size)
+	
 
 func register_parent(new_parent) -> void:
 	parent = new_parent
@@ -88,6 +92,7 @@ func _physics_process(delta: float) -> void:
 		velocity_dir = terminal_velocity_dir
 		speed = terminal_speed
 		rotation += terminal_rotation * delta
+		scale -= terminal_size * delta
 	# Only move if velocity_dir is a meaningful number
 	if not velocity_dir.is_zero_approx():
 		# calculate ship velocity

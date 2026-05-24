@@ -7,6 +7,7 @@ var dest_ship   : ShipNode = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	add_to_group("connections")
 	z_index = -1
 	
 

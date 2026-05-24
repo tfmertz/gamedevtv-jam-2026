@@ -8,6 +8,7 @@ extends Area2D
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var enemy_collision_shape_2d: CollisionShape2D = $EnemyCollisionShape2D
 
 var tween : Tween
 var tween_scale : Tween
