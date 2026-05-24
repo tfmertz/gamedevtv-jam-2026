@@ -69,7 +69,7 @@ texture = ExtResource("4_planet_b")
 wait_time = 2.0
 
 [node name="DifficultyTimer" type="Timer" parent="." unique_id=642594811]
-wait_time = 60.0
+wait_time = 120.0
 autostart = true
 
 [node name="EnemyVertSpawnPath" type="Path2D" parent="." unique_id=804415949]

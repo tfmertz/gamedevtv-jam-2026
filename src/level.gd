@@ -2,12 +2,15 @@ extends Node
 
 @export_dir var waves_folder: String = "res://scene/waves"
 @export var wave_spawn_interval: float = 5.0
+@export var pre_boss_delay := 10
+
 ## Where instantiated waves get parented. Usually your enemies container or the world root.
 @export var enemy_container: Node
 enum Difficulty { EASY, MEDIUM, HARD }
 @export var difficulty: Difficulty = Difficulty.EASY
 @export var enemy_spawn_interval: float = 5.0
 @export var enemy_scenes : Array[PackedScene]
+
 
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var group_scene : PackedScene = preload("res://scene/player_group.tscn")
@@ -149,9 +152,13 @@ func _on_difficulty_timer_timeout() -> void:
 		wave_timer.stop()
 		enemy_spawn_timer.stop()
 		difficulty_timer.stop()
+	
+		# wait for enemies to clear
+		await get_tree().create_timer(pre_boss_delay).timeout
 	else:
 		# increase difficulty every 2m
 		difficulty += 1
+		$DifficultyTimer.wait_time -= 15
 
 
 func _on_timer_timeout() -> void:
