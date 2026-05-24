@@ -6,6 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ka421"]
 radius = 61.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wm7db"]
+radius = 46.09772
+
 [node name="Shield" type="Area2D" unique_id=779096602 groups=["shield"]]
 collision_layer = 0
 collision_mask = 0
@@ -20,5 +23,8 @@ disabled = true
 visible = false
 self_modulate = Color(0.52, 0.85599995, 1, 0.77254903)
 texture = ExtResource("1_0p0gr")
+
+[node name="EnemyCollisionShape2D" type="CollisionShape2D" parent="." unique_id=2118630578]
+shape = SubResource("CircleShape2D_wm7db")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

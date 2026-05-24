@@ -29,11 +29,15 @@ func set_active(new_health: int) -> void:
 	if is_enemy:
 		set_collision_layer_value(2, true)
 		initial_scale = Vector2(0.65, 0.65)
-		collision_shape_2d.shape.radius = 40
+		enemy_collision_shape_2d.shape.radius = 40
+		enemy_collision_shape_2d.disabled = false
+		collision_shape_2d.disabled = true
 	else:
 		set_collision_layer_value(1, true)
 		initial_scale = Vector2.ONE
 		collision_shape_2d.shape.radius = 61
+		collision_shape_2d.disabled = false
+		enemy_collision_shape_2d.disabled = true
 	
 	# set health
 	health = new_health
@@ -41,13 +45,13 @@ func set_active(new_health: int) -> void:
 	sprite_2d.scale = Vector2.ZERO
 	sprite_2d.visible = true
 	scale_shield(initial_scale, 0.45)
-	collision_shape_2d.disabled = false
 
 func take_damage(damage: int, source: Area2D) -> void:
 	health -= damage
 	if health <= 0:
 		# disable our protection
 		collision_shape_2d.set_deferred("disabled", true)
+		enemy_collision_shape_2d.set_deferred("disabled", true)
 		scale_shield(Vector2.ZERO, 0.2)
 	else:
 		flash()
