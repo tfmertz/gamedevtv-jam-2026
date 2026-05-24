@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ca8adspbq10hq"]
+
+[ext_resource type="Script" uid="uid://2jy7so4lmnfo" path="res://scene/autoload/game_manager.gd" id="1_2uct3"]
+[ext_resource type="Script" uid="uid://cy83tbydebwdl" path="res://src/camera_controls.gd" id="2_ubk7d"]
+
+[node name="GameManager" type="Node2D" unique_id=1450854875]
+script = ExtResource("1_2uct3")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=561175760]
+anchor_mode = 0
+script = ExtResource("2_ubk7d")

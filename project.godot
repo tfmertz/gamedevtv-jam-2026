@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://2jy7so4lmnfo"
+GameManager="*uid://ca8adspbq10hq"
 AudioManager="*uid://c5rk6odxqr1le"
 
 [display]
@@ -78,6 +78,7 @@ sort_ships={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Bullets"
+2d_physics/layer_4="Shielded"
 
 [physics]
 

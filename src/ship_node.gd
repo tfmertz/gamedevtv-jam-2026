@@ -2,7 +2,6 @@ class_name ShipNode extends Area2D
 
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
-@onready var hitbox_shield: CollisionShape2D = $hitbox_shield
 
 enum ShipType {GUN, SHIELD, MOTHER}
 
@@ -16,7 +15,6 @@ var health: int
 var initial_speed := 0
 var screen_size: Rect2
 var invuln_duration := 1
-var shield_radius := 50
 var parent
 
 # Called when the node enters the scene tree for the first time.
@@ -24,13 +22,6 @@ func _ready() -> void:
 	initial_speed = speed
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
-
-func _draw() -> void:
-	if ship_type != ShipType.SHIELD:
-		return
-	
-	if health > 1:
-		draw_circle(hitbox_shield.position, shield_radius, Color.from_rgba8(0, 150, 178, 125))
 
 func register_parent(new_parent) -> void:
 	parent = new_parent
@@ -50,38 +41,27 @@ func set_position_target(new_target) -> void:
 
 func set_ship_type(new_type) -> void:
 	ship_type = new_type
+	show()
 	$InvulnerabilityTimer.wait_time = invuln_duration
 	if ship_type == ShipType.GUN:
 		$sprite.animation = "gun"
+		$hitbox_gun.disabled = false
 		health = 1
 	elif ship_type == ShipType.SHIELD:
 		$sprite.animation = "shield"
-		health = 4
+		health = 1
+		$hitbox_shield.disabled = false
+		$Shield.set_active(3)
 	elif ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-3hp"
+		$hitbox_mother.disabled = false
 		health = 3
 		add_to_group("player")
 	else:
 		assert(false, "invalid ship type")
 
-func set_shield() -> void:
-	queue_redraw()
-
 func start(pos):
 	position = pos
-	show()
-	
-	if ship_type == ShipType.GUN:
-		$hitbox_gun.disabled = false
-		
-	elif ship_type == ShipType.SHIELD:
-		$hitbox_shield.disabled = false
-	
-	elif ship_type == ShipType.MOTHER:
-		$hitbox_mother.disabled = false
-	else:
-		assert(false, "invalid ship type")
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -115,11 +95,10 @@ func take_damage(damage: int) -> void:
 		if health <= 0:
 			queue_free()
 		elif ship_type == ShipType.MOTHER:
+			GameManager.flash()
 			$InvulnerabilityTimer.start()
 			$sprite.animation = "mothership-" + str(health) + "hp"
 			$FlashingTimer.start()
-		elif ship_type == ShipType.SHIELD and health == 1:
-			set_shield()
 
 func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)

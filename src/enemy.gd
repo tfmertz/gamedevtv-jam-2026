@@ -82,8 +82,11 @@ func _die(explode: bool = false) -> void:
 # handles exploding from player ship/nodes. Not for regular damage detectiion
 # see take_damage
 func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("shield"):
+		return
 	var is_explosion := false
 	# only explode on collisions with nodes or player
 	if area.is_in_group("node"):
+		GameManager.shake_camera(20.0)
 		is_explosion = true
 	_die(is_explosion)

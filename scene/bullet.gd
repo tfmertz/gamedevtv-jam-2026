@@ -71,5 +71,4 @@ func _on_area_entered(area: Area2D) -> void:
 
 # When bullets go out of view, delete them
 func _on_screen_exited() -> void:
-
 	queue_free()
