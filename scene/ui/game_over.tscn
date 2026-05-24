@@ -5,6 +5,24 @@
 [sub_resource type="LabelSettings" id="LabelSettings_ka843"]
 font_size = 32
 
+[sub_resource type="LabelSettings" id="LabelSettings_controls_header"]
+font_size = 32
+font_color = Color(0.45, 0.9, 1, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_controls_body"]
+font_size = 28
+font_color = Color(0.85, 0.85, 0.85, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_controls_key"]
+font_size = 28
+font_color = Color(1, 0.85, 0.35, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Title" type="Node2D" unique_id=1822057023]
 script = ExtResource("1_oef1b")
 
@@ -19,15 +37,80 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=222502212]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=342005093]
 layout_mode = 2
 text = "Game Over!"
 label_settings = SubResource("LabelSettings_ka843")
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=2062605715]
+[node name="ControlsMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -160
+
+[node name="ControlsBox" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ControlsHeader" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox"]
+layout_mode = 2
+text = "— CONTROLS —"
+label_settings = SubResource("LabelSettings_controls_header")
+horizontal_alignment = 1
+
+[node name="ControlsGrid" type="GridContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="ActionMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "Move"
+label_settings = SubResource("LabelSettings_controls_body")
+
+[node name="KeyMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "WASD / Arrow Keys"
+label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ActionFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "Cycle Formation"
+label_settings = SubResource("LabelSettings_controls_body")
+
+[node name="KeyFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "F"
+label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ActionSpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "Cycle Spacing"
+label_settings = SubResource("LabelSettings_controls_body")
+
+[node name="KeySpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "R"
+label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "Sort Ships"
+label_settings = SubResource("LabelSettings_controls_body")
+
+[node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+layout_mode = 2
+text = "G"
+label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 40
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/ButtonMargin" unique_id=2062605715]
 layout_mode = 2
 text = "Retry"
 
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button" to="." method="_on_button_press"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ButtonMargin/Button" to="." method="_on_button_press"]

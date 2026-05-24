@@ -24,13 +24,17 @@ enemy_scenes = Array[PackedScene]([ExtResource("2_bddx0"), ExtResource("3_u2b8d"
 z_index = -100
 scale = Vector2(5, 5)
 scroll_scale = Vector2(0, 0)
-repeat_size = Vector2(256, 128)
+repeat_size = Vector2(2048, 1152)
 autoscroll = Vector2(-20, 0)
-repeat_times = 8
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SpaceLayer" unique_id=34797159]
+texture_filter = 1
+texture_repeat = 2
 texture = ExtResource("2_space1")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 2048, 1152)
 
 [node name="PlanetLayer" type="Parallax2D" parent="." unique_id=2054582734]
 z_index = -50
