@@ -24,6 +24,7 @@ var sprite_half = 32
 
 
 func _ready() -> void:
+	super()
 	wind_x = get_viewport_rect().size.x
 	wind_y = get_viewport_rect().size.y
 	#$sprite.hide()

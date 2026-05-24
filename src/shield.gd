@@ -12,12 +12,20 @@ extends Area2D
 
 var tween : Tween
 var tween_scale : Tween
+var bossshield = false
+var target_location
+var speed = 150
 
 var initial_scale = Vector2.ONE
 
 func _ready() -> void:
 	if health > 0 and auto_init:
 		set_active(health)
+	target_location=position
+
+func _physics_process(delta: float) -> void:
+	if bossshield:
+		flyto(delta)
 
 func set_active(new_health: int) -> void:
 	# if we aren't started, wait til next frame
@@ -69,3 +77,9 @@ func flash() -> void:
 	tween.set_loops(2)
 	tween.tween_property(sprite_2d, "modulate:a", 0.5, 0.05)
 	tween.tween_property(sprite_2d, "modulate:a", 1, 0.05)
+
+func flyto(delta: float) -> void: #recieves a target position as vector2
+	var dir = position.direction_to(target_location)
+	# sets a temporary speed equal to arrive at location exactly
+	if position.distance_to(target_location) > 5:
+		position += dir * speed * delta
