@@ -113,7 +113,10 @@ func _process(delta: float) -> void:
 	var close_loop            = false
 	var toggle_ship_grouping  = false
 	
-	velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if not GameManager.stop_player_control:
+		velocity_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	else:
+		velocity_dir = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("cycle_formation"):
 		formation = (formation + 1) % len(FormationType)

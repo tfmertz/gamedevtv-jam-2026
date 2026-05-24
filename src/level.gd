@@ -11,6 +11,8 @@ enum Difficulty { EASY, MEDIUM, HARD }
 
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var group_scene : PackedScene = preload("res://scene/player_group.tscn")
+var boss_scene : PackedScene = preload("res://scene/boss_wave.tscn")
+
 var screen_size : Vector2i
 
 @onready var enemy_vert_spawn_follow_2d: PathFollow2D = $EnemyVertSpawnPath/VertSpawnFollow2D
@@ -137,10 +139,18 @@ func _on_enemy_spawn_timer_timeout() -> void:
 
 func _on_difficulty_timer_timeout() -> void:
 	# for now go to boss directly, until tom builds out more waves
-	GameManager.load_scene("res://scenes/boss_wave.tscn")
+	var boss := boss_scene.instantiate()
+	add_child(boss)
+	# wait 4 sec
+	GameManager.pause_player_control(4.0)
+	
+	# Turn off other spawners
+	wave_timer.stop()
+	enemy_spawn_timer.stop()
+	
 	return
 	if difficulty == Difficulty.HARD:
-		GameManager.load_scene("res://scenes/boss_wave.tscn")
+		pass
 	else:
 		# increase difficulty every 2m
 		difficulty += 1

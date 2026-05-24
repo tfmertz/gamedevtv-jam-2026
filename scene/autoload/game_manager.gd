@@ -13,6 +13,7 @@ signal scene_changed
 
 var is_transitioning := false
 var is_spawning_scrap := false
+var stop_player_control := false
 
 var _color_rect: ColorRect
 var flash_tween: Tween
@@ -35,6 +36,11 @@ func _ready() -> void:
 		_change_to(initial_scene_path)
 	else:
 		fade_in(3)
+
+func pause_player_control(duration: float) -> void:
+	stop_player_control = true
+	await get_tree().create_timer(duration).timeout
+	stop_player_control = false
 
 func fade_out(duration := 1.0) -> void:
 	var tween := create_tween()

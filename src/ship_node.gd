@@ -144,6 +144,9 @@ func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)
 
 func _on_bullet_timer_timeout() -> void:
+	if GameManager.stop_player_control:
+		return
+	
 	if ship_type != ShipType.SHIELD:
 		var bullet = bullet_scene.instantiate()
 		bullet.position = position
