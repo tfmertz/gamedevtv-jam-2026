@@ -8,7 +8,6 @@ var dest_ship   : ShipNode = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_index = -1
-	add_to_group("node")
 	
 
 func set_source_ship(ship: ShipNode):
