@@ -12,9 +12,11 @@ signal scene_changed
 @export var scrap_scene: PackedScene = preload("res://scene/scrap.tscn")
 
 var is_transitioning := false
+var is_spawning_scrap := false
 
 var _color_rect: ColorRect
 var flash_tween: Tween
+
 
 func _ready() -> void:
 	var canvas := CanvasLayer.new()
@@ -86,17 +88,24 @@ func _change_to(scene_path: String) -> void:
 	await get_tree().process_frame  # second frame: instantiation settled
 
 func spawn_scrap(pos: Vector2) -> void:
+	if is_spawning_scrap:
+		return
+	is_spawning_scrap = true
 	var player_fleet_size = get_tree().get_nodes_in_group("node").size()
 	var scrap_chance = scrap_chance_calculator(player_fleet_size)
 	if randf_range(0, 1) < scrap_chance:
 		var scrap = scrap_scene.instantiate()
 		scrap.position = pos
 		get_tree().get_root().call_deferred("add_child", scrap)
+	
+	set_deferred("is_spawning_scrap", false)
 
 func scrap_chance_calculator(fleet_size: int) -> float:
-	var chance = 0.56
-	if fleet_size < 4:
+	var chance = 0.35
+	if fleet_size < 2:
 		chance = 1
+	elif fleet_size < 4:
+		chance = 0.5
 	else:
 		chance -= fleet_size * 0.02
 	return chance

@@ -57,7 +57,6 @@ func spawn_enemy_big() -> void: #spawns ship as gun ship, sets animation, health
 	$sprite.show()
 
 	hitbox_enemy_bg.disabled = false
-	shield.set_active(1)
 	$bullet_timer.start()
 	health = 1
 	ship_type = EnemyType.ENEMY_BIG

@@ -44,7 +44,7 @@ func spawn_mothership() -> void:
 	mothership = ship_scene.instantiate()
 	mothership.register_parent(self)
 	mothership.set_ship_type(ShipNode.ShipType.MOTHER)
-	mothership.start(Vector2(screen_size.size.x / 2,screen_size.size.x / 2))
+	mothership.start(Vector2(screen_size.size.x / 4,screen_size.size.y / 2))
 	add_child(mothership)
 
 #TODO ew

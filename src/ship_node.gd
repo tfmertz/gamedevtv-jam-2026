@@ -2,10 +2,12 @@ class_name ShipNode extends Area2D
 
 @onready var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
+@onready var death_particles: CPUParticles2D = $DeathParticles
+@onready var mothership_death_particles: CPUParticles2D = $MothershipDeathParticles
 
 enum ShipType {GUN, SHIELD, MOTHER}
 
-var speed := 250
+var speed := 300
 var terminal_speed := 500
 var terminal_rotation := PI*randf_range(3.0,6.0)
 var terminal_size := Vector2.ZERO
@@ -26,10 +28,12 @@ func _ready() -> void:
 	initial_speed = speed
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
-	$CrashTimer.wait_time = randf_range(0.75, 1.5)
+	if ship_type == ShipType.MOTHER:
+		$CrashTimer.wait_time = 3.0
+	else:
+		$CrashTimer.wait_time = randf_range(0.75, 1.5)
 	var last_size = randf_range(0.2, 0.8)
 	terminal_size = Vector2(last_size, last_size)
-	
 
 func register_parent(new_parent) -> void:
 	parent = new_parent
@@ -102,6 +106,13 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 	
 	position += velocity * delta
+	# for dying mother ships, bounce
+	if mothership_death_particles.emitting:
+		 # Bounce: flip velocity component on whichever axis went out of bounds
+		if position.x <= 0 or position.x >= screen_size.size.x:
+			terminal_velocity_dir.x = -terminal_velocity_dir.x
+		if position.y <= 0 or position.y >= screen_size.size.y:
+			terminal_velocity_dir.y = -terminal_velocity_dir.y
 	position.x = clamp(position.x, 0, screen_size.size.x)
 	position.y = clamp(position.y, 0, screen_size.size.y)
 
@@ -118,14 +129,16 @@ func take_damage(damage: int, source: Area2D) -> void:
 
 
 func dramatic_death(source: Area2D) -> void:
+	if ship_type == ShipType.MOTHER:
+		mothership_death_particles.emitting = true
+	else:
+		death_particles.emitting = true
 	$CrashTimer.start()
 	set_off_path()
 	terminal_velocity_dir = source.position.direction_to(position)
 	$bullet_timer.stop()
-	$hitbox_gun.disabled = true
-	$hitbox_shield.disabled = true
-	
-
+	$hitbox_gun.set_deferred("disabled", true)
+	$hitbox_shield.set_deferred("disabled", true)
 
 func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)
