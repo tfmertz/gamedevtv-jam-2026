@@ -9,7 +9,7 @@ var FREQ_RATIO := 20
 var frequency_ratio: float
 var amplitude: int
 var frequency: float
-var speed = 250
+var speed = 200
 var spawn_position: Vector2
 var scrap_type: int
 
@@ -22,7 +22,8 @@ func _ready() -> void:
 		$scrap_sprite.animation = "gun"
 		
 	set_movement()
-	
+	await get_tree().create_timer(1).timeout
+	set_collision_mask_value(1, true)
 
 func set_movement() -> void:
 	#TODO Isaac: i think the origin is wrong here because
@@ -54,5 +55,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("hit_scrap"):
+		# only disconnect if we've given scrap
+		area_entered.disconnect(_on_area_entered)
 		area.hit_scrap(self)
 		queue_free()

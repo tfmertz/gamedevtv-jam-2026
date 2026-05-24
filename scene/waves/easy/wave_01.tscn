@@ -1,21 +1,13 @@
 [gd_scene format=3 uid="uid://sg32a6offe3k"]
 
-[ext_resource type="PackedScene" uid="uid://cmmk8vljkgmy6" path="res://scene/scrap.tscn" id="1_kr5hj"]
 [ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="2_4lqt3"]
 
 [node name="Wave1" type="Node2D" unique_id=1161713471]
 
 [node name="EnemyShipNode2" parent="." unique_id=1878084434 instance=ExtResource("2_4lqt3")]
-position = Vector2(2077, 129)
-ship_type = 2
-
-[node name="EnemyShipNode3" parent="." unique_id=17835875 instance=ExtResource("2_4lqt3")]
-position = Vector2(2296, 515)
+position = Vector2(2075, 193)
 ship_type = 2
 
 [node name="EnemyShipNode5" parent="." unique_id=398741377 instance=ExtResource("2_4lqt3")]
-position = Vector2(2073, 892)
+position = Vector2(2082, 872)
 ship_type = 2
-
-[node name="Scrap" parent="." unique_id=498599342 instance=ExtResource("1_kr5hj")]
-position = Vector2(2017, 510)
