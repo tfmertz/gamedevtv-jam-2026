@@ -60,6 +60,8 @@ func _on_area_entered(area: Area2D) -> void:
 	# that can take damage, clear damage to it
 	if area.has_method("take_damage"):
 		area.take_damage(1, self)
+	elif area.is_in_group("boss"):
+		area.get_parent().take_damage(1, self)
 	
 	# kill the bullet, on mask area hit
 	var new_vfx = bullet_explosion_vfx.instantiate()

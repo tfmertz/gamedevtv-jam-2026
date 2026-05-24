@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c4evxf4j44kyi"]
+[gd_scene format=3 uid="uid://cyne6ke83tlit"]
 
 [ext_resource type="Script" uid="uid://c5cxt05584a6s" path="res://src/boss_wave.gd" id="1_4nm24"]
 [ext_resource type="PackedScene" uid="uid://e1q14x8d1pxp" path="res://scene/boss_assets.tscn" id="2_aepen"]
@@ -6,7 +6,7 @@
 [node name="boss_wave" type="Node2D" unique_id=1501877358]
 script = ExtResource("1_4nm24")
 
-[node name="boss_assets" parent="." unique_id=1304102839 instance=ExtResource("2_aepen")]
+[node name="boss_assets" parent="." unique_id=1304102839 groups=["boss"] instance=ExtResource("2_aepen")]
 position = Vector2(306, 0)
 
 [node name="tongue_timer" type="Timer" parent="." unique_id=94264862]

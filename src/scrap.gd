@@ -22,7 +22,7 @@ func _ready() -> void:
 		$scrap_sprite.animation = "gun"
 		
 	set_movement()
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	set_collision_mask_value(1, true)
 
 func set_movement() -> void:
