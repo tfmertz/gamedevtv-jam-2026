@@ -42,7 +42,7 @@ func set_active(new_health: int) -> void:
 	scale_shield(initial_scale, 0.45)
 	collision_shape_2d.disabled = false
 
-func take_damage(damage: int) -> void:
+func take_damage(damage: int, source: Area2D) -> void:
 	health -= damage
 	if health <= 0:
 		# disable our protection

@@ -6,9 +6,12 @@ class_name ShipNode extends Area2D
 enum ShipType {GUN, SHIELD, MOTHER}
 
 var speed := 250
+var terminal_speed := 500
+var terminal_rotation := PI*randf_range(3.0,6.0)
 var ship_type: ShipType
 var velocity := Vector2.ZERO
 var velocity_dir := Vector2.ZERO
+var terminal_velocity_dir := Vector2.ZERO
 var on_path := false
 var position_target := Vector2.ZERO
 var health: int
@@ -22,6 +25,7 @@ func _ready() -> void:
 	initial_speed = speed
 	screen_size = get_viewport_rect()
 	$bullet_timer.start()
+	$CrashTimer.wait_time = randf_range(0.75, 1.5)
 
 func register_parent(new_parent) -> void:
 	parent = new_parent
@@ -33,6 +37,10 @@ func set_velocity_dir(new_vel_dir) -> void:
 
 func set_on_path() -> void:
 	on_path = true
+
+
+func set_off_path() -> void:
+	on_path = false
 
 
 func set_position_target(new_target) -> void:
@@ -76,7 +84,10 @@ func _physics_process(delta: float) -> void:
 			# increase speed for travel
 			speed = initial_speed * 2
 		
-	
+	if terminal_velocity_dir != Vector2.ZERO:
+		velocity_dir = terminal_velocity_dir
+		speed = terminal_speed
+		rotation += terminal_rotation * delta
 	# Only move if velocity_dir is a meaningful number
 	if not velocity_dir.is_zero_approx():
 		# calculate ship velocity
@@ -89,16 +100,27 @@ func _physics_process(delta: float) -> void:
 	position.x = clamp(position.x, 0, screen_size.size.x)
 	position.y = clamp(position.y, 0, screen_size.size.y)
 
-func take_damage(damage: int) -> void:
+func take_damage(damage: int, source: Area2D) -> void:
 	if $InvulnerabilityTimer.is_stopped():
 		health -= damage
 		if health <= 0:
-			queue_free()
+			dramatic_death(source)
 		elif ship_type == ShipType.MOTHER:
 			GameManager.flash()
 			$InvulnerabilityTimer.start()
 			$sprite.animation = "mothership-" + str(health) + "hp"
 			$FlashingTimer.start()
+
+
+func dramatic_death(source: Area2D) -> void:
+	$CrashTimer.start()
+	set_off_path()
+	terminal_velocity_dir = source.position.direction_to(position)
+	$bullet_timer.stop()
+	$hitbox_gun.disabled = true
+	$hitbox_shield.disabled = true
+	
+
 
 func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)
@@ -118,3 +140,7 @@ func _on_flashing_timer_timeout() -> void:
 func _on_invulnerability_timer_timeout() -> void:
 	$FlashingTimer.stop()
 	self.visible = true
+
+
+func _on_crash_timer_timeout() -> void:
+	queue_free()
