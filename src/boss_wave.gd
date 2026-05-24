@@ -151,12 +151,12 @@ func spawn_ships() -> void:
 		ship2.set_rand_mode(true)
 	else:
 		var ship = bomber_scene.instantiate()
-		get_tree().get_root().add_child(ship)
 		ship.position = ship_spawn_top
+		get_tree().get_root().add_child(ship)
 		
 		var ship2 = bomber_scene.instantiate()
-		get_tree().get_root().add_child(ship2)
 		ship2.position = ship_spawn_bot
+		get_tree().get_root().add_child(ship2)
 
 
 
