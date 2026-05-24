@@ -14,6 +14,7 @@ var bullet_spawn_1 = Vector2(1736,26)
 var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
+var max_health = 100
 var health = 100
 var target_location
 var target_direction
@@ -22,6 +23,8 @@ var tongueplaying = false
 var wave = false
 var attack_type = 1
 @onready var boss_assets: Area2D = $boss_assets
+@onready var health_bar_layer: CanvasLayer = $HealthBarLayer
+@onready var health_bar: ProgressBar = $HealthBarLayer/HealthBar
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,6 +37,9 @@ func _ready() -> void:
 	$wave_timer.stop()
 	#boss_assets.get_node("bossmid").play()
 	boss_assets.get_node("bossmid").play("default")
+	health_bar.max_value = max_health
+	health_bar.value = health
+	health_bar_layer.visible = false
 
 func _physics_process(delta: float) -> void:
 	flyto(target_location)
@@ -130,6 +136,7 @@ func _on_screen_enter_timer_timeout() -> void:
 	$screen_enter_timer.stop()
 	#$bullet_timer.start()
 	$wave_timer.start()
+	health_bar_layer.visible = true
 
 
 func _on_ship_spawn_timer_timeout() -> void:
@@ -163,6 +170,7 @@ func spawn_ships() -> void:
 
 func take_damage(damage: int, source: Area2D) -> void:
 	health -= damage
+	health_bar.value = max(health, 0)
 	if health <= 0:
 		die.emit()
 		_die()
@@ -176,6 +184,7 @@ func _die() -> void:
 	boss_assets.get_node("tongue").stop()
 	boss_assets.get_node("tongue").hide()
 	boss_assets.get_node("bossmid").play("death")
+	health_bar_layer.visible = false
 	flyto(Vector2(300, position.y))
 	
 	'''
