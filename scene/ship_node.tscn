@@ -8,9 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://taqqcwcew3jf" path="res://assets/art/cow_0001.png" id="6_8rak0"]
 [ext_resource type="Texture2D" uid="uid://cvb7682s2nuus" path="res://assets/art/cow_0003.png" id="6_qshjt"]
 [ext_resource type="Texture2D" uid="uid://0pg0f3h6pl24" path="res://assets/art/cow_0002.png" id="7_8rak0"]
+[ext_resource type="Texture2D" uid="uid://bvtnhscp8pi07" path="res://assets/art/cow_sprint_0003.png" id="7_r1g71"]
+[ext_resource type="Texture2D" uid="uid://c048ejbpxnkjc" path="res://assets/art/cow_sprint_0002.png" id="8_vi1mi"]
+[ext_resource type="Texture2D" uid="uid://d2nxkweuirjqc" path="res://assets/art/cow_sprint_0001.png" id="9_6216j"]
+[ext_resource type="Texture2D" uid="uid://dmlysfs0j1an8" path="res://assets/art/cow_sprint_not_0003.png" id="10_g7nh2"]
 [ext_resource type="Texture2D" uid="uid://bcxayw6q2phll" path="res://assets/art/particle.png" id="10_qshjt"]
+[ext_resource type="Texture2D" uid="uid://ddkyu8fg7xihc" path="res://assets/art/cow_sprint_not_0002.png" id="11_5vq46"]
 [ext_resource type="PackedScene" uid="uid://bnx018jkfsdvj" path="res://scene/shield.tscn" id="11_8rak0"]
 [ext_resource type="Texture2D" uid="uid://dklvj5in83lnu" path="res://assets/art/milk.png" id="11_waopi"]
+[ext_resource type="Texture2D" uid="uid://cvm5gboem75g6" path="res://assets/art/cow_sprint_not_0001.png" id="12_mfate"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
@@ -51,6 +57,54 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("7_r1g71")
+}],
+"loop": true,
+"name": &"mothership-sprint-1hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_vi1mi")
+}],
+"loop": true,
+"name": &"mothership-sprint-2hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_6216j")
+}],
+"loop": true,
+"name": &"mothership-sprint-3hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_g7nh2")
+}],
+"loop": true,
+"name": &"mothership-tired-1hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_5vq46")
+}],
+"loop": true,
+"name": &"mothership-tired-2hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_mfate")
+}],
+"loop": true,
+"name": &"mothership-tired-3hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_cpmmr")
 }, {
 "duration": 1.0,
@@ -86,7 +140,7 @@ script = ExtResource("1_ewtr1")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1209264211]
 sprite_frames = SubResource("SpriteFrames_65l50")
-animation = &"mothership-3hp"
+animation = &"mothership-tired-1hp"
 
 [node name="hitbox_gun" type="CollisionShape2D" parent="." unique_id=753737017]
 visible = false
@@ -162,8 +216,13 @@ color_ramp = SubResource("Gradient_8rak0")
 wait_time = 15.0
 one_shot = true
 
+[node name="SprintTimer" type="Timer" parent="." unique_id=2035421417]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
 [connection signal="timeout" from="FlashingTimer" to="." method="_on_flashing_timer_timeout"]
 [connection signal="timeout" from="CrashTimer" to="." method="_on_crash_timer_timeout"]
 [connection signal="timeout" from="HardDeathTimer" to="." method="_on_hard_death_timer_timeout"]
+[connection signal="timeout" from="SprintTimer" to="." method="_on_sprint_timer_timeout"]

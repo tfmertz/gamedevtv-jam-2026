@@ -39,3 +39,9 @@ curve = SubResource("Curve2D_x5c8g")
 [node name="DiamondPathFollow2D" type="PathFollow2D" parent="DiamondPath" unique_id=468773119]
 position = Vector2(-2, -169)
 rotation = 0.56456935
+
+[node name="SprintTimer" type="Timer" parent="." unique_id=143277229]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="SprintTimer" to="." method="_on_sprint_timer_timeout"]
