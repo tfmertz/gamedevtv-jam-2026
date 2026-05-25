@@ -18,8 +18,8 @@ var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
 var shield_plane = 1550
-var max_health = 50
-var health = 50
+var max_health = 500
+var health = 500
 var target_location
 var target_direction
 var speed = 1
