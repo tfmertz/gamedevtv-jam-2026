@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://c0vmc0duksco"]
+
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="1_gko8v"]
+[ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="2_28w36"]
+
+[node name="Wave06" type="Node2D" unique_id=893229760]
+
+[node name="EnemyShipNode" parent="." unique_id=1841324561 instance=ExtResource("1_gko8v")]
+position = Vector2(1950, 187)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode2" parent="." unique_id=1021191056 instance=ExtResource("1_gko8v")]
+position = Vector2(1953, 283)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode3" parent="." unique_id=1585288805 instance=ExtResource("1_gko8v")]
+position = Vector2(1955, 503)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode4" parent="." unique_id=15021021 instance=ExtResource("1_gko8v")]
+position = Vector2(1952, 615)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode5" parent="." unique_id=1829555168 instance=ExtResource("1_gko8v")]
+position = Vector2(1958, 799)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode6" parent="." unique_id=82225320 instance=ExtResource("1_gko8v")]
+position = Vector2(1956, 908)
+ship_type = 2
+shield_health = 1
+
+[node name="TommyGun" parent="." unique_id=979594765 instance=ExtResource("2_28w36")]
+position = Vector2(2043, 238)
+attack_spread = 15
+clip_size = 18
+
+[node name="TommyGun2" parent="." unique_id=107201817 instance=ExtResource("2_28w36")]
+position = Vector2(2039, 560)
+attack_spread = 15
+clip_size = 18
+
+[node name="TommyGun3" parent="." unique_id=19322442 instance=ExtResource("2_28w36")]
+position = Vector2(2046, 860)
+attack_spread = 15
+clip_size = 18

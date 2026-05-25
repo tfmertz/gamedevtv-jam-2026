@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://f033r3u37qpw"]
+
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="1_788g2"]
+
+[node name="Wave04" type="Node2D" unique_id=1903933942]
+
+[node name="EnemyShipNode" parent="." unique_id=1841324561 instance=ExtResource("1_788g2")]
+position = Vector2(1986, 74)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode2" parent="." unique_id=595430533 instance=ExtResource("1_788g2")]
+position = Vector2(2517, 74)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode3" parent="." unique_id=885033632 instance=ExtResource("1_788g2")]
+position = Vector2(2380, 74)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode4" parent="." unique_id=1806598216 instance=ExtResource("1_788g2")]
+position = Vector2(2248, 74)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode5" parent="." unique_id=1848454020 instance=ExtResource("1_788g2")]
+position = Vector2(2125, 77)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode6" parent="." unique_id=2027645139 instance=ExtResource("1_788g2")]
+position = Vector2(1987, 540)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode11" parent="." unique_id=1654718720 instance=ExtResource("1_788g2")]
+position = Vector2(1984, 1005)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode12" parent="." unique_id=516639687 instance=ExtResource("1_788g2")]
+position = Vector2(2498, 1007)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode13" parent="." unique_id=1965543215 instance=ExtResource("1_788g2")]
+position = Vector2(2366, 1005)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode14" parent="." unique_id=1566109544 instance=ExtResource("1_788g2")]
+position = Vector2(2237, 1007)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode15" parent="." unique_id=90471398 instance=ExtResource("1_788g2")]
+position = Vector2(2113, 1005)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode7" parent="." unique_id=2075966597 instance=ExtResource("1_788g2")]
+position = Vector2(2499, 540)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode8" parent="." unique_id=2017169007 instance=ExtResource("1_788g2")]
+position = Vector2(2366, 540)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode9" parent="." unique_id=2088472987 instance=ExtResource("1_788g2")]
+position = Vector2(2238, 540)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode10" parent="." unique_id=708815905 instance=ExtResource("1_788g2")]
+position = Vector2(2109, 542)
+ship_type = 2
+shield_health = 1

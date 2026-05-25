@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b82up8877oev"]
+
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="1_jfl7o"]
+
+[node name="Wave05" type="Node2D" unique_id=826818992]
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("1_jfl7o")]
+position = Vector2(2308, 166)
+attack_delay = 2.75
+
+[node name="Bomber9" parent="." unique_id=1961999112 instance=ExtResource("1_jfl7o")]
+position = Vector2(2405, 67)
+attack_delay = 3.0
+
+[node name="Bomber2" parent="." unique_id=774577858 instance=ExtResource("1_jfl7o")]
+position = Vector2(2201, 256)
+attack_delay = 2.5
+
+[node name="Bomber3" parent="." unique_id=2047099451 instance=ExtResource("1_jfl7o")]
+position = Vector2(2097, 350)
+attack_delay = 2.25
+
+[node name="Bomber4" parent="." unique_id=590626703 instance=ExtResource("1_jfl7o")]
+position = Vector2(1999, 428)
+
+[node name="Bomber5" parent="." unique_id=1735279598 instance=ExtResource("1_jfl7o")]
+position = Vector2(2012, 803)
+
+[node name="Bomber6" parent="." unique_id=1475264434 instance=ExtResource("1_jfl7o")]
+position = Vector2(2165, 889)
+attack_delay = 2.5
+
+[node name="Bomber7" parent="." unique_id=1293543843 instance=ExtResource("1_jfl7o")]
+position = Vector2(2319, 959)
+attack_delay = 3.0
+
+[node name="Bomber8" parent="." unique_id=1722043677 instance=ExtResource("1_jfl7o")]
+position = Vector2(2477, 1012)
+attack_delay = 3.5

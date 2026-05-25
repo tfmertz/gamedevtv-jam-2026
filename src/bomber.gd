@@ -4,7 +4,7 @@ extends Enemy
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 ## How long to wait until attacking
-@export var attack_delay := 2
+@export var attack_delay := 2.0
 @export var initial_move_distance := 500
 
 var is_attacking := false
@@ -14,7 +14,7 @@ var max_speed := 2000
 func _ready() -> void:
 	# call base class to wire events
 	super()
-
+	
 	# our initial move into position
 	var tween = move_to(position + direction * initial_move_distance, attack_delay)
 	await tween.finished
