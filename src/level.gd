@@ -163,13 +163,17 @@ func _on_difficulty_timer_timeout() -> void:
 		# TODO(isaac) maybe make waves shorter? longer? idk making slightly shorter
 		difficulty_timer.stop()
 		wave_timer.stop()
+		enemy_spawn_timer.stop()
 		
-		wave_spawn_interval += 1
+		wave_spawn_interval += 0.5
 		wave_timer.wait_time = wave_spawn_interval
+		enemy_spawn_interval -= 0.5
+		enemy_spawn_timer.wait_time = enemy_spawn_interval
 		$DifficultyTimer.wait_time -= 15*difficulty
 		
 		difficulty_timer.start()
 		wave_timer.start()
+		enemy_spawn_timer.start()
 
 
 func _on_timer_timeout() -> void:
