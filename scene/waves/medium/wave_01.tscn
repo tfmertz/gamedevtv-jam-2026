@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b8p1uf87ms2rv"]
+
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="1_kh1oo"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="2_olt4a"]
+[ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="3_3lqm6"]
+
+[node name="Wave01" type="Node2D" unique_id=571715416]
+
+[node name="EnemyShipNode" parent="." unique_id=1841324561 instance=ExtResource("1_kh1oo")]
+position = Vector2(1967, 501)
+ship_type = 2
+shield_health = 1
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("2_olt4a")]
+position = Vector2(2084, 427)
+attack_delay = 3.0
+
+[node name="TommyGun" parent="." unique_id=979594765 instance=ExtResource("3_3lqm6")]
+position = Vector2(1989, 267)
+clip_size = 15
+
+[node name="TommyGun2" parent="." unique_id=970799084 instance=ExtResource("3_3lqm6")]
+position = Vector2(1986, 736)
+attack_spread = 20
+clip_size = 15

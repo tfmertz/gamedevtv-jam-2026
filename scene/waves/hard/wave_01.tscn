@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://6pmyubfjf64l"]
+
+[ext_resource type="PackedScene" uid="uid://bn0m0hhmvfil" path="res://scene/enemy_ship_node.tscn" id="1_kh1oo"]
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="2_olt4a"]
+
+[node name="Wave07_tscn" type="Node2D" unique_id=18544803]
+
+[node name="EnemyShipNode" parent="." unique_id=1841324561 instance=ExtResource("1_kh1oo")]
+position = Vector2(1999, 755)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode2" parent="." unique_id=1864004100 instance=ExtResource("1_kh1oo")]
+position = Vector2(2077, 978)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode3" parent="." unique_id=1134909277 instance=ExtResource("1_kh1oo")]
+position = Vector2(2073, 521)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode4" parent="." unique_id=256704747 instance=ExtResource("1_kh1oo")]
+position = Vector2(2088, 91)
+ship_type = 2
+shield_health = 1
+
+[node name="EnemyShipNode5" parent="." unique_id=319630389 instance=ExtResource("1_kh1oo")]
+position = Vector2(2000, 302)
+ship_type = 2
+shield_health = 1
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("2_olt4a")]
+position = Vector2(2304, 33)
+
+[node name="Bomber2" parent="." unique_id=759232536 instance=ExtResource("2_olt4a")]
+position = Vector2(2645, 1044)
+attack_delay = 3.75
+initial_move_distance = 900
+
+[node name="Bomber3" parent="." unique_id=479512434 instance=ExtResource("2_olt4a")]
+position = Vector2(2562, 40)
+attack_delay = 3.5
+initial_move_distance = 800
+
+[node name="Bomber4" parent="." unique_id=1622194784 instance=ExtResource("2_olt4a")]
+position = Vector2(2554, 1046)
+attack_delay = 3.25
+initial_move_distance = 800
+
+[node name="Bomber5" parent="." unique_id=1506013215 instance=ExtResource("2_olt4a")]
+position = Vector2(2477, 38)
+attack_delay = 3.0
+initial_move_distance = 700
+
+[node name="Bomber6" parent="." unique_id=1529130966 instance=ExtResource("2_olt4a")]
+position = Vector2(2456, 1046)
+attack_delay = 2.75
+initial_move_distance = 700
+
+[node name="Bomber7" parent="." unique_id=495310310 instance=ExtResource("2_olt4a")]
+position = Vector2(2390, 32)
+attack_delay = 2.5
+initial_move_distance = 600
+
+[node name="Bomber8" parent="." unique_id=979519858 instance=ExtResource("2_olt4a")]
+position = Vector2(2352, 1046)
+attack_delay = 2.25
+initial_move_distance = 600

@@ -141,27 +141,25 @@ func _on_enemy_spawn_timer_timeout() -> void:
 				new_enemy.spawn_enemy_big()
 
 func _on_difficulty_timer_timeout() -> void:
-	# Turn off other spawners
-	wave_timer.stop()
-	enemy_spawn_timer.stop()
-	difficulty_timer.stop()
-	
-	# wait for enemies to clear
-	await get_tree().create_timer(pre_boss_delay).timeout
-	
-	# for now go to boss directly, until tom builds out more waves
-	var boss := boss_scene.instantiate()
-	add_child(boss)
-
-	# wait 4 sec
-	GameManager.pause_player_control(4.0)
-	
-	return
 	if difficulty == Difficulty.HARD:
-		pass
+		# for now go to boss directly, until tom builds out more waves
+		var boss := boss_scene.instantiate()
+		add_child(boss)
+		# wait 4 sec
+		GameManager.pause_player_control(4.0)
+		
+		# Turn off other spawners
+		wave_timer.stop()
+		enemy_spawn_timer.stop()
+		difficulty_timer.stop()
+	
+		# wait for enemies to clear
+		await get_tree().create_timer(pre_boss_delay).timeout
 	else:
 		# increase difficulty every 2m
 		difficulty += 1
+		# TODO(isaac) maybe make waves shorter? longer? idk leaving as is
+		#$DifficultyTimer.wait_time -= 15
 
 
 func _on_timer_timeout() -> void:

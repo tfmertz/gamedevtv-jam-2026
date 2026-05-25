@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dighhxhhpe0ei" path="res://src/bomber.gd" id="1_u514y"]
 [ext_resource type="Texture2D" uid="uid://e6a6cd4tna5e" path="res://assets/art/small_enemy.png" id="2_8c32t"]
 [ext_resource type="PackedScene" uid="uid://cumlnlxw5s8vl" path="res://scene/auto_kill_off_screen.tscn" id="3_8c32t"]
+[ext_resource type="PackedScene" uid="uid://bnx018jkfsdvj" path="res://scene/shield.tscn" id="4_j07rk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j07rk"]
 size = Vector2(62, 18)
@@ -27,5 +28,7 @@ one_shot = true
 
 [node name="AutoKillOffScreen" parent="." unique_id=296764808 instance=ExtResource("3_8c32t")]
 rect = Rect2(-34, -12, 68, 24)
+
+[node name="Shield" parent="." unique_id=779096602 instance=ExtResource("4_j07rk")]
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
