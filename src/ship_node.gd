@@ -117,6 +117,8 @@ func _physics_process(delta: float) -> void:
 	position.y = clamp(position.y, 0, screen_size.size.y)
 
 func take_damage(damage: int, source: Area2D) -> void:
+	if ship_type == ShipType.MOTHER:
+		damage=1
 	if $InvulnerabilityTimer.is_stopped():
 		health -= damage
 		if health <= 0:
