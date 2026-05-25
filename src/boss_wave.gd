@@ -46,6 +46,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = health
 	health_bar_layer.visible = false
+	AudioManager.report_boss_laughter()
 
 func _physics_process(delta: float) -> void:
 	flyto(target_location)
@@ -205,6 +206,8 @@ func _die() -> void:
 	var allenemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in allenemies:
 		enemy._die()
+	await get_tree().create_timer(3.0).timeout
+	GameManager.load_scene("res://scene/ui/game_won.tscn")
 	
 	'''
 func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning ships, to be removed/disabled

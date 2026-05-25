@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://corejdt0d2lcn"]
+
+[ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="1_b88nt"]
+
+[node name="Wave04" type="Node2D" unique_id=1801436262]
+
+[node name="Bomber" parent="." unique_id=608566180 instance=ExtResource("1_b88nt")]
+position = Vector2(1981, 566)
+
+[node name="Bomber2" parent="." unique_id=1075670099 instance=ExtResource("1_b88nt")]
+position = Vector2(1981, 566)
+attack_delay = 2.25
+
+[node name="Bomber3" parent="." unique_id=1815966148 instance=ExtResource("1_b88nt")]
+position = Vector2(1981, 566)
+attack_delay = 2.5
+
+[node name="Bomber4" parent="." unique_id=1422593781 instance=ExtResource("1_b88nt")]
+position = Vector2(1981, 566)
+attack_delay = 2.75

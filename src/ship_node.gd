@@ -126,6 +126,10 @@ func take_damage(damage: int, source: Area2D) -> void:
 			$InvulnerabilityTimer.start()
 			$sprite.animation = "mothership-" + str(health) + "hp"
 			$FlashingTimer.start()
+			if health == 1:
+				AudioManager.report_player_very_injured()
+			else:
+				AudioManager.report_player_injured()
 
 
 func dramatic_death(source: Area2D) -> void:

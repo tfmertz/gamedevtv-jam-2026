@@ -71,14 +71,15 @@ func add_shieldship(spawn:Vector2 = Vector2(randi() % int(screen_size.size.x),ra
 
 
 func add_single_connection(new_ship: ShipNode) -> void:
-	if ships.size() > 1:
+	if ships.size() > 1 and is_instance_valid(ships[-2]) and is_instance_valid(new_ship):
 		var connection = ship_conn_scene.instantiate()
 		connection.set_source_ship(ships[-2])
 		connection.set_dest_ship(new_ship)
 		connection.play_animation()
 		connections.append(connection)
 		call_deferred("add_child", connection)
-	if ships.size() > 2 and (formation == FormationType.CIRCLE or formation == FormationType.DIAMOND) and spacing >= 1:
+	if (ships.size() > 2 and (formation == FormationType.CIRCLE or formation == FormationType.DIAMOND) 
+		and spacing >= 1 and is_instance_valid(ships[-1]) and is_instance_valid(ships[0])):
 		#remove -2 because we just added a new connection between the second to last ship and this one,
 		#so trim the connection between second to last and first, then add one between newest and first
 		if ships.size() > 3:
