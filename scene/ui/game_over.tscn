@@ -87,7 +87,10 @@ theme_override_constants/separation = 12
 
 [node name="ControlsHeader" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox" unique_id=1704687517]
 layout_mode = 2
-text = "— CONTROLS —"
+text = "Collect Scrap to Make Connections
+Connections KIll Enemies and Block Bullets
+Make Connections To Win
+— CONTROLS —"
 label_settings = SubResource("LabelSettings_controls_header")
 horizontal_alignment = 1
 
@@ -130,7 +133,7 @@ label_settings = SubResource("LabelSettings_controls_key")
 
 [node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1000771412]
 layout_mode = 2
-text = "Sort Ships"
+text = "Re-Order Ships"
 label_settings = SubResource("LabelSettings_controls_body")
 
 [node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1272974297]
@@ -145,7 +148,7 @@ label_settings = SubResource("LabelSettings_t72hy")
 
 [node name="KeySort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1363792448]
 layout_mode = 2
-text = "Shift (Green Stilettos)"
+text = "Left Shift"
 label_settings = SubResource("LabelSettings_yp7xi")
 
 [node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=961276245]
