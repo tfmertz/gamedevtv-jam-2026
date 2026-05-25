@@ -123,6 +123,16 @@ layout_mode = 2
 text = "G / Scroll Wheel"
 label_settings = SubResource("LabelSettings_controls_key")
 
+[node name="ActionSort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1560462979]
+layout_mode = 2
+text = "Sprint"
+label_settings = SubResource("LabelSettings_controls_body")
+
+[node name="KeySort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1866379787]
+layout_mode = 2
+text = "Shift (Green Stilettos)"
+label_settings = SubResource("LabelSettings_controls_key")
+
 [node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=481684679]
 layout_mode = 2
 theme_override_constants/margin_top = 40

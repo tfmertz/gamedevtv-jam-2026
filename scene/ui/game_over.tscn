@@ -27,6 +27,18 @@ font_color = Color(1, 0.85, 0.35, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_t72hy"]
+font_size = 28
+font_color = Color(0.85, 0.85, 0.85, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yp7xi"]
+font_size = 28
+font_color = Color(1, 0.85, 0.35, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Title" type="Node2D" unique_id=1822057023]
 script = ExtResource("1_oef1b")
 
@@ -125,6 +137,16 @@ label_settings = SubResource("LabelSettings_controls_body")
 layout_mode = 2
 text = "G / Scroll Wheel"
 label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ActionSort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1930231165]
+layout_mode = 2
+text = "Sprint"
+label_settings = SubResource("LabelSettings_t72hy")
+
+[node name="KeySort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1363792448]
+layout_mode = 2
+text = "Shift (Green Stilettos)"
+label_settings = SubResource("LabelSettings_yp7xi")
 
 [node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=961276245]
 layout_mode = 2
