@@ -15,6 +15,7 @@ enum Difficulty { EASY, MEDIUM, HARD }
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var group_scene : PackedScene = preload("res://scene/player_group.tscn")
 var boss_scene : PackedScene = preload("res://scene/boss_wave.tscn")
+var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 
 var screen_size : Vector2i
 
@@ -48,6 +49,7 @@ func _ready() -> void:
 	wave_timer.wait_time = wave_spawn_interval
 	enemy_spawn_timer.wait_time = enemy_spawn_interval
 	_apply_difficulty()
+	load_first_scrap()
 
 func _apply_difficulty() -> void:
 	var range = _spawn_counts[difficulty]
@@ -164,3 +166,8 @@ func _on_difficulty_timer_timeout() -> void:
 
 func _on_timer_timeout() -> void:
 	pass # Replace with function body.
+
+func load_first_scrap() -> void:
+	var scrap = scrap_scene.instantiate()
+	scrap.position = Vector2(1183, 516)
+	get_tree().current_scene.add_child(scrap)
