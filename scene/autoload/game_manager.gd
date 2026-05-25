@@ -45,7 +45,7 @@ func pause_player_control(duration: float) -> void:
 	await get_tree().create_timer(duration).timeout
 	stop_player_control = false
 	# Start boss music
-	AudioManager.cross_fade_music(AudioManager._boss_player)
+	AudioManager.cross_fade_music(AudioManager._boss_player, 1.0)
 
 func fade_out(duration := 1.0) -> void:
 	var tween := create_tween()

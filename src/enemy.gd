@@ -63,8 +63,8 @@ func random_direction_around(base: Vector2, spread_degrees: float = 45.0) -> Vec
 	return base.normalized().rotated(angle_offset)
 
 func is_on_screen(world_pos: Vector2) -> bool:
-	var transform := get_viewport().get_canvas_transform()
-	var screen_pos := transform * world_pos
+	var new_transform := get_viewport().get_canvas_transform()
+	var screen_pos := new_transform * world_pos
 	return get_viewport_rect().has_point(screen_pos)
 
 func _die(explode: bool = false) -> void:
@@ -81,6 +81,7 @@ func _die(explode: bool = false) -> void:
 	if explosion_damage > 0 and explode:
 		explosion_vfx.damage = explosion_damage
 		explosion_vfx.radius = explosion_radius
+		AudioManager.report_explosion()
 	get_parent().call_deferred("add_child", explosion_vfx)
 	queue_free()
 

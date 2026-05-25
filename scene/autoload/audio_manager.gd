@@ -13,11 +13,13 @@ const POOL_SIZE := 16 # max audio players
 @export var player_injured_stream: AudioStream
 @export var player_very_injured_stream: AudioStream
 @export var boss_laugh_stream: AudioStream
+@export var explosion_stream: AudioStream
 
 var _enemy_fire_count          := 0
 var _bullet_hit_count          := 0
 var _player_injured_count      := 0
 var _player_very_injured_count := 0
+var _explosion_count           := 0
 var _boss_laughing             := false
 var _aggregate_accum           := 0.0
 var _pool: Array[AudioStreamPlayer] = []
@@ -48,6 +50,7 @@ func _ready() -> void:
 	_boss_player.stream = boss_music_stream
 	_boss_player.bus = "Music"
 	add_child(_boss_player)
+	#_boss_player.play()
 	# Build out our pool of audio stream players to avoid sound conflicts
 	for i in POOL_SIZE:
 		var p := AudioStreamPlayer.new()
@@ -75,12 +78,21 @@ func _process(delta: float) -> void:
 	if _player_very_injured_count > 0:
 		_play_pooled(player_very_injured_stream, 10.0, 1.0)
 		_player_very_injured_count = 0
+	if _explosion_count > 0:
+		var intensity: float = clampf(_explosion_count / 20.0, 0.0, 1.0)
+		_play_pooled(explosion_stream,
+			-12.0 + intensity * 8.0,
+			randf_range(0.95, 1.05))
+		_explosion_count = 0
 	if _boss_laughing:
 		_play_pooled(boss_laugh_stream, 0.0, 1.0)
 		_boss_laughing = false
 
 func report_enemy_fire() -> void:
 	_enemy_fire_count += 1
+
+func report_explosion() -> void:
+	_explosion_count += 1
 
 func report_bullet_hit() -> void:
 	_bullet_hit_count += 1
@@ -94,14 +106,15 @@ func report_player_very_injured() -> void:
 func report_boss_laughter() -> void:
 	_boss_laughing = true
 
-func cross_fade_music(new_player: AudioStreamPlayer):
+func cross_fade_music(new_player: AudioStreamPlayer, duration: float = 2.0):
 	if _music_tween and _music_tween.is_valid():
 		_music_tween.kill()
 	new_player.volume_linear = 0.0
 	new_player.play()
 	_music_tween = create_tween().bind_node(self)
-	_music_tween.tween_property(current_player, "volume_linear", 0.0, 2.0)
-	_music_tween.tween_property(new_player, "volume_linear", 1.0, 2.0)
+	_music_tween.set_parallel(true)
+	_music_tween.tween_property(current_player, "volume_linear", 0.0, duration)
+	_music_tween.tween_property(new_player, "volume_linear", 1.0, duration)
 	await _music_tween.finished
 	if current_player and current_player != new_player:
 		current_player.stop()
