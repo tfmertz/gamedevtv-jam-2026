@@ -81,7 +81,6 @@ func _die(explode: bool = false) -> void:
 	if explosion_damage > 0 and explode:
 		explosion_vfx.damage = explosion_damage
 		explosion_vfx.radius = explosion_radius
-		AudioManager.report_explosion()
 	get_parent().call_deferred("add_child", explosion_vfx)
 	queue_free()
 
@@ -93,6 +92,5 @@ func _on_area_entered(area: Area2D) -> void:
 	var is_explosion := false
 	# only explode on collisions with nodes or player
 	if area.is_in_group("node") or area.is_in_group("connections"):
-		GameManager.shake_camera(30.0)
 		is_explosion = true
 	_die(is_explosion)

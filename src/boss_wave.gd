@@ -5,6 +5,7 @@ var bomber_scene : PackedScene = preload("res://scene/bomber.tscn")
 var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 var tommygun_scene: PackedScene = preload("res://src/tommy_gun.tscn")
 var shield_scene: PackedScene = preload("res://scene/shield.tscn")
+var explosion_scene: PackedScene = preload("res://scene/ship_explosion.tscn")
 
 @export var attack_spread := 30
 @export var clip_size := 10
@@ -17,8 +18,8 @@ var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
 var shield_plane = 1550
-var max_health = 500
-var health = 500
+var max_health = 50
+var health = 50
 var target_location
 var target_direction
 var speed = 1
@@ -194,6 +195,8 @@ func _die() -> void:
 	if is_dying:
 		return
 	is_dying = true
+	
+	_death_animation()
 	$tongue_timer.stop()
 	$ship_spawn_timer.stop()
 	$bullet_timer.stop()
@@ -214,7 +217,23 @@ func _die() -> void:
 		enemy._die()
 	await get_tree().create_timer(3.0).timeout
 	GameManager.load_scene("res://scene/ui/game_won.tscn")
+
+func _death_animation() -> void:
+	var tween := create_tween()
+	tween.set_loops(0)
+	tween.tween_property(boss_assets, "modulate:a", 0, 0.1)
+	tween.tween_property(boss_assets, "modulate:a", 1.0, 0.1)
 	
+	var screen_size = get_viewport_rect().size
+	for i in range(100):
+		var explosion = explosion_scene.instantiate()
+		explosion.damage = 1
+		var rand_y = randi_range(50, screen_size.y - 50)
+		var rand_x = randi_range(screen_size.x - 150, screen_size.x)
+		explosion.position = Vector2(rand_x, rand_y)
+		get_tree().current_scene.add_child(explosion)
+		await get_tree().create_timer(randf_range(0.1, 0.3)).timeout
+
 	'''
 func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning ships, to be removed/disabled
 	if event is InputEventKey:#placeholder for spawning ships, to be removed/disabled

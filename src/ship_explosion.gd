@@ -20,6 +20,8 @@ func _ready() -> void:
 	# wait a frame so we have physics info
 	if damage > 0:
 		draw_shape = true
+		AudioManager.report_explosion()
+		GameManager.shake_camera(30.0)
 		# wait a frame to set collision shape up, ready doesn't like it
 		await get_tree().physics_frame
 		collision_shape_2d.disabled = false
