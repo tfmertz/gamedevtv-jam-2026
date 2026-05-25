@@ -4,6 +4,7 @@ class_name ShipNode extends Area2D
 @onready var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 @onready var death_particles: CPUParticles2D = $DeathParticles
 @onready var mothership_death_particles: CPUParticles2D = $MothershipDeathParticles
+@onready var sprint_particles: CPUParticles2D = $SprintParticles
 
 enum ShipType {GUN, SHIELD, MOTHER}
 
@@ -186,6 +187,7 @@ func start_sprinting() -> void:
 	initial_speed = 600
 	if ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-sprint-" + str(health) + "hp"
+		sprint_particles.emitting = true
 
 
 func can_sprint() -> void:
@@ -197,3 +199,4 @@ func _on_sprint_timer_timeout() -> void:
 	initial_speed = 300
 	if ship_type == ShipType.MOTHER:
 		$sprite.animation = "mothership-tired-" + str(health) + "hp"
+		sprint_particles.emitting = false

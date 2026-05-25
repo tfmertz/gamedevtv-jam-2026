@@ -6,7 +6,8 @@ signal scene_changed
 
 @onready var camera: Camera2D = $Camera2D
 @onready var _color_rect: ColorRect = $CanvasLayer/ColorRect
-@onready var paused_label: Label = $CanvasLayer/CenterContainer/PausedLabel
+@onready var center_container: CenterContainer = $CanvasLayer/CenterContainer
+@onready var h_slider: HSlider = $CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/HSlider
 
 ## Optional. Leave empty and set Godot's normal "Main Scene"
 ## in Project Settings instead. If set, this path loads on startup.
@@ -35,9 +36,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_color_rect.color = start_color
 		if scene_tree.paused:
 			_color_rect.color.a = 0.5
-			paused_label.show()
+			center_container.show()
 		else:
-			paused_label.hide()
+			center_container.hide()
 		
 
 func pause_player_control(duration: float) -> void:
@@ -125,3 +126,7 @@ func scrap_chance_calculator(fleet_size: int) -> float:
 	else:
 		chance -= fleet_size * 0.015
 	return chance
+
+
+func _on_h_slider_drag_ended(value_changed: bool) -> void:
+	AudioManager.set_volume(h_slider.value)
