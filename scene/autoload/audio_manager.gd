@@ -9,6 +9,7 @@ const POOL_SIZE := 16 # max audio players
 @export var hit_stream: AudioStream
 @export var title_music_stream: AudioStream
 @export var game_music_stream: AudioStream
+@export var game_won_stream: AudioStream
 @export var boss_music_stream: AudioStream
 @export var player_injured_stream: AudioStream
 @export var player_very_injured_stream: AudioStream
@@ -121,6 +122,18 @@ func report_boss_laughter() -> void:
 func report_boss_dying() -> void:
 	_boss_dying = true
 
+func play_music(new_stream) -> void:
+	current_player.stop()
+	current_player = _music_player
+	current_player.stream = new_stream
+	current_player.play()
+
+func stop_music() -> void:
+	var tween := create_tween()
+	tween.tween_property(current_player, "volume_linear", 0.0, 1.0)
+	await tween.finished
+	current_player.stop()
+
 func cross_fade_music(new_player: AudioStreamPlayer, duration: float = 2.0):
 	if _music_tween and _music_tween.is_valid():
 		_music_tween.kill()
@@ -129,7 +142,7 @@ func cross_fade_music(new_player: AudioStreamPlayer, duration: float = 2.0):
 	_music_tween = create_tween().bind_node(self)
 	_music_tween.set_parallel(true)
 	_music_tween.tween_property(current_player, "volume_linear", 0.0, duration)
-	_music_tween.tween_property(new_player, "volume_linear", 1.0, duration)
+	_music_tween.tween_property(new_player, "volume_linear", current_player.volume_linear, duration)
 	await _music_tween.finished
 	if current_player and current_player != new_player:
 		current_player.stop()

@@ -195,6 +195,7 @@ func _die() -> void:
 	$bullet_timer.stop()
 	$wave_timer.stop()
 	$shield_timer.stop()
+	AudioManager.stop_music()
 	AudioManager.report_boss_dying()
 	boss_assets.get_node("tongue").stop()
 	boss_assets.get_node("tongue").hide()
@@ -209,6 +210,7 @@ func _die() -> void:
 		enemy._die()
 	await get_tree().create_timer(3.0).timeout
 	GameManager.load_scene("res://scene/ui/game_won.tscn")
+	AudioManager.play_music(AudioManager.game_won_stream)
 	
 	'''
 func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning ships, to be removed/disabled

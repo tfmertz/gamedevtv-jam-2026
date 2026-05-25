@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ce8uu8iu6iqb6" path="res://assets/sound/SpaceAmbient.ogg" id="4_f24qo"]
 [ext_resource type="AudioStream" uid="uid://c6mfrwi7c2uo1" path="res://assets/sound/StarOx.ogg" id="5_kteht"]
 [ext_resource type="AudioStream" uid="uid://pw60ibjxcnue" path="res://assets/sound/moopain1.wav" id="6_ibl2c"]
+[ext_resource type="AudioStream" uid="uid://kdtp8lrvsgkv" path="res://assets/sound/JamWon.ogg" id="6_l0hx6"]
 [ext_resource type="AudioStream" uid="uid://dj4stnw7iq4b0" path="res://assets/sound/StarOxBoss.ogg" id="6_ummdi"]
 [ext_resource type="AudioStream" uid="uid://cfurosvinpaoq" path="res://assets/sound/moopain2.wav" id="7_fvf71"]
 [ext_resource type="AudioStream" uid="uid://bqwwipokfsnqm" path="res://assets/sound/bosslaugh1.wav" id="8_fvf71"]
@@ -19,6 +20,7 @@ enemy_fire_stream = ExtResource("2_m2pcc")
 hit_stream = ExtResource("3_kteht")
 title_music_stream = ExtResource("4_f24qo")
 game_music_stream = ExtResource("5_kteht")
+game_won_stream = ExtResource("6_l0hx6")
 boss_music_stream = ExtResource("6_ummdi")
 player_injured_stream = ExtResource("6_ibl2c")
 player_very_injured_stream = ExtResource("7_fvf71")
