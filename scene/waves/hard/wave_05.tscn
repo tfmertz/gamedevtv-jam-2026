@@ -8,10 +8,6 @@
 position = Vector2(2308, 166)
 attack_delay = 2.75
 
-[node name="Bomber9" parent="." unique_id=1961999112 instance=ExtResource("1_jfl7o")]
-position = Vector2(2405, 67)
-attack_delay = 3.0
-
 [node name="Bomber2" parent="." unique_id=774577858 instance=ExtResource("1_jfl7o")]
 position = Vector2(2201, 256)
 attack_delay = 2.5
@@ -33,7 +29,3 @@ attack_delay = 2.5
 [node name="Bomber7" parent="." unique_id=1293543843 instance=ExtResource("1_jfl7o")]
 position = Vector2(2319, 959)
 attack_delay = 3.0
-
-[node name="Bomber8" parent="." unique_id=1722043677 instance=ExtResource("1_jfl7o")]
-position = Vector2(2477, 1012)
-attack_delay = 3.5
