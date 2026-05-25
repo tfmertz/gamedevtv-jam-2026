@@ -6,17 +6,17 @@ var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 var tommygun_scene: PackedScene = preload("res://src/tommy_gun.tscn")
 var shield_scene: PackedScene = preload("res://scene/shield.tscn")
 
-@export var attack_spread := 50
+@export var attack_spread := 30
 @export var clip_size := 10
 @export var attack_delay := .05
 signal die
-var ship_spawn_top = Vector2(1742+300,175)
-var ship_spawn_bot = Vector2(1742+300,905)
-var bullet_spawn_1 = Vector2(1736+300,26)
-var bullet_spawn_2 = Vector2(1670+300,335)
-var bullet_spawn_3 = Vector2(1670+300,745)
-var bullet_spawn_4 = Vector2(1736+300,1054)
-var shield_plane = 1550+300
+var ship_spawn_top = Vector2(1742,175)
+var ship_spawn_bot = Vector2(1742,905)
+var bullet_spawn_1 = Vector2(1736,26)
+var bullet_spawn_2 = Vector2(1670,335)
+var bullet_spawn_3 = Vector2(1670,745)
+var bullet_spawn_4 = Vector2(1736,1054)
+var shield_plane = 1550
 var max_health = 500
 var health = 500
 var target_location
@@ -232,7 +232,7 @@ func random_direction_around(base: Vector2, spread_degrees: float = 45.0) -> Vec
 func _on_wave_timer_timeout() -> void:
 	if wave:
 		wave = false
-		$wave_timer.wait_time =2
+		$wave_timer.wait_time =5
 		$wave_timer.start()
 		$bullet_timer.stop()
 	else:
