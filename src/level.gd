@@ -126,6 +126,8 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	for i in range(enemies_to_spawn):
 		var enemy_scene = enemy_scenes.pick_random()
 		var new_enemy = enemy_scene.instantiate()
+		if difficulty > Difficulty.EASY:
+			new_enemy.shield_health = 1
 		
 		# get a random position on the path
 		spawn_path.progress_ratio = randf()
