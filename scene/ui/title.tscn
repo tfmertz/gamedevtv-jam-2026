@@ -110,7 +110,7 @@ label_settings = SubResource("LabelSettings_controls_body")
 
 [node name="KeySpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=2091684507]
 layout_mode = 2
-text = "R / Scroll Wheel"
+text = "R / Right Mouse"
 label_settings = SubResource("LabelSettings_controls_key")
 
 [node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1598324394]
@@ -120,7 +120,7 @@ label_settings = SubResource("LabelSettings_controls_body")
 
 [node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=746968169]
 layout_mode = 2
-text = "G / Right Mouse"
+text = "G / Scroll Wheel"
 label_settings = SubResource("LabelSettings_controls_key")
 
 [node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=481684679]
