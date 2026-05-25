@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://btjhyl76d37gl" path="res://src/title.gd" id="1_w5x2q"]
 [ext_resource type="Texture2D" uid="uid://b78v62tuvike" path="res://assets/art/space1.png" id="2_space1"]
 [ext_resource type="Texture2D" uid="uid://c4qyhwx5qtiey" path="res://assets/art/star_ox.png" id="3_starox"]
+[ext_resource type="Texture2D" uid="uid://bqykfq746jgon" path="res://assets/art/diagram.png" id="4_a1n26"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_controls_header"]
 font_size = 32
@@ -143,5 +144,25 @@ theme_override_constants/margin_top = 40
 [node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/ButtonMargin" unique_id=2062605715]
 layout_mode = 2
 text = "START"
+
+[node name="Diagram" type="Sprite2D" parent="CanvasLayer/Control" unique_id=1827633483]
+position = Vector2(1631.0001, 762)
+scale = Vector2(2, 2)
+texture = ExtResource("4_a1n26")
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/Control" unique_id=1617809408]
+points = PackedVector2Array(1214, 719, 1447, 630)
+width = 5.0
+default_color = Color(0.9843137, 0.9490196, 0.21176471, 1)
+
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/Control" unique_id=1880655674]
+points = PackedVector2Array(1215, 767, 1453, 767)
+width = 5.0
+default_color = Color(0.9843137, 0.9490196, 0.21176471, 1)
+
+[node name="Line2D3" type="Line2D" parent="CanvasLayer/Control" unique_id=221579889]
+points = PackedVector2Array(1214, 815, 1412, 891)
+width = 5.0
+default_color = Color(0.9843137, 0.9490196, 0.21176471, 1)
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ButtonMargin/Button" to="." method="_on_button_press"]
