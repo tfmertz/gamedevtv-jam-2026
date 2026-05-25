@@ -24,6 +24,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="GameWon" type="Node2D" unique_id=1628899924]
 script = ExtResource("1_titlegd")
+play_won_music = true
 
 [node name="SpaceLayer" type="Parallax2D" parent="." unique_id=2032836150]
 z_index = -100
