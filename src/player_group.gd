@@ -21,6 +21,7 @@ enum ShipOrderType {INTERLACE, SHIELD_FIRST, GUN_FIRST}
 var formation = FormationType.V
 var ship_order = -1
 var spacing = 1.0
+var can_sprint = true
 
 var screen_size: Rect2
 
@@ -130,6 +131,11 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("sort_ships"):
 		ship_order = (ship_order + 1) % len(ShipOrderType)
 		toggle_ship_grouping = true
+	elif Input.is_action_just_pressed("sprint"):
+		if can_sprint:
+			$SprintTimer.start()
+			can_sprint = false
+			mothership.start_sprinting()
 	
 	if mothership:
 		mothership.set_velocity_dir(velocity_dir)
@@ -230,3 +236,14 @@ func interlace_ships() -> void:
 			new_ships.append(shield_ships.pop_back())
 	ships = new_ships
 	
+
+func notify_can_sprint() -> void:
+	$SprintTimer.stop()
+	can_sprint = true
+	mothership.can_sprint()
+	
+
+
+func _on_sprint_timer_timeout() -> void:
+	can_sprint = true
+	mothership.can_sprint()

@@ -15,6 +15,7 @@ enum Difficulty { EASY, MEDIUM, HARD }
 var ship_scene : PackedScene = preload("res://scene/ship_node.tscn")
 var group_scene : PackedScene = preload("res://scene/player_group.tscn")
 var boss_scene : PackedScene = preload("res://scene/boss_wave.tscn")
+var scrap_scene : PackedScene = preload("res://scene/scrap.tscn")
 
 var screen_size : Vector2i
 
@@ -48,6 +49,7 @@ func _ready() -> void:
 	wave_timer.wait_time = wave_spawn_interval
 	enemy_spawn_timer.wait_time = enemy_spawn_interval
 	_apply_difficulty()
+	load_first_scrap()
 
 func _apply_difficulty() -> void:
 	var range = _spawn_counts[difficulty]
@@ -124,6 +126,8 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	for i in range(enemies_to_spawn):
 		var enemy_scene = enemy_scenes.pick_random()
 		var new_enemy = enemy_scene.instantiate()
+		if difficulty > Difficulty.EASY:
+			new_enemy.shield_health = 1
 		
 		# get a random position on the path
 		spawn_path.progress_ratio = randf()
@@ -159,8 +163,25 @@ func _on_difficulty_timer_timeout() -> void:
 		# increase difficulty every 2m
 		difficulty += 1
 		# TODO(isaac) maybe make waves shorter? longer? idk making slightly shorter
-		$DifficultyTimer.wait_time -= 15
+		difficulty_timer.stop()
+		wave_timer.stop()
+		enemy_spawn_timer.stop()
+		
+		wave_spawn_interval += 0.5
+		wave_timer.wait_time = wave_spawn_interval
+		enemy_spawn_interval -= 0.5
+		enemy_spawn_timer.wait_time = enemy_spawn_interval
+		$DifficultyTimer.wait_time -= 15*difficulty
+		
+		difficulty_timer.start()
+		wave_timer.start()
+		enemy_spawn_timer.start()
 
 
 func _on_timer_timeout() -> void:
 	pass # Replace with function body.
+
+func load_first_scrap() -> void:
+	var scrap = scrap_scene.instantiate()
+	scrap.position = Vector2(1183, 516)
+	get_tree().current_scene.add_child(scrap)

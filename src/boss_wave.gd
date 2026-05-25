@@ -6,8 +6,8 @@ var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 var tommygun_scene: PackedScene = preload("res://src/tommy_gun.tscn")
 var shield_scene: PackedScene = preload("res://scene/shield.tscn")
 
-@export var attack_spread := 10
-@export var clip_size := 8
+@export var attack_spread := 30
+@export var clip_size := 10
 @export var attack_delay := .05
 signal die
 var ship_spawn_top = Vector2(1742,175)
@@ -17,8 +17,8 @@ var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
 var shield_plane = 1550
-var max_health = 300
-var health = 300
+var max_health = 500
+var health = 500
 var target_location
 var target_direction
 var speed = 1
@@ -26,7 +26,7 @@ var tongueplaying = false
 var wave = false
 var attack_type = 1
 var wind_y
-var shield_density =4
+var shield_density =6
 @onready var boss_assets: Area2D = $boss_assets
 @onready var health_bar_layer: CanvasLayer = $HealthBarLayer
 @onready var health_bar: ProgressBar = $HealthBarLayer/HealthBar
@@ -151,7 +151,7 @@ func _on_screen_enter_timer_timeout() -> void:
 
 
 func _on_ship_spawn_timer_timeout() -> void:
-	if (randi()%101 < 50): 
+	if (randi()%101 < 100): 
 		spawn_ships()
 
 func spawn_ships() -> void:
@@ -251,22 +251,23 @@ func _on_wave_timer_timeout() -> void:
 			$wave_timer.start()
 
 func spawn_shields() -> void:
-	for i in shield_density:
+	for i in (shield_density):
 		var shield = shield_scene.instantiate()
 		shield.position = ship_spawn_top
 		shield.set_active(3)
-		get_tree().get_root().add_child(shield)
-		shield.target_location =Vector2(shield_plane,randi_range(0,wind_y/2))
+		get_tree().current_scene.add_child(shield)
+		var range1 = randi_range(i*(wind_y/2)/shield_density,(i+1)*(wind_y/2)/shield_density)
+		shield.target_location =Vector2(shield_plane,range1)
 		shield.bossshield = true
 		
-		
 		#shield.flyto(Vector2(shield_plane,randi_range(32,wind_y-32)))
-	
+		
 		var shield2 = shield_scene.instantiate()
 		shield2.position = ship_spawn_bot
 		shield2.set_active(3)
-		get_tree().get_root().add_child(shield2)
-		shield2.target_location =Vector2(shield_plane,randi_range(wind_y/2,wind_y))
+		get_tree().current_scene.add_child(shield2)
+		var range2 = randi_range((i*(wind_y/2)/shield_density)+(wind_y/2),((i+1)*(wind_y/2)/shield_density)+(wind_y/2))
+		shield2.target_location =Vector2(shield_plane,range2)
 		shield2.bossshield = true
 		
 		#shield2.flyto(Vector2(shield_plane,randi_range(32,wind_y-32)))

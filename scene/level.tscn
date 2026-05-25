@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://i2bhoea50ibg" path="res://scene/bomber.tscn" id="3_u2b8d"]
 [ext_resource type="PackedScene" uid="uid://dyfe2xuytxb4s" path="res://src/tommy_gun.tscn" id="4_aw33w"]
 [ext_resource type="Texture2D" uid="uid://6usrl22ae0rg" path="res://assets/art/planet_b.png" id="4_planet_b"]
-[ext_resource type="PackedScene" uid="uid://cmmk8vljkgmy6" path="res://scene/scrap.tscn" id="8_u2b8d"]
 
 [sub_resource type="Curve2D" id="Curve2D_s4405"]
 _data = {
@@ -82,9 +81,6 @@ rotation = 1.5719074
 
 [node name="WaveTimer" type="Timer" parent="." unique_id=38180934]
 autostart = true
-
-[node name="Scrap" parent="." unique_id=498599342 instance=ExtResource("8_u2b8d")]
-position = Vector2(1183, 516)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
