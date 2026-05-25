@@ -124,14 +124,14 @@ func report_boss_dying() -> void:
 
 func play_music(new_stream) -> void:
 	current_player.stop()
+	await get_tree().physics_frame
+	var volume = current_player.volume_linear
 	current_player = _music_player
 	current_player.stream = new_stream
+	current_player.volume_linear = volume
 	current_player.play()
 
 func stop_music() -> void:
-	var tween := create_tween()
-	tween.tween_property(current_player, "volume_linear", 0.0, 1.0)
-	await tween.finished
 	current_player.stop()
 
 func cross_fade_music(new_player: AudioStreamPlayer, duration: float = 2.0):

@@ -180,7 +180,8 @@ func _on_difficulty_timer_timeout() -> void:
 		wave_timer.wait_time = wave_spawn_interval
 		enemy_spawn_interval -= 0.5
 		enemy_spawn_timer.wait_time = enemy_spawn_interval
-		$DifficultyTimer.wait_time -= 15
+		var new_time = max(difficulty_timer.wait_time - 15, 1)
+		$DifficultyTimer.wait_time = new_time
 		progress_label.text = "Wave %d" % (difficulty + 1)
 		_refill_wave_bag()
 		
