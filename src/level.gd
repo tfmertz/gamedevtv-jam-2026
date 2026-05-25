@@ -158,8 +158,8 @@ func _on_difficulty_timer_timeout() -> void:
 	else:
 		# increase difficulty every 2m
 		difficulty += 1
-		# TODO(isaac) maybe make waves shorter? longer? idk leaving as is
-		#$DifficultyTimer.wait_time -= 15
+		# TODO(isaac) maybe make waves shorter? longer? idk making slightly shorter
+		$DifficultyTimer.wait_time -= 15
 
 
 func _on_timer_timeout() -> void:
