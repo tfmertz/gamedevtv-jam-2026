@@ -27,6 +27,7 @@ var wave = false
 var attack_type = 1
 var wind_y
 var shield_density =6
+var is_dying := false
 @onready var boss_assets: Area2D = $boss_assets
 @onready var health_bar_layer: CanvasLayer = $HealthBarLayer
 @onready var health_bar: ProgressBar = $HealthBarLayer/HealthBar
@@ -190,6 +191,9 @@ func take_damage(damage: int, source: Area2D) -> void:
 
 
 func _die() -> void:
+	if is_dying:
+		return
+	is_dying = true
 	$tongue_timer.stop()
 	$ship_spawn_timer.stop()
 	$bullet_timer.stop()
