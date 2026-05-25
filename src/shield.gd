@@ -2,6 +2,7 @@ extends Area2D
 
 # start as 0 which means shield is disabled
 @export var health := 0
+@export var max_health := 0
 @export var protecting_shape: CollisionShape2D
 @export var is_enemy := false
 @export var auto_init := false
@@ -10,11 +11,14 @@ extends Area2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var enemy_collision_shape_2d: CollisionShape2D = $EnemyCollisionShape2D
 
+@onready var regen_timer: Timer = $RegenTimer
+
 var tween : Tween
 var tween_scale : Tween
 var bossshield = false
 var target_location
 var speed = 150
+var base_alpha := 0.0
 
 var initial_scale = Vector2.ONE
 
@@ -27,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	if bossshield:
 		flyto(delta)
 
-func set_active(new_health: int) -> void:
+func set_active(new_health: int, new_max_health: int = -1) -> void:
 	# if we aren't started, wait til next frame
 	if not sprite_2d:
 		call_deferred("set_active", new_health)
@@ -49,6 +53,12 @@ func set_active(new_health: int) -> void:
 	
 	# set health
 	health = new_health
+	if new_max_health <= 0:
+		max_health = health
+	else:
+		max_health = new_max_health
+	if base_alpha == 0.0:
+		base_alpha = sprite_2d.self_modulate.a
 	# turn on visuals and collision
 	sprite_2d.scale = Vector2.ZERO
 	sprite_2d.visible = true
@@ -62,7 +72,10 @@ func take_damage(damage: int, source: Area2D) -> void:
 		enemy_collision_shape_2d.set_deferred("disabled", true)
 		scale_shield(Vector2.ZERO, 0.2)
 	else:
-		flash()
+		regen_timer.start()
+		await flash()
+		if max_health > 0:
+			sprite_2d.self_modulate.a = base_alpha * (float(health) / max_health)
 
 func scale_shield(new_scale, duration) -> Tween:
 	tween_scale = create_tween()
@@ -83,3 +96,13 @@ func flyto(delta: float) -> void: #recieves a target position as vector2
 	# sets a temporary speed equal to arrive at location exactly
 	if position.distance_to(target_location) > 5:
 		position += dir * speed * delta
+
+
+func _on_regen_timer_timeout() -> void:
+	if health == 0:
+		set_active(1, max_health)
+	else:
+		if health < max_health:
+			take_damage(-1, self)
+		else:
+			regen_timer.stop()
