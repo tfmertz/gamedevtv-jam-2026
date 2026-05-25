@@ -187,6 +187,8 @@ func _die() -> void:
 	boss_assets.get_node("bossmid").play("death")
 	health_bar_layer.visible = false
 	flyto(Vector2(300, position.y))
+	await get_tree().create_timer(3.0).timeout
+	GameManager.load_scene("res://scene/ui/game_won.tscn")
 	
 	'''
 func _unhandled_input(event: InputEvent) -> void:  #placeholder for spawning ships, to be removed/disabled
