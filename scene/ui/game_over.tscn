@@ -27,6 +27,18 @@ font_color = Color(1, 0.85, 0.35, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_t72hy"]
+font_size = 28
+font_color = Color(0.85, 0.85, 0.85, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yp7xi"]
+font_size = 28
+font_color = Color(1, 0.85, 0.35, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Title" type="Node2D" unique_id=1822057023]
 script = ExtResource("1_oef1b")
 
@@ -75,7 +87,10 @@ theme_override_constants/separation = 12
 
 [node name="ControlsHeader" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox" unique_id=1704687517]
 layout_mode = 2
-text = "— CONTROLS —"
+text = "Collect Scrap to Make Connections
+Connections KIll Enemies and Block Bullets
+Make Connections To Win
+— CONTROLS —"
 label_settings = SubResource("LabelSettings_controls_header")
 horizontal_alignment = 1
 
@@ -113,18 +128,28 @@ label_settings = SubResource("LabelSettings_controls_body")
 
 [node name="KeySpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=530371527]
 layout_mode = 2
-text = "R / Scroll Wheel"
+text = "R / Right Mouse"
 label_settings = SubResource("LabelSettings_controls_key")
 
 [node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1000771412]
 layout_mode = 2
-text = "Sort Ships"
+text = "Re-Order Ships"
 label_settings = SubResource("LabelSettings_controls_body")
 
 [node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1272974297]
 layout_mode = 2
-text = "G / Right Mouse"
+text = "G / Scroll Wheel"
 label_settings = SubResource("LabelSettings_controls_key")
+
+[node name="ActionSort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1930231165]
+layout_mode = 2
+text = "Sprint"
+label_settings = SubResource("LabelSettings_t72hy")
+
+[node name="KeySort2" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1363792448]
+layout_mode = 2
+text = "Left Shift"
+label_settings = SubResource("LabelSettings_yp7xi")
 
 [node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=961276245]
 layout_mode = 2

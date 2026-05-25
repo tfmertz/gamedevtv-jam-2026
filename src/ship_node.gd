@@ -8,7 +8,6 @@ class_name ShipNode extends Area2D
 enum ShipType {GUN, SHIELD, MOTHER}
 
 var speed := 300
-var terminal_speed := 500
 var terminal_rotation := PI*randf_range(3.0,6.0)
 var terminal_size := Vector2.ZERO
 var ship_type: ShipType
@@ -94,7 +93,7 @@ func _physics_process(delta: float) -> void:
 		
 	if terminal_velocity_dir != Vector2.ZERO:
 		velocity_dir = terminal_velocity_dir
-		speed = terminal_speed
+		speed = speed * 1.667
 		rotation += terminal_rotation * delta
 		scale -= terminal_size * delta
 	# Only move if velocity_dir is a meaningful number
@@ -118,7 +117,7 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(damage: int, source: Area2D) -> void:
 	if ship_type == ShipType.MOTHER:
-		damage=1
+		damage = 1
 	if $InvulnerabilityTimer.is_stopped():
 		health -= damage
 		if health <= 0:
@@ -132,6 +131,7 @@ func take_damage(damage: int, source: Area2D) -> void:
 				AudioManager.report_player_very_injured()
 			else:
 				AudioManager.report_player_injured()
+			parent.notify_can_sprint()
 
 
 func dramatic_death(source: Area2D) -> void:
@@ -146,6 +146,7 @@ func dramatic_death(source: Area2D) -> void:
 	$bullet_timer.stop()
 	$hitbox_gun.set_deferred("disabled", true)
 	$hitbox_shield.set_deferred("disabled", true)
+	$hitbox_mother.set_deferred("disabled", true)
 
 func hit_scrap(scrap: Scrap):
 	parent.add_scrap(scrap)
@@ -178,3 +179,21 @@ func _on_crash_timer_timeout() -> void:
 func _on_hard_death_timer_timeout() -> void:
 	if is_instance_valid(self):
 		queue_free()
+
+
+func start_sprinting() -> void:
+	$SprintTimer.start()
+	initial_speed = 600
+	if ship_type == ShipType.MOTHER:
+		$sprite.animation = "mothership-sprint-" + str(health) + "hp"
+
+
+func can_sprint() -> void:
+	if ship_type == ShipType.MOTHER:
+		$sprite.animation = "mothership-" + str(health) + "hp"
+
+
+func _on_sprint_timer_timeout() -> void:
+	initial_speed = 300
+	if ship_type == ShipType.MOTHER:
+		$sprite.animation = "mothership-tired-" + str(health) + "hp"
