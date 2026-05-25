@@ -14,6 +14,7 @@ const POOL_SIZE := 16 # max audio players
 @export var player_very_injured_stream: AudioStream
 @export var boss_laugh_stream: AudioStream
 @export var explosion_stream: AudioStream
+@export var boss_death_stream: AudioStream
 
 var _enemy_fire_count          := 0
 var _bullet_hit_count          := 0
@@ -21,6 +22,7 @@ var _player_injured_count      := 0
 var _player_very_injured_count := 0
 var _explosion_count           := 0
 var _boss_laughing             := false
+var _boss_dying                := false
 var _aggregate_accum           := 0.0
 var _pool: Array[AudioStreamPlayer] = []
 
@@ -91,6 +93,9 @@ func _process(delta: float) -> void:
 	if _boss_laughing:
 		_play_pooled(boss_laugh_stream, 0.0, 1.0)
 		_boss_laughing = false
+	if _boss_dying:
+		_play_pooled(boss_death_stream, 0.0, 1.0)
+		_boss_dying = false
 
 func set_volume(volume: float) -> void:
 	current_player.volume_linear = volume
@@ -112,6 +117,9 @@ func report_player_very_injured() -> void:
 
 func report_boss_laughter() -> void:
 	_boss_laughing = true
+
+func report_boss_dying() -> void:
+	_boss_dying = true
 
 func cross_fade_music(new_player: AudioStreamPlayer, duration: float = 2.0):
 	if _music_tween and _music_tween.is_valid():

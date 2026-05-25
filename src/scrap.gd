@@ -11,11 +11,11 @@ var amplitude: int
 var frequency: float
 var speed = 200
 var spawn_position: Vector2
-var scrap_type: int
+@export var scrap_type: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	scrap_type = randi_range(0, ScrapType.size()-1)
+	#scrap_type must be set ahead of adding this to tree
 	if scrap_type == ScrapType.SHIELD:
 		$scrap_sprite.animation = "shield"
 	else:

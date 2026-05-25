@@ -109,9 +109,16 @@ func spawn_scrap(pos: Vector2) -> void:
 		return
 	is_spawning_scrap = true
 	var player_fleet_size = get_tree().get_nodes_in_group("node").size()
+	var player_guns       = get_tree().get_nodes_in_group("node").filter(func(item): return item.ship_type == ShipNode.ShipType.GUN).size()
+	var player_shields    = get_tree().get_nodes_in_group("node").filter(func(item): return item.ship_type == ShipNode.ShipType.SHIELD).size()
+	var gun_chance        = min(0.9, max(0.1, 0.5 + ((player_shields - player_guns) * 0.05)))
 	var scrap_chance = scrap_chance_calculator(player_fleet_size)
 	if randf_range(0, 1) < scrap_chance:
 		var scrap = scrap_scene.instantiate()
+		if randf_range(0, 1) < gun_chance:
+			scrap.scrap_type = Scrap.ScrapType.GUN
+		else:
+			scrap.scrap_type = Scrap.ScrapType.SHIELD
 		scrap.position = pos
 		get_tree().current_scene.call_deferred("add_child", scrap)
 	
