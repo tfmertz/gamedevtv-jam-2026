@@ -4,6 +4,8 @@ var enemy_scene : PackedScene = preload("res://scene/enemy_ship_node.tscn")
 var bomber_scene : PackedScene = preload("res://scene/bomber.tscn")
 var bullet_scene : PackedScene = preload("res://scene/bullet.tscn")
 var tommygun_scene: PackedScene = preload("res://src/tommy_gun.tscn")
+var shield_scene: PackedScene = preload("res://scene/shield.tscn")
+
 @export var attack_spread := 10
 @export var clip_size := 8
 @export var attack_delay := .05
@@ -14,14 +16,17 @@ var bullet_spawn_1 = Vector2(1736,26)
 var bullet_spawn_2 = Vector2(1670,335)
 var bullet_spawn_3 = Vector2(1670,745)
 var bullet_spawn_4 = Vector2(1736,1054)
-var max_health = 100
-var health = 100
+var shield_plane = 1550
+var max_health = 300
+var health = 300
 var target_location
 var target_direction
 var speed = 1
 var tongueplaying = false
 var wave = false
 var attack_type = 1
+var wind_y
+var shield_density =4
 @onready var boss_assets: Area2D = $boss_assets
 @onready var health_bar_layer: CanvasLayer = $HealthBarLayer
 @onready var health_bar: ProgressBar = $HealthBarLayer/HealthBar
@@ -29,6 +34,7 @@ var attack_type = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	wind_y = get_viewport_rect().size.y
 	target_location=Vector2(-300, position.y)
 	$screen_enter_timer.start()
 	$tongue_timer.stop()
@@ -58,7 +64,7 @@ func flyto(location: Vector2) -> void: #recieves a target position as vector2
 
 
 
-func shoot_type1() -> void:
+func shoot_type1() -> void: #pos:Vector2
 	
 	var bullet1 = bullet_scene.instantiate()
 	bullet1.position = bullet_spawn_1
@@ -80,13 +86,14 @@ func shoot_type1() -> void:
 	get_tree().get_root().add_child(bullet4)
 	bullet4.set_bullet_type(Bullet.BulletType.ENEMY_2)
 	
-func shoot_type2() -> void:
+func shoot_type2() -> void: #pos:Vector2
 	for i in range(clip_size):
 		var bullet1 = bullet_scene.instantiate()
 		bullet1.position = bullet_spawn_1
 		get_tree().get_root().add_child(bullet1)
 		bullet1.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		bullet1.direction = random_direction_around(Vector2.LEFT, attack_spread)
+		
 		
 		var bullet2 = bullet_scene.instantiate()
 		bullet2.position = bullet_spawn_2
@@ -137,11 +144,14 @@ func _on_screen_enter_timer_timeout() -> void:
 	$screen_enter_timer.stop()
 	#$bullet_timer.start()
 	$wave_timer.start()
+	$shield_timer.start()
+	health=max_health
+	spawn_shields()
 	health_bar_layer.visible = true
 
 
 func _on_ship_spawn_timer_timeout() -> void:
-	if (randi()%101 < 25): 
+	if (randi()%101 < 50): 
 		spawn_ships()
 
 func spawn_ships() -> void:
@@ -175,6 +185,8 @@ func take_damage(damage: int, source: Area2D) -> void:
 	if health <= 0:
 		die.emit()
 		_die()
+	
+	
 
 
 func _die() -> void:
@@ -182,11 +194,18 @@ func _die() -> void:
 	$ship_spawn_timer.stop()
 	$bullet_timer.stop()
 	$wave_timer.stop()
+	$shield_timer.stop()
 	boss_assets.get_node("tongue").stop()
 	boss_assets.get_node("tongue").hide()
 	boss_assets.get_node("bossmid").play("death")
 	health_bar_layer.visible = false
 	flyto(Vector2(300, position.y))
+	var allshields = get_tree().get_nodes_in_group("shield")
+	for shield in allshields:
+		shield.take_damage(100, shield)
+	var allenemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in allenemies:
+		enemy._die()
 	await get_tree().create_timer(3.0).timeout
 	GameManager.load_scene("res://scene/ui/game_won.tscn")
 	
@@ -218,7 +237,7 @@ func _on_wave_timer_timeout() -> void:
 		$bullet_timer.stop()
 	else:
 		wave = true
-		if (randi()%101 < 25): 
+		if (randi()%101 < 50): 
 			attack_type = 2
 			$bullet_timer.wait_time = 1
 			$bullet_timer.start()
@@ -230,3 +249,27 @@ func _on_wave_timer_timeout() -> void:
 			$bullet_timer.start()
 			$wave_timer.wait_time =1
 			$wave_timer.start()
+
+func spawn_shields() -> void:
+	for i in shield_density:
+		var shield = shield_scene.instantiate()
+		shield.position = ship_spawn_top
+		shield.set_active(3)
+		get_tree().get_root().add_child(shield)
+		shield.target_location =Vector2(shield_plane,randi_range(0,wind_y/2))
+		shield.bossshield = true
+		
+		
+		#shield.flyto(Vector2(shield_plane,randi_range(32,wind_y-32)))
+	
+		var shield2 = shield_scene.instantiate()
+		shield2.position = ship_spawn_bot
+		shield2.set_active(3)
+		get_tree().get_root().add_child(shield2)
+		shield2.target_location =Vector2(shield_plane,randi_range(wind_y/2,wind_y))
+		shield2.bossshield = true
+		
+		#shield2.flyto(Vector2(shield_plane,randi_range(32,wind_y-32)))
+
+func _on_shield_timer_timeout() -> void:
+	spawn_shields()

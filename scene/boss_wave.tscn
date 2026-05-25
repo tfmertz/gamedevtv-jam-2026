@@ -36,7 +36,7 @@ position = Vector2(306, 0)
 [node name="tongue_timer" type="Timer" parent="." unique_id=94264862]
 
 [node name="screen_enter_timer" type="Timer" parent="." unique_id=531797416]
-wait_time = 4.0
+wait_time = 6.0
 
 [node name="ship_spawn_timer" type="Timer" parent="." unique_id=1371163265]
 wait_time = 2.0
@@ -47,7 +47,7 @@ wait_time = 1.5
 [node name="attack_timer" type="Timer" parent="." unique_id=1561567841]
 
 [node name="wave_timer" type="Timer" parent="." unique_id=1274687876]
-wait_time = 5.0
+wait_time = 3.0
 
 [node name="HealthBarLayer" type="CanvasLayer" parent="." unique_id=1101010101]
 layer = 10
@@ -61,7 +61,7 @@ offset_left = -50.0
 offset_top = 16.0
 offset_right = 50.0
 offset_bottom = 44.0
-text = "BOSS"
+text = "UNMILKMAN"
 label_settings = SubResource("LabelSettings_hb_label")
 horizontal_alignment = 1
 
@@ -78,8 +78,12 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_hb_fill")
 value = 100.0
 show_percentage = false
 
+[node name="shield_timer" type="Timer" parent="." unique_id=1306147985]
+wait_time = 6.0
+
 [connection signal="timeout" from="tongue_timer" to="." method="_on_tongue_timer_timeout"]
 [connection signal="timeout" from="screen_enter_timer" to="." method="_on_screen_enter_timer_timeout"]
 [connection signal="timeout" from="ship_spawn_timer" to="." method="_on_ship_spawn_timer_timeout"]
 [connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
 [connection signal="timeout" from="wave_timer" to="." method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="shield_timer" to="." method="_on_shield_timer_timeout"]

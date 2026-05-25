@@ -18,9 +18,11 @@ var is_dying := false
 
 func _ready() -> void:
 	# hook up explosion logic
+	add_to_group("enemy")
 	area_entered.connect(_on_area_entered)
 	if shield_health > 0:
 		$Shield.set_active(shield_health)
+	
 	
 func _physics_process(delta: float) -> void:
 	_move(delta)
