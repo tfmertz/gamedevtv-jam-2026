@@ -75,11 +75,15 @@ func load_scene(scene_path: String) -> void:
 	is_transitioning = true
 	scene_changing.emit()
 
+	# Disable objects
+	var scene_tree = get_tree()
+	scene_tree.paused = true
 	await fade_out()
 	await _change_to(scene_path)
 
 	scene_changed.emit()
 	await fade_in()
+	scene_tree.paused = false
 	is_transitioning = false
 
 # Performs the scene change and waits until the new scene
@@ -102,7 +106,7 @@ func spawn_scrap(pos: Vector2) -> void:
 	if randf_range(0, 1) < scrap_chance:
 		var scrap = scrap_scene.instantiate()
 		scrap.position = pos
-		get_tree().get_root().call_deferred("add_child", scrap)
+		get_tree().current_scene.call_deferred("add_child", scrap)
 	
 	set_deferred("is_spawning_scrap", false)
 

@@ -154,7 +154,7 @@ func _on_bullet_timer_timeout() -> void:
 	if ship_type != ShipType.SHIELD:
 		var bullet = bullet_scene.instantiate()
 		bullet.position = position
-		get_tree().get_root().add_child(bullet)
+		get_tree().current_scene.add_child(bullet)
 		bullet.set_bullet_type(Bullet.BulletType.PLAYER)
 
 

@@ -62,47 +62,47 @@ func shoot_type1() -> void:
 	
 	var bullet1 = bullet_scene.instantiate()
 	bullet1.position = bullet_spawn_1
-	get_tree().get_root().add_child(bullet1)
+	get_tree().current_scene.add_child(bullet1)
 	bullet1.set_bullet_type(Bullet.BulletType.ENEMY_2)
 	
 	var bullet2 = bullet_scene.instantiate()
 	bullet2.position = bullet_spawn_2
-	get_tree().get_root().add_child(bullet2)
+	get_tree().current_scene.add_child(bullet2)
 	bullet2.set_bullet_type(Bullet.BulletType.ENEMY_2)
 	
 	var bullet3 = bullet_scene.instantiate()
 	bullet3.position = bullet_spawn_3
-	get_tree().get_root().add_child(bullet3)
+	get_tree().current_scene.add_child(bullet3)
 	bullet3.set_bullet_type(Bullet.BulletType.ENEMY_2)
 	
 	var bullet4 = bullet_scene.instantiate()
 	bullet4.position = bullet_spawn_4
-	get_tree().get_root().add_child(bullet4)
+	get_tree().current_scene.add_child(bullet4)
 	bullet4.set_bullet_type(Bullet.BulletType.ENEMY_2)
 	
 func shoot_type2() -> void:
 	for i in range(clip_size):
 		var bullet1 = bullet_scene.instantiate()
 		bullet1.position = bullet_spawn_1
-		get_tree().get_root().add_child(bullet1)
+		get_tree().current_scene.add_child(bullet1)
 		bullet1.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		bullet1.direction = random_direction_around(Vector2.LEFT, attack_spread)
 		
 		var bullet2 = bullet_scene.instantiate()
 		bullet2.position = bullet_spawn_2
-		get_tree().get_root().add_child(bullet2)
+		get_tree().current_scene.add_child(bullet2)
 		bullet2.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		bullet2.direction = random_direction_around(Vector2.LEFT, attack_spread)
 		
 		var bullet3 = bullet_scene.instantiate()
 		bullet3.position = bullet_spawn_3
-		get_tree().get_root().add_child(bullet3)
+		get_tree().current_scene.add_child(bullet3)
 		bullet3.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		bullet3.direction = random_direction_around(Vector2.LEFT, attack_spread)
 		
 		var bullet4 = bullet_scene.instantiate()
 		bullet4.position = bullet_spawn_4
-		get_tree().get_root().add_child(bullet4)
+		get_tree().current_scene.add_child(bullet4)
 		bullet4.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		bullet4.direction = random_direction_around(Vector2.LEFT, attack_spread)
 		
@@ -147,24 +147,24 @@ func _on_ship_spawn_timer_timeout() -> void:
 func spawn_ships() -> void:
 	if (randi()%101 < 50): 
 		var ship = enemy_scene.instantiate()
-		get_tree().get_root().add_child(ship)
+		get_tree().current_scene.add_child(ship)
 		ship.spawn_enemy_big()
 		ship.position = ship_spawn_top
 		ship.set_rand_mode(true)
 		
 		var ship2 = enemy_scene.instantiate()
-		get_tree().get_root().add_child(ship2)
+		get_tree().current_scene.add_child(ship2)
 		ship2.spawn_enemy_big()
 		ship2.position = ship_spawn_bot
 		ship2.set_rand_mode(true)
 	else:
 		var ship = bomber_scene.instantiate()
 		ship.position = ship_spawn_top
-		get_tree().get_root().add_child(ship)
+		get_tree().current_scene.add_child(ship)
 		
 		var ship2 = bomber_scene.instantiate()
 		ship2.position = ship_spawn_bot
-		get_tree().get_root().add_child(ship2)
+		get_tree().current_scene.add_child(ship2)
 
 
 

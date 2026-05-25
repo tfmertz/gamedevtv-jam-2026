@@ -24,6 +24,7 @@ var sprite_half = 32
 
 
 func _ready() -> void:
+	super()
 	wind_x = get_viewport_rect().size.x
 	wind_y = get_viewport_rect().size.y
 	#$sprite.hide()
@@ -86,7 +87,7 @@ func _on_timer_timeout() -> void:
 	var bullet = bullet_scene.instantiate()
 	bullet.position = position
 	
-	get_tree().get_root().add_child(bullet)
+	get_tree().current_scene.add_child(bullet)
 	
 	#if ship_type == EnemyType.ENEMY_SMALL:
 		#bullet.set_bullet_type(Bullet.BulletType.ENEMY_1)

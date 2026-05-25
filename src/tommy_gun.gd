@@ -30,7 +30,7 @@ func _attack() -> void:
 	for i in range(clip_size):
 		var new_bullet : Bullet = bullet_scene.instantiate()
 		new_bullet.position = position
-		get_tree().root.add_child(new_bullet)
+		get_tree().current_scene.add_child(new_bullet)
 		new_bullet.set_bullet_type(Bullet.BulletType.ENEMY_2)
 		new_bullet.direction = random_direction_around(Vector2.LEFT, attack_spread)
 		attack_timer.wait_time = attack_delay
