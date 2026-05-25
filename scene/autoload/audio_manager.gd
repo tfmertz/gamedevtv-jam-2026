@@ -9,6 +9,7 @@ const POOL_SIZE := 16 # max audio players
 @export var hit_stream: AudioStream
 @export var title_music_stream: AudioStream
 @export var game_music_stream: AudioStream
+@export var boss_music_stream: AudioStream
 @export var player_injured_stream: AudioStream
 @export var player_very_injured_stream: AudioStream
 @export var boss_laugh_stream: AudioStream
@@ -22,6 +23,10 @@ var _aggregate_accum           := 0.0
 var _pool: Array[AudioStreamPlayer] = []
 
 var _music_player: AudioStreamPlayer
+var _game_player: AudioStreamPlayer
+var _boss_player: AudioStreamPlayer
+
+var current_player: AudioStreamPlayer
 
 func _ready() -> void:
 	# Setup background music player
@@ -30,7 +35,17 @@ func _ready() -> void:
 	_music_player.bus = "Music"
 	add_child(_music_player)
 	_music_player.play()
+	current_player = _music_player
 	
+	_game_player = AudioStreamPlayer.new()
+	_game_player.stream = game_music_stream
+	_game_player.bus = "Music"
+	add_child(_game_player)
+	
+	_boss_player = AudioStreamPlayer.new()
+	_boss_player.stream = boss_music_stream
+	_boss_player.bus = "Music"
+	add_child(_boss_player)
 	# Build out our pool of audio stream players to avoid sound conflicts
 	for i in POOL_SIZE:
 		var p := AudioStreamPlayer.new()
@@ -77,10 +92,15 @@ func report_player_very_injured() -> void:
 func report_boss_laughter() -> void:
 	_boss_laughing = true
 
-# TODO(tom) add music cross fade on scene transition
-func cross_fade_music(new_stream: AudioStream):
-	_music_player.stream = new_stream
-	_music_player.play()
+func cross_fade_music(new_player: AudioStreamPlayer):
+	new_player.volume_linear = 0.0
+	new_player.play()
+	var music_tween := create_tween()
+	music_tween.tween_property(current_player, "volume_linear", 0.0, 2.0)
+	music_tween.tween_property(new_player, "volume_linear", 1.0, 2.0)
+	await music_tween.finished
+	current_player.stop()
+	current_player = new_player
 
 func _play_pooled(stream: AudioStream, volume_db: float = 0.0,
 		pitch: float = 1.0) -> void:

@@ -30,7 +30,7 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Title" type="Node2D" unique_id=1822057023]
 script = ExtResource("1_oef1b")
 
-[node name="SpaceLayer" type="Parallax2D" parent="."]
+[node name="SpaceLayer" type="Parallax2D" parent="." unique_id=610956503]
 z_index = -100
 scale = Vector2(5, 5)
 scroll_scale = Vector2(0, 0)
@@ -38,7 +38,7 @@ repeat_size = Vector2(2048, 1152)
 autoscroll = Vector2(-20, 0)
 repeat_times = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="SpaceLayer"]
+[node name="Sprite2D" type="Sprite2D" parent="SpaceLayer" unique_id=221825839]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("2_space1")
@@ -65,68 +65,68 @@ text = "Game Over!"
 label_settings = SubResource("LabelSettings_ka843")
 horizontal_alignment = 1
 
-[node name="ControlsMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="ControlsMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=1498016350]
 layout_mode = 2
 theme_override_constants/margin_top = 24
 
-[node name="ControlsBox" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin"]
+[node name="ControlsBox" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin" unique_id=66460782]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="ControlsHeader" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox"]
+[node name="ControlsHeader" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox" unique_id=1704687517]
 layout_mode = 2
 text = "— CONTROLS —"
 label_settings = SubResource("LabelSettings_controls_header")
 horizontal_alignment = 1
 
-[node name="ControlsGrid" type="GridContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox"]
+[node name="ControlsGrid" type="GridContainer" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox" unique_id=904325965]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 24
 theme_override_constants/v_separation = 6
 columns = 2
 
-[node name="ActionMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="ActionMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1580036477]
 layout_mode = 2
 text = "Move"
 label_settings = SubResource("LabelSettings_controls_body")
 
-[node name="KeyMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="KeyMove" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=939343391]
 layout_mode = 2
 text = "WASD / Arrow Keys"
 label_settings = SubResource("LabelSettings_controls_key")
 
-[node name="ActionFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="ActionFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=346389349]
 layout_mode = 2
 text = "Cycle Formation"
 label_settings = SubResource("LabelSettings_controls_body")
 
-[node name="KeyFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="KeyFormation" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1733582814]
 layout_mode = 2
 text = "F"
 label_settings = SubResource("LabelSettings_controls_key")
 
-[node name="ActionSpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="ActionSpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1456308750]
 layout_mode = 2
 text = "Cycle Spacing"
 label_settings = SubResource("LabelSettings_controls_body")
 
-[node name="KeySpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="KeySpacing" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=530371527]
 layout_mode = 2
 text = "R"
 label_settings = SubResource("LabelSettings_controls_key")
 
-[node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="ActionSort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1000771412]
 layout_mode = 2
 text = "Sort Ships"
 label_settings = SubResource("LabelSettings_controls_body")
 
-[node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid"]
+[node name="KeySort" type="Label" parent="CanvasLayer/Control/VBoxContainer/ControlsMargin/ControlsBox/ControlsGrid" unique_id=1272974297]
 layout_mode = 2
 text = "G"
 label_settings = SubResource("LabelSettings_controls_key")
 
-[node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="ButtonMargin" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=961276245]
 layout_mode = 2
 theme_override_constants/margin_top = 40
 
