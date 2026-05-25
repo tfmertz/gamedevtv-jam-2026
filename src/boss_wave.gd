@@ -254,7 +254,7 @@ func spawn_shields() -> void:
 	for i in (shield_density):
 		var shield = shield_scene.instantiate()
 		shield.position = ship_spawn_top
-		shield.set_active(3)
+		shield.set_active(1)
 		get_tree().current_scene.add_child(shield)
 		var range1 = randi_range(i*(wind_y/2)/shield_density,(i+1)*(wind_y/2)/shield_density)
 		shield.target_location =Vector2(shield_plane,range1)
@@ -264,7 +264,7 @@ func spawn_shields() -> void:
 		
 		var shield2 = shield_scene.instantiate()
 		shield2.position = ship_spawn_bot
-		shield2.set_active(3)
+		shield2.set_active(1)
 		get_tree().current_scene.add_child(shield2)
 		var range2 = randi_range((i*(wind_y/2)/shield_density)+(wind_y/2),((i+1)*(wind_y/2)/shield_density)+(wind_y/2))
 		shield2.target_location =Vector2(shield_plane,range2)
