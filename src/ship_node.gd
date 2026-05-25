@@ -138,6 +138,7 @@ func dramatic_death(source: Area2D) -> void:
 	else:
 		death_particles.emitting = true
 	$CrashTimer.start()
+	$HardDeathTimer.start()
 	set_off_path()
 	terminal_velocity_dir = source.position.direction_to(position)
 	$bullet_timer.stop()
@@ -168,4 +169,10 @@ func _on_invulnerability_timer_timeout() -> void:
 
 
 func _on_crash_timer_timeout() -> void:
-	queue_free()
+	if is_instance_valid(self):
+		queue_free()
+
+
+func _on_hard_death_timer_timeout() -> void:
+	if is_instance_valid(self):
+		queue_free()
