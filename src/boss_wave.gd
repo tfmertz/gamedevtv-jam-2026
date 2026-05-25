@@ -195,6 +195,7 @@ func _die() -> void:
 	$bullet_timer.stop()
 	$wave_timer.stop()
 	$shield_timer.stop()
+	AudioManager.report_boss_dying()
 	boss_assets.get_node("tongue").stop()
 	boss_assets.get_node("tongue").hide()
 	boss_assets.get_node("bossmid").play("death")

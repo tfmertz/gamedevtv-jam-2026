@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cfurosvinpaoq" path="res://assets/sound/moopain2.wav" id="7_fvf71"]
 [ext_resource type="AudioStream" uid="uid://bqwwipokfsnqm" path="res://assets/sound/bosslaugh1.wav" id="8_fvf71"]
 [ext_resource type="AudioStream" uid="uid://c3l5ax534gwxw" path="res://assets/sound/explosion.wav" id="10_7svow"]
+[ext_resource type="AudioStream" uid="uid://dbb26aadjhx1j" path="res://assets/sound/bossnoooo.wav" id="11_8igsy"]
 
 [node name="AudioManager" type="Node2D" unique_id=1142990482]
 process_mode = 3
@@ -23,3 +24,4 @@ player_injured_stream = ExtResource("6_ibl2c")
 player_very_injured_stream = ExtResource("7_fvf71")
 boss_laugh_stream = ExtResource("8_fvf71")
 explosion_stream = ExtResource("10_7svow")
+boss_death_stream = ExtResource("11_8igsy")

@@ -194,5 +194,6 @@ func _on_timer_timeout() -> void:
 
 func load_first_scrap() -> void:
 	var scrap = scrap_scene.instantiate()
+	scrap.scrap_type = Scrap.ScrapType.GUN
 	scrap.position = Vector2(1183, 516)
 	get_tree().current_scene.add_child(scrap)
