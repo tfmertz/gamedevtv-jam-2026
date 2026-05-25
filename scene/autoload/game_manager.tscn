@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://2jy7so4lmnfo" path="res://scene/autoload/game_manager.gd" id="1_2uct3"]
 [ext_resource type="Script" uid="uid://cy83tbydebwdl" path="res://src/camera_controls.gd" id="2_ubk7d"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_2uct3"]
+font_size = 76
+
 [node name="GameManager" type="Node2D" unique_id=1450854875]
 process_mode = 3
 script = ExtResource("1_2uct3")
@@ -10,3 +13,29 @@ script = ExtResource("1_2uct3")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=561175760]
 anchor_mode = 0
 script = ExtResource("2_ubk7d")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1673039592]
+layer = 128
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=946676852]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=2006127796]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PausedLabel" type="Label" parent="CanvasLayer/CenterContainer" unique_id=121997920]
+visible = false
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_2uct3")

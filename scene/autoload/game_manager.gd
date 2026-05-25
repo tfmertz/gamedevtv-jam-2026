@@ -5,6 +5,8 @@ signal scene_changing
 signal scene_changed
 
 @onready var camera: Camera2D = $Camera2D
+@onready var _color_rect: ColorRect = $CanvasLayer/ColorRect
+@onready var paused_label: Label = $CanvasLayer/CenterContainer/PausedLabel
 
 ## Optional. Leave empty and set Godot's normal "Main Scene"
 ## in Project Settings instead. If set, this path loads on startup.
@@ -15,21 +17,10 @@ var is_transitioning := false
 var is_spawning_scrap := false
 var stop_player_control := false
 
-var _color_rect: ColorRect
 var flash_tween: Tween
-
+var start_color := Color(0, 0, 0, 0)
 
 func _ready() -> void:
-	var canvas := CanvasLayer.new()
-	canvas.layer = 128
-	add_child(canvas)
-
-	_color_rect = ColorRect.new()
-	_color_rect.color = Color(0, 0, 0, 1)  # opaque; fade in to reveal
-	_color_rect.anchor_right = 1.0
-	_color_rect.anchor_bottom = 1.0
-	_color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	canvas.add_child(_color_rect)
 
 	if initial_scene_path != "":
 		# Defer: can't change_scene during the autoload's own _ready.
@@ -37,10 +28,24 @@ func _ready() -> void:
 	else:
 		fade_in(3)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		var scene_tree := get_tree()
+		scene_tree.paused = !scene_tree.paused
+		_color_rect.color = start_color
+		if scene_tree.paused:
+			_color_rect.color.a = 0.5
+			paused_label.show()
+		else:
+			paused_label.hide()
+		
+
 func pause_player_control(duration: float) -> void:
 	stop_player_control = true
 	await get_tree().create_timer(duration).timeout
 	stop_player_control = false
+	# Start boss music
+	AudioManager.cross_fade_music(AudioManager._boss_player)
 
 func fade_out(duration := 1.0) -> void:
 	var tween := create_tween()
@@ -49,6 +54,7 @@ func fade_out(duration := 1.0) -> void:
 
 func fade_in(duration := 1.0) -> void:
 	var tween := create_tween()
+	_color_rect.color.a = 1
 	tween.tween_property(_color_rect, "color:a", 0.0, duration)
 	await tween.finished
 
