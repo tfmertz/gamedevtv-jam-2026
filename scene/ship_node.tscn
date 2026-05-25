@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bnx018jkfsdvj" path="res://scene/shield.tscn" id="11_8rak0"]
 [ext_resource type="Texture2D" uid="uid://dklvj5in83lnu" path="res://assets/art/milk.png" id="11_waopi"]
 [ext_resource type="Texture2D" uid="uid://cvm5gboem75g6" path="res://assets/art/cow_sprint_not_0001.png" id="12_mfate"]
+[ext_resource type="Texture2D" uid="uid://bpnmuncerpdtj" path="res://assets/art/star.png" id="18_vi1mi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_65l50"]
 animations = [{
@@ -130,9 +131,13 @@ point_count = 3
 offsets = PackedFloat32Array(0.051779937, 0.3106796, 0.5631068, 0.68608415, 1)
 colors = PackedColorArray(0.9999997, 0.2830094, 0.09237703, 1, 0.6421697, 0, 0.1061903, 1, 0.5877486, 0, 0.097191125, 1, 0, 0, 0, 1, 0, 0, 0, 0)
 
+[sub_resource type="Gradient" id="Gradient_vi1mi"]
+offsets = PackedFloat32Array(0.81877023, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [sub_resource type="Gradient" id="Gradient_8rak0"]
 offsets = PackedFloat32Array(0.76375407, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+colors = PackedColorArray(1, 0.94200003, 0.42000002, 0.56078434, 1, 1, 1, 0)
 
 [node name="ShipNode" type="Area2D" unique_id=1841324561 groups=["node"]]
 collision_mask = 2
@@ -209,6 +214,24 @@ initial_velocity_min = 1.0
 initial_velocity_max = 3.0
 angular_velocity_max = 700.0
 scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_8rak0")
+color_ramp = SubResource("Gradient_vi1mi")
+
+[node name="SprintParticles" type="CPUParticles2D" parent="." unique_id=1617166264]
+show_behind_parent = true
+emitting = false
+amount = 15
+texture = ExtResource("18_vi1mi")
+lifetime = 0.5
+randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 20.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+angular_velocity_max = 700.0
+scale_amount_max = 1.5
 scale_amount_curve = SubResource("Curve_8rak0")
 color_ramp = SubResource("Gradient_8rak0")
 

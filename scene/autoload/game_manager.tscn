@@ -6,6 +6,15 @@
 [sub_resource type="LabelSettings" id="LabelSettings_2uct3"]
 font_size = 76
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2uct3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0.27752772, 0.27752772, 0.27752772, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ubk7d"]
+bg_color = Color(1, 1, 1, 1)
+
 [node name="GameManager" type="Node2D" unique_id=1450854875]
 process_mode = 3
 script = ExtResource("1_2uct3")
@@ -27,6 +36,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=2006127796]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,8 +44,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PausedLabel" type="Label" parent="CanvasLayer/CenterContainer" unique_id=121997920]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer" unique_id=299499394]
+layout_mode = 2
+
+[node name="PausedLabel" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer" unique_id=121997920]
 layout_mode = 2
 text = "PAUSED"
 label_settings = SubResource("LabelSettings_2uct3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer" unique_id=206307591]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer" unique_id=2085610573]
+layout_mode = 2
+text = "Volume:"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer" unique_id=843027512]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_2uct3")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ubk7d")
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[connection signal="drag_ended" from="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/HSlider" to="." method="_on_h_slider_drag_ended"]

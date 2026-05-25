@@ -34,6 +34,8 @@ var current_player: AudioStreamPlayer
 
 var _music_tween: Tween
 
+var initial_volume := 0.5
+
 func _ready() -> void:
 	# Setup background music player
 	_music_player = AudioStreamPlayer.new()
@@ -52,6 +54,8 @@ func _ready() -> void:
 	_boss_player.stream = boss_music_stream
 	_boss_player.bus = "Music"
 	add_child(_boss_player)
+	
+	set_volume(initial_volume)
 	#_boss_player.play()
 	# Build out our pool of audio stream players to avoid sound conflicts
 	for i in POOL_SIZE:
@@ -92,6 +96,9 @@ func _process(delta: float) -> void:
 	if _boss_dying:
 		_play_pooled(boss_death_stream, 0.0, 1.0)
 		_boss_dying = false
+
+func set_volume(volume: float) -> void:
+	current_player.volume_linear = volume
 
 func report_enemy_fire() -> void:
 	_enemy_fire_count += 1
