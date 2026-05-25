@@ -126,6 +126,8 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	for i in range(enemies_to_spawn):
 		var enemy_scene = enemy_scenes.pick_random()
 		var new_enemy = enemy_scene.instantiate()
+		if difficulty > Difficulty.EASY:
+			new_enemy.shield_health = 1
 		
 		# get a random position on the path
 		spawn_path.progress_ratio = randf()
@@ -161,7 +163,19 @@ func _on_difficulty_timer_timeout() -> void:
 		# increase difficulty every 2m
 		difficulty += 1
 		# TODO(isaac) maybe make waves shorter? longer? idk making slightly shorter
-		$DifficultyTimer.wait_time -= 15
+		difficulty_timer.stop()
+		wave_timer.stop()
+		enemy_spawn_timer.stop()
+		
+		wave_spawn_interval += 0.5
+		wave_timer.wait_time = wave_spawn_interval
+		enemy_spawn_interval -= 0.5
+		enemy_spawn_timer.wait_time = enemy_spawn_interval
+		$DifficultyTimer.wait_time -= 15*difficulty
+		
+		difficulty_timer.start()
+		wave_timer.start()
+		enemy_spawn_timer.start()
 
 
 func _on_timer_timeout() -> void:
