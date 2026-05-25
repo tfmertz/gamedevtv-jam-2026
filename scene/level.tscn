@@ -14,6 +14,12 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bddx0"]
+bg_color = Color(0.23, 0.23, 0.23, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2b8d"]
+bg_color = Color(0.93, 0.26039997, 0.26039997, 1)
+
 [node name="Level" type="Node2D" unique_id=1430583570 node_paths=PackedStringArray("enemy_container")]
 script = ExtResource("1_u52ul")
 enemy_container = NodePath("Enemies")
@@ -68,7 +74,7 @@ texture = ExtResource("4_planet_b")
 wait_time = 2.0
 
 [node name="DifficultyTimer" type="Timer" parent="." unique_id=642594811]
-wait_time = 120.0
+wait_time = 90.0
 autostart = true
 
 [node name="EnemyVertSpawnPath" type="Path2D" parent="." unique_id=804415949]
@@ -81,6 +87,31 @@ rotation = 1.5719074
 
 [node name="WaveTimer" type="Timer" parent="." unique_id=38180934]
 autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1237895584]
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=1660004315]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer" unique_id=913373220]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/CenterContainer/HBoxContainer" unique_id=487840888]
+layout_mode = 2
+text = "Wave 1"
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/CenterContainer/HBoxContainer" unique_id=1070634818]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bddx0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u2b8d")
+max_value = 1.0
+show_percentage = false
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]

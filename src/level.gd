@@ -23,6 +23,8 @@ var screen_size : Vector2i
 @onready var wave_timer: Timer = $WaveTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 @onready var difficulty_timer: Timer = $DifficultyTimer
+@onready var progress_bar: ProgressBar = $CanvasLayer/CenterContainer/HBoxContainer/ProgressBar
+@onready var progress_label: Label = $CanvasLayer/CenterContainer/HBoxContainer/ProgressLabel
 
 var player_fleet
 var enemy_spawn_min := 1
@@ -50,6 +52,10 @@ func _ready() -> void:
 	enemy_spawn_timer.wait_time = enemy_spawn_interval
 	_apply_difficulty()
 	load_first_scrap()
+
+func _process(delta: float) -> void:
+	# update progress bar
+	progress_bar.value = 1 - (difficulty_timer.time_left / difficulty_timer.wait_time)
 
 func _apply_difficulty() -> void:
 	var range = _spawn_counts[difficulty]
@@ -150,6 +156,9 @@ func _on_difficulty_timer_timeout() -> void:
 		wave_timer.stop()
 		enemy_spawn_timer.stop()
 		difficulty_timer.stop()
+		# Hide progress UI
+		progress_bar.hide()
+		progress_label.hide()
 
 		# wait for enemies to clear
 		await get_tree().create_timer(pre_boss_delay).timeout
@@ -172,6 +181,7 @@ func _on_difficulty_timer_timeout() -> void:
 		enemy_spawn_interval -= 0.5
 		enemy_spawn_timer.wait_time = enemy_spawn_interval
 		$DifficultyTimer.wait_time -= 15*difficulty
+		progress_label.text = "Wave %d" % (difficulty + 1)
 		
 		difficulty_timer.start()
 		wave_timer.start()
