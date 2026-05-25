@@ -28,6 +28,8 @@ var _boss_player: AudioStreamPlayer
 
 var current_player: AudioStreamPlayer
 
+var _music_tween: Tween
+
 func _ready() -> void:
 	# Setup background music player
 	_music_player = AudioStreamPlayer.new()
@@ -93,13 +95,16 @@ func report_boss_laughter() -> void:
 	_boss_laughing = true
 
 func cross_fade_music(new_player: AudioStreamPlayer):
+	if _music_tween and _music_tween.is_valid():
+		_music_tween.kill()
 	new_player.volume_linear = 0.0
 	new_player.play()
-	var music_tween := create_tween()
-	music_tween.tween_property(current_player, "volume_linear", 0.0, 2.0)
-	music_tween.tween_property(new_player, "volume_linear", 1.0, 2.0)
-	await music_tween.finished
-	current_player.stop()
+	_music_tween = create_tween().bind_node(self)
+	_music_tween.tween_property(current_player, "volume_linear", 0.0, 2.0)
+	_music_tween.tween_property(new_player, "volume_linear", 1.0, 2.0)
+	await _music_tween.finished
+	if current_player and current_player != new_player:
+		current_player.stop()
 	current_player = new_player
 
 func _play_pooled(stream: AudioStream, volume_db: float = 0.0,
